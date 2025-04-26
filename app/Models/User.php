@@ -60,7 +60,23 @@ class User extends Authenticatable
         return $this->hasMany(Pedido::class);
     }
 
-    public function isAdmin(): bool {
-        return $this->cargo_id === 1;
+    public function temPermissao(string $permissao){
+        
+        if (!$this->cargo) {
+            return false;
+        }
+    
+        $permissoes = [
+            'acesso_completo' => ['Gerente', 'Administrador'],
+            'acesso_limitado' => ['Atendente'],
+        ];
+    
+        foreach ($permissoes[$permissao] ?? [] as $cargoPermitido) {
+            if ($this->cargo->name === $cargoPermitido) {
+                return true;
+            }
+        }
+    
+        return false;
     }
 }

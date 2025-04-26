@@ -20,6 +20,7 @@ class AuthServiceProvider extends ServiceProvider
    protected $policies = [
        User::class => UserPolicy::class,
        Cargo::class => CargoPolicy::class,
+       Sabor::class => SaborPolicy::class,
    ];
 
     /**
@@ -36,19 +37,8 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->registerPolicies();
-        Gate::define('viewUsers', [UserPolicy::class, 'viewAny']);
-        Gate::define('viewUser', [UserPolicy::class, 'view']);
-        Gate::define('createUser', [UserPolicy::class, 'create']);
-        Gate::define('updateUser', [UserPolicy::class, 'update']);
-        Gate::define('deleteUser', [UserPolicy::class, 'delete']);
+
         Gate::define('reativarUser', [UserPolicy::class, 'reativar']);
 
-        Gate::define('viewCargos', [CargoPolicy::class, 'viewAny']);
-
-        Gate::define('viewSabores', [SaborPolicy::class, 'viewAny']);
-        Gate::define('viewSabor', [SaborPolicy::class, 'view']);
-        Gate::define('createSabor', [SaborPolicy::class, 'create']);
-        Gate::define('updateSabor', [SaborPolicy::class, 'update']);
-        Gate::define('deleteSabor', [SaborPolicy::class, 'delete']);
     }
 }

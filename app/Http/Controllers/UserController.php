@@ -17,7 +17,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $this->authorize('viewUsers', User::class);
+        $this->authorize('viewAny', User::class);
 
         $usuarios = User::all();
         return Inertia::render('Usuarios/Index', [
@@ -30,7 +30,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $this->authorize('createUser', User::class);
+        $this->authorize('create', User::class);
 
         $cargos = Cargo::all();
 
@@ -68,7 +68,7 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         
-        $this->authorize('viewUser', $user);
+        $this->authorize('view', $user);
 
         return $user;
     }
@@ -80,7 +80,7 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        $this->authorize('updateUser', $user);
+        $this->authorize('update', $user);
 
         return Inertia::render('Usuarios/Edit', [
             'usuario' => $user
@@ -116,7 +116,7 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        $this->authorize('deleteUser', $user);
+        $this->authorize('delete', $user);
 
         $user->ativo = false;
         $user->save();

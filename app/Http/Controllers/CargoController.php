@@ -10,7 +10,7 @@ class CargoController extends Controller
     use AuthorizesRequests;
 
     public function index(){
-        $this->authorize('viewCargos', Cargo::class);
+        $this->authorize('viewAny', Cargo::class);
 
         return Cargo::all();
     }

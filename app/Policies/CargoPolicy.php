@@ -14,6 +14,6 @@ class CargoPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->isAdmin() && $user->ativo;
+        return $user->temPermissao('acesso_completo')() && $user->ativo;
     }
 }

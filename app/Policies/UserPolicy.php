@@ -17,7 +17,7 @@ class UserPolicy
     public function viewAny(User $user)
     {
         // Apenas administradores podem ver todos os usuários
-        return $user->isAdmin() && $user->ativo;
+        return $user->temPermissao('acesso_completo')() && $user->ativo;
     }
     
     /**
@@ -29,7 +29,7 @@ class UserPolicy
     public function view(User $user, User $model)
     {
         // Qualquer usuário pode ver seu próprio perfil, mas um admin pode ver qualquer um
-        return $user->id === $model->id || $user->isAdmin() && $user->ativo;
+        return $user->id === $model->id || $user->temPermissao('acesso_completo')() && $user->ativo;
     }
     
     /**
@@ -40,7 +40,7 @@ class UserPolicy
     public function create(User $user)
     {
         // Apenas administradores podem criar novos usuários
-        return $user->isAdmin() && $user->ativo;
+        return $user->temPermissao('acesso_completo')() && $user->ativo;
     }
 
     /**
@@ -52,7 +52,7 @@ class UserPolicy
     public function update(User $user, User $model)
     {
         // O admin pode atualizar qualquer usuário, e o próprio usuário pode atualizar seu perfil
-        return $user->id === $model->id || $user->isAdmin() && $user->ativo;
+        return $user->id === $model->id || $user->temPermissao('acesso_completo')() && $user->ativo;
     }
 
     /**
@@ -64,12 +64,12 @@ class UserPolicy
     public function delete(User $user, User $model)
     {
         // Apenas o admin pode excluir outro usuário
-        return $user->isAdmin() && $user->id !== $model->id && $user->ativo;
+        return $user->temPermissao('acesso_completo')() && $user->id !== $model->id && $user->ativo;
     }
 
     public function reativar(User $user){
         
-        return $user->isAdmin() && $user->ativo;
+        return $user->temPermissao('acesso_completo')() && $user->ativo;
     }
 
 }

@@ -16,7 +16,7 @@ class SaborController extends Controller
      */
     public function index()
     {
-        $this->authorize('viewSabores');
+        $this->authorize('viewAny');
 
         $sabores = Sabor::all();
         return Inertia::render('Sabores/Index', [
@@ -29,7 +29,7 @@ class SaborController extends Controller
      */
     public function create()
     {
-        $this->authorize('createSabor');
+        $this->authorize('create');
 
         return Inertia::render('Sabores/Create');
     }
@@ -57,7 +57,7 @@ class SaborController extends Controller
     {
         $sabor = Sabor::findOrFail($id);
         
-        $this->authorize('viewSabor');
+        $this->authorize('view');
 
         return $sabor;
     }
@@ -69,7 +69,7 @@ class SaborController extends Controller
     {
         $sabor = Sabor::findOrFail($id);
 
-        $this->authorize('updateSabor');
+        $this->authorize('update');
 
         return Inertia::render('Sabores/Edit', [
             'sabor' => $sabor
@@ -99,7 +99,7 @@ class SaborController extends Controller
     {
         $sabor = Sabor::findOrFail($id);
 
-        $this->authorize('deleteSabor');
+        $this->authorize('delete');
 
         $sabor->delete();
 

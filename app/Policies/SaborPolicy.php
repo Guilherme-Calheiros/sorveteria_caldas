@@ -32,7 +32,7 @@ class SaborPolicy
     public function create(User $user)
     {
 
-        return $user->isAdmin() && $user->ativo;
+        return $user->temPermissao('acesso_completo')() && $user->ativo;
     }
 
     /**
@@ -44,7 +44,7 @@ class SaborPolicy
     public function update(User $user)
     {
 
-        return $user->isAdmin() && $user->ativo;
+        return $user->temPermissao('acesso_completo')() && $user->ativo;
     }
 
     /**
@@ -56,6 +56,6 @@ class SaborPolicy
     public function delete(User $user)
     {
         // Apenas o admin pode excluir outro usuário
-        return $user->isAdmin() && $user->ativo;
+        return $user->temPermissao('acesso_completo')() && $user->ativo;
     }
 }
