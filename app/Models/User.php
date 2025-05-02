@@ -25,7 +25,8 @@ class User extends Authenticatable
         'cargo_id',
         'data_admissao',
         'password',
-        'ativo'
+        'ativo',
+        'trocar_senha',
     ];
 
     /**
@@ -49,6 +50,7 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'ativo' => 'boolean',
+            'trocar_senha' => 'boolean',
         ];
     }
 

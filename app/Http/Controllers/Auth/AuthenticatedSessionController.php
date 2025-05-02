@@ -33,6 +33,10 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        if (Auth::user()->trocar_senha) {
+            return redirect()->route('password.change');
+        }
+
         return redirect()->intended(route('dashboard', absolute: false));
     }
 

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Cargo;
 use Inertia\Inertia;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -52,6 +52,8 @@ class UserController extends Controller
             'telefone' => $validated['telefone'],
             'cargo_id' => $validated['cargo_id'],
             'data_admissao' => $validated['data_admissao'],
+            'password' => Hash::make('senha123*'),
+            'trocar_senha' => true,
         ]);
 
         return redirect()->route('usuarios.index');
