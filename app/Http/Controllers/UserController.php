@@ -10,15 +10,11 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class UserController extends Controller
 {
-    use AuthorizesRequests;
-
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $this->authorize('viewAny', User::class);
-
         $usuarios = User::all();
         return Inertia::render('Usuarios/Index', [
             'usuarios' => $usuarios
@@ -30,8 +26,6 @@ class UserController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', User::class);
-
         $cargos = Cargo::all();
 
         return Inertia::render('Usuarios/Create', [
@@ -47,15 +41,17 @@ class UserController extends Controller
         $validated = $request->validate([
             'name' =>  'required|string|max:255',
             'email' => 'required|string|max:255',
-            'password' => 'required|string|min:8|confirmed',
+            'telefone' => 'required|string|max:255',
             'cargo_id' => 'required|exists:cargos,id',
+            'data_admissao' => 'required|date',
         ]);
 
         User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
-            'password' => bcrypt($validated['password']),
+            'telefone' => $validated['telefone'],
             'cargo_id' => $validated['cargo_id'],
+            'data_admissao' => $validated['data_admissao'],
         ]);
 
         return redirect()->route('usuarios.index');
@@ -68,8 +64,6 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         
-        $this->authorize('view', $user);
-
         return $user;
     }
 
@@ -79,8 +73,6 @@ class UserController extends Controller
     public function edit(string $id)
     {
         $user = User::findOrFail($id);
-
-        $this->authorize('update', $user);
 
         return Inertia::render('Usuarios/Edit', [
             'usuario' => $user
@@ -116,8 +108,6 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        $this->authorize('delete', $user);
-
         $user->ativo = false;
         $user->save();
 
@@ -125,8 +115,6 @@ class UserController extends Controller
     }
 
     public function reativar(User $user){
-        $this->authorize('reativarUser', $user);
-
         if (!$user->ativo) {
             $user->ativo = true;
             $user->save();

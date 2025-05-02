@@ -1,32 +1,17 @@
 import { useForm } from '@inertiajs/react';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
 
-export default function CreateUser() {
+export default function Create({ cargos }) {
   const { data, setData, post, processing, errors } = useForm({
-    nome: '',
+    name: '',
     email: '',
     telefone: '',
-    id_cargo: '',
+    cargo_id: '',
     data_admissao: '',
   });
 
-  const [cargos, setCargos] = useState([]);
-
-  useEffect(() => {
-    axios.get('/api/cargos', {
-        headers: {
-          Authorization: 'Bearer 1|hrvRUjuKii6tdr74OrD3tjvDaP4kx1kUOODzdyio5e9c219c',
-          Accept: 'application/json'
-        }
-      })
-      .then((res) => setCargos(res.data))
-      .catch((err) => console.error('Erro ao carregar cargos:', err));
-  }, []);
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    post(route('users.store')); // a rota do seu controller
+    post(route('usuarios.store'));
   };
 
   return (
@@ -35,10 +20,10 @@ export default function CreateUser() {
         <label>Nome:</label>
         <input
           type="text"
-          value={data.nome}
-          onChange={(e) => setData('nome', e.target.value)}
+          value={data.name}
+          onChange={(e) => setData('name', e.target.value)}
         />
-        {errors.nome && <p className="text-red-500">{errors.nome}</p>}
+        {errors.name && <p className="text-red-500">{errors.name}</p>}
       </div>
 
       <div>
@@ -64,8 +49,8 @@ export default function CreateUser() {
       <div>
         <label>Cargo:</label>
         <select
-          value={data.id_cargo}
-          onChange={(e) => setData('id_cargo', e.target.value)}
+          value={data.cargo_id}
+          onChange={(e) => setData('cargo_id', e.target.value)}
         >
           <option value="">Selecione um cargo</option>
           {cargos.map((cargo) => (
@@ -74,7 +59,7 @@ export default function CreateUser() {
             </option>
           ))}
         </select>
-        {errors.id_cargo && <p className="text-red-500">{errors.id_cargo}</p>}
+        {errors.cargo_id && <p className="text-red-500">{errors.cargo_id}</p>}
       </div>
 
       <div>
