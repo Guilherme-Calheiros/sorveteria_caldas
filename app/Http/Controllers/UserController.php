@@ -43,7 +43,6 @@ class UserController extends Controller
             'email' => 'required|string|max:255',
             'telefone' => 'required|string|max:255',
             'cargo_id' => 'required|exists:cargos,id',
-            'data_admissao' => 'required|date',
         ]);
 
         User::create([
@@ -51,8 +50,8 @@ class UserController extends Controller
             'email' => $validated['email'],
             'telefone' => $validated['telefone'],
             'cargo_id' => $validated['cargo_id'],
-            'data_admissao' => $validated['data_admissao'],
-            'password' => Hash::make('senha123*'),
+            'data_admissao' => now()->toDateString(),
+            'password' => Hash::make(env('DEFAULT_USER_PASSWORD')),
             'trocar_senha' => true,
         ]);
 

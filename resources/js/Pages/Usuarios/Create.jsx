@@ -62,16 +62,6 @@ export default function Create({ cargos }) {
         {errors.cargo_id && <p className="text-red-500">{errors.cargo_id}</p>}
       </div>
 
-      <div>
-        <label>Data de admissão:</label>
-        <input
-          type="date"
-          value={data.data_admissao}
-          onChange={(e) => setData('data_admissao', e.target.value)}
-        />
-        {errors.data_admissao && <p className="text-red-500">{errors.data_admissao}</p>}
-      </div>
-
       <button type="submit" disabled={processing}>
         {processing ? 'Salvando...' : 'Criar Usuário'}
       </button>
