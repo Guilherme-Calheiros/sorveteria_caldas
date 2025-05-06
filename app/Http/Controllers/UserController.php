@@ -75,27 +75,32 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
+        $cargos = Cargo::all();
+
         return Inertia::render('Usuarios/Edit', [
-            'usuario' => $user
+            'usuario' => $user,
+            'cargos' => $cargos
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
+        $user = User::findOrFail($id);
+
         $validated = $request->validate([
             'name' =>  'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-            'password' => 'nullable|string|min:8|confirmed',
+            'telefone' => 'required|string|max:255',
             'cargo_id' => 'required|exists:cargos,id',
         ]);
     
         $user->update([
             'name' => $validated['name'],
             'email' => $validated['email'],
-            'password' => $validated['password'] ? bcrypt($validated['password']) : $user->password,
+            'telefone' => $validated['telefone'],
             'cargo_id' => $validated['cargo_id'],
         ]);
     

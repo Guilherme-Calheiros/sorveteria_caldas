@@ -13,6 +13,7 @@ export default function Index({ usuarios }) {
                         <th className="p-2 border">Nome</th>
                         <th className="p-2 border">Email</th>
                         <th className="p-2 border">Telefone</th>
+                        <th className="p-2 border"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -22,6 +23,7 @@ export default function Index({ usuarios }) {
                             <td className="p-2 border">{user.name}</td>
                             <td className="p-2 border">{user.email}</td>
                             <td className="p-2 border">{user.telefone}</td>
+                            <td className="p-2 border"><a href={route('usuarios.edit', user.id)} rel="noopener noreferrer">Editar</a></td>
                         </tr>
                     ))}
                 </tbody>
