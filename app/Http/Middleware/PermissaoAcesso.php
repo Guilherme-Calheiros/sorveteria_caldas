@@ -19,7 +19,6 @@ class PermissaoAcesso
         }
 
         if ($user->temPermissao('acesso_completo') && $user->ativo) {
-            dd($user);
             return $next($request);
         }
 
