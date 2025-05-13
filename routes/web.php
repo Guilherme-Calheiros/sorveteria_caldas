@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SaborController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -29,6 +30,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'verified', 'permissao.acesso'])->group(function () {
     Route::resource('usuarios', UserController::class);
     Route::patch('usuarios/{user}/reativar', [UserController::class, 'reativar'])->name('usuarios.reativar');
+    Route::resource('sabores', SaborController::class);
 });
 
 require __DIR__.'/auth.php';
