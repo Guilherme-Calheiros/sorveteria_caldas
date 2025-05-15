@@ -1,28 +1,19 @@
 import React, { useState } from "react";
-import { Head, router } from '@inertiajs/react';
-import ConfirmationModal from "@/Components/ConfirmationModal";
+import { Head } from '@inertiajs/react';
 import CreateSaborModal from "@/Components/Sabores/CreateSaborModal";
 import UpdateSaborModal from "@/Components/Sabores/UpdateSaborModal";
+import DeleteSaborModal from "@/Components/Sabores/DeleteSaborModal";
 import { FaTrash, FaEdit, FaPlus } from "react-icons/fa";
 
 export default function Index({ sabores }){
-    const [showModalConfimation, setShowModalConfimation] = useState(false);
+    const [showModalDelete, setShowModalDelete] = useState(false);
     const [showModalCreate, setShowModalCreate] = useState(false);
     const [showModalUpdate, setShowModalUpdate] = useState(false);
     const [selectedSabor, setSelectedSabor] = useState(null)
 
-    const confirmExcluirSabor = (sabor) => {
+    const excluirSabor = (sabor) => {
         setSelectedSabor(sabor);
-        setShowModalConfimation(true);
-    };
-
-    const handleExcluirSabor = () => {
-        router.delete(route('sabores.destroy', selectedSabor.id), {
-            onSuccess: () => {
-                setShowModalConfimation(false);
-                setSelectedSabor(null);
-            },
-        });
+        setShowModalDelete(true);
     };
 
     const editarSabor = (sabor) => {
@@ -60,7 +51,7 @@ export default function Index({ sabores }){
                                     <button onClick={() => editarSabor(sabor)}>
                                         <FaEdit/>
                                     </button>
-                                    <button onClick={() => confirmExcluirSabor(sabor)} className="text-red-500">
+                                    <button onClick={() => excluirSabor(sabor)} className="text-red-500">
                                         <FaTrash/>
                                     </button>
                                 </div>
@@ -70,19 +61,10 @@ export default function Index({ sabores }){
                 </tbody>
             </table>
 
-            <ConfirmationModal
-                show={showModalConfimation}
-                title={
-                    'Excluir Sabor'
-                }
-                message={
-                    selectedSabor &&
-                    `Tem certeza que deseja excluir o sabor "${selectedSabor.name}"?`
-                }
-                confirmText='Excluir'
-                cancelText="Cancelar"
-                onClose={() => setShowModalConfimation(false)}
-                onConfirm={handleExcluirSabor}
+            <DeleteSaborModal
+                show={showModalDelete} 
+                onClose={() => setShowModalDelete(false)}
+                sabor={selectedSabor}
             />
 
             <CreateSaborModal 
