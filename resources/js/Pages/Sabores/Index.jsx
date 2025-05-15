@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { Head, router } from '@inertiajs/react';
 import ConfirmationModal from "@/Components/ConfirmationModal";
 import CreateSaborModal from "@/Components/Sabores/CreateSaborModal";
-import EditSaborModal from "@/Components/Sabores/EditSaborModal";
+import UpdateSaborModal from "@/Components/Sabores/UpdateSaborModal";
 import { FaTrash, FaEdit, FaPlus } from "react-icons/fa";
 
 export default function Index({ sabores }){
     const [showModalConfimation, setShowModalConfimation] = useState(false);
     const [showModalCreate, setShowModalCreate] = useState(false);
-    const [showModalEdit, setShowModalEdit] = useState(false);
+    const [showModalUpdate, setShowModalUpdate] = useState(false);
     const [selectedSabor, setSelectedSabor] = useState(null)
 
     const confirmExcluirSabor = (sabor) => {
@@ -27,7 +27,7 @@ export default function Index({ sabores }){
 
     const editarSabor = (sabor) => {
         setSelectedSabor(sabor)
-        setShowModalEdit(true)
+        setShowModalUpdate(true)
     }
 
     return (
@@ -91,9 +91,9 @@ export default function Index({ sabores }){
                 onClose={() => setShowModalCreate(false)} 
             />
 
-            <EditSaborModal
-                show={showModalEdit} 
-                onClose={() => setShowModalEdit(false)}
+            <UpdateSaborModal
+                show={showModalUpdate} 
+                onClose={() => setShowModalUpdate(false)}
                 sabor={selectedSabor}
             />
         </div>

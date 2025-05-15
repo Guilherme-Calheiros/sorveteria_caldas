@@ -2,7 +2,7 @@ import Modal from '@/Components/Modal';
 import { useForm } from '@inertiajs/react';
 import { useEffect } from 'react';
 
-export default function EditSaborModal({ show, onClose, sabor }) {
+export default function UpdateSaborModal({ show, onClose, sabor }) {
     
     const { data, setData, put, processing, errors } = useForm({
         name: sabor ? sabor.name : '',
