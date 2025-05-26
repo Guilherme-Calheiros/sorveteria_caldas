@@ -1,42 +1,38 @@
 import React, { useState } from 'react';
-import { Head, router } from '@inertiajs/react';
-import ConfirmationModal from '@/Components/ConfirmationModal';
+import { Head } from '@inertiajs/react';
+import CreateUserModal from '@/Components/Usuarios/CreateUserModal';
+import UpdateUserModal from '@/Components/Usuarios/UpdateUserModal';
+import DeleteUserModal from '@/Components/Usuarios/DeleteUserModal';
+import { FaEdit, FaPlus } from "react-icons/fa";
 
-export default function Index({ usuarios }) {
-    const [showModal, setShowModal] = useState(false);
+export default function Index({ usuarios, cargos }) {
+    const [showCreateModal, setShowCreateModal] = useState(false);
+    const [showUpdateModal, setShowUpdateModal] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
-    const [actionType, setActionType] = useState(''); // 'desativar' ou 'reativar'
 
-    const confirmToggleStatus = (user) => {
-        setSelectedUser(user);
-        setActionType(user.ativo ? 'desativar' : 'reativar');
-        setShowModal(true);
-    };
+    const editarUser = (user) => {
+        setSelectedUser(user)
+        setShowUpdateModal(true)
+    }
 
-    const handleToggleStatus = () => {
-        if (actionType === 'desativar') {
-            router.delete(route('usuarios.destroy', selectedUser.id), {
-                onSuccess: () => {
-                    setShowModal(false);
-                    setSelectedUser(null);
-                    setActionType('');
-                },
-            });
-        } else {
-            router.patch(route('usuarios.reativar', selectedUser.id), {}, {
-                onSuccess: () => {
-                    setShowModal(false);
-                    setSelectedUser(null);
-                    setActionType('');
-                },
-            });
-        }
-    };
+    const excluirUser = (user) => {
+        setSelectedUser(user)
+        setShowDeleteModal(true)
+    }
 
     return (
         <div className="p-4">
             <Head title="Funcionários" />
-            <h1 className="text-2xl font-bold mb-4">Lista de Funcionários</h1>
+            <div className="p-2 flex justify-between items-center">
+                <h1 className="text-2xl font-bold">Lista de usuários</h1>
+                <button
+                    onClick={() => setShowCreateModal(true)}
+                    className="mb-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-2"
+                    >
+                    Adicionar Usuário <FaPlus/>
+                </button>
+            </div>
             <table className="table-auto w-full border">
                 <thead>
                     <tr className="bg-gray-100">
@@ -44,6 +40,8 @@ export default function Index({ usuarios }) {
                         <th className="p-2 border">Nome</th>
                         <th className="p-2 border">Email</th>
                         <th className="p-2 border">Telefone</th>
+                        <th className="p-2 border">Cargo</th>
+                        <th className="p-2 border">Data de admissão</th>
                         <th className="p-2 border">Ações</th>
                     </tr>
                 </thead>
@@ -54,22 +52,14 @@ export default function Index({ usuarios }) {
                             <td className="p-2 border">{user.name}</td>
                             <td className="p-2 border">{user.email}</td>
                             <td className="p-2 border">{user.telefone}</td>
+                            <td className="p-2 border">{cargos.find(cargo => cargo.id === user.cargo_id)?.name || 'Não informado'}</td>
+                            <td className="p-2 border">{user.data_admissao}</td>
                             <td className="p-2 border space-x-2">
-                                <a
-                                    href={route('usuarios.edit', user.id)}
-                                    className="text-blue-600 hover:underline"
-                                >
-                                    Editar
-                                </a>
-                                <button
-                                    onClick={() => confirmToggleStatus(user)}
-                                    className={
-                                        user.ativo
-                                            ? 'text-red-600 hover:underline'
-                                            : 'text-green-600 hover:underline'
-                                    }
-                                >
-                                    {user.ativo ? 'Desativar' : 'Reativar'}
+                                <button onClick={() => editarUser(user)}>
+                                    <FaEdit/>
+                                </button>
+                                <button onClick={() => excluirUser(user)} className={user.ativo ? 'text-red-500 hover:underline' : 'text-green-500 hover:underline'}>
+                                    {user.ativo ? 'Desativar' : 'Ativar'}
                                 </button>
                             </td>
                         </tr>
@@ -77,22 +67,25 @@ export default function Index({ usuarios }) {
                 </tbody>
             </table>
 
-            <ConfirmationModal
-                show={showModal}
-                title={
-                    actionType === 'desativar'
-                        ? 'Desativar Funcionário'
-                        : 'Reativar Funcionário'
-                }
-                message={
-                    selectedUser &&
-                    `Tem certeza que deseja ${actionType} o funcionário "${selectedUser.name}"?`
-                }
-                confirmText={actionType === 'desativar' ? 'Desativar' : 'Reativar'}
-                cancelText="Cancelar"
-                onClose={() => setShowModal(false)}
-                onConfirm={handleToggleStatus}
+            <CreateUserModal
+                show={showCreateModal}
+                onClose={() => setShowCreateModal(false)}
+                cargos={cargos}
             />
+
+            <UpdateUserModal
+                show={showUpdateModal} 
+                onClose={() => setShowUpdateModal(false)}
+                cargos={cargos}
+                user={selectedUser}
+            />
+
+            <DeleteUserModal
+                show={showDeleteModal} 
+                onClose={() => setShowDeleteModal(false)}
+                user={selectedUser}
+            />
+
         </div>
     );
 }

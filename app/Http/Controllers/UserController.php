@@ -16,19 +16,9 @@ class UserController extends Controller
     public function index()
     {
         $usuarios = User::all();
-        return Inertia::render('Usuarios/Index', [
-            'usuarios' => $usuarios
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
         $cargos = Cargo::all();
-
-        return Inertia::render('Usuarios/Create', [
+        return Inertia::render('Usuarios/Index', [
+            'usuarios' => $usuarios,
             'cargos' => $cargos,
         ]);
     }
