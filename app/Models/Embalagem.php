@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Embalagem extends Model
 {
+    protected $table = 'embalagens';
+
     protected $fillable = [
         'name',
         'maximo_sabores',
