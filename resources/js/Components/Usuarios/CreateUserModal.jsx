@@ -1,3 +1,4 @@
+import InputMask from 'react-input-mask';
 import Modal from '@/Components/Modal';
 import { useForm } from '@inertiajs/react';
 import { useEffect } from 'react';
@@ -60,18 +61,20 @@ export default function CreateUserModal({ show, onClose, cargos }) {
                             <p className="text-red-500 text-sm mt-1">{errors.email}</p>
                         )}
                     </div>
-                    <div>
-                        <input
-                            type="text"
-                            value={data.telefone}
-                            placeholder="Telefone"
-                            onChange={(e) => setData('telefone', e.target.value)}
-                            className="w-full border border-gray-300 rounded px-3 py-2"
-                        />
-                        {errors.telefone && (
-                            <p className="text-red-500 text-sm mt-1">{errors.telefone}</p>
+                    <InputMask
+                        mask="(99) 99999-9999"
+                        value={data.telefone}
+                        onChange={(e) => setData('telefone', e.target.value)}
+                    >
+                        {(inputProps) => (
+                            <input
+                                {...inputProps}
+                                type="text"
+                                placeholder="Telefone"
+                                className="w-full border border-gray-300 rounded px-3 py-2"
+                            />
                         )}
-                    </div>
+                    </InputMask>
                     <div>
                         <select
                             value={data.cargo_id}
