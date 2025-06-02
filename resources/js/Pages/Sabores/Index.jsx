@@ -6,19 +6,19 @@ import DeleteSaborModal from "@/Components/Sabores/DeleteSaborModal";
 import { FaTrash, FaEdit, FaPlus } from "react-icons/fa";
 
 export default function Index({ sabores }){
-    const [showModalDelete, setShowModalDelete] = useState(false);
-    const [showModalCreate, setShowModalCreate] = useState(false);
-    const [showModalUpdate, setShowModalUpdate] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [showCreateModal, setShowCreateModal] = useState(false);
+    const [showUpdateModal, setShowUpdateModal] = useState(false);
     const [selectedSabor, setSelectedSabor] = useState(null)
 
     const excluirSabor = (sabor) => {
         setSelectedSabor(sabor);
-        setShowModalDelete(true);
+        setShowDeleteModal(true);
     };
 
     const editarSabor = (sabor) => {
         setSelectedSabor(sabor)
-        setShowModalUpdate(true)
+        setShowUpdateModal(true)
     }
 
     return (
@@ -27,7 +27,7 @@ export default function Index({ sabores }){
             <div className="p-2 flex justify-between items-center">
                 <h1 className="text-2xl font-bold">Lista de sabores</h1>
                 <button
-                    onClick={() => setShowModalCreate(true)}
+                    onClick={() => setShowCreateModal(true)}
                     className="mb-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-2"
                 >
                     Adicionar Sabor <FaPlus/>
@@ -62,20 +62,20 @@ export default function Index({ sabores }){
             </table>
 
             <DeleteSaborModal
-                show={showModalDelete} 
-                onClose={() => setShowModalDelete(false)}
+                show={showDeleteModal} 
+                onClose={() => setShowDeleteModal(false)}
                 sabor={selectedSabor}
             />
 
             <CreateSaborModal 
-                key={showModalCreate ? 'show' : 'hide'}
-                show={showModalCreate} 
-                onClose={() => setShowModalCreate(false)} 
+                key={showCreateModal ? 'show' : 'hide'}
+                show={showCreateModal} 
+                onClose={() => setShowCreateModal(false)} 
             />
 
             <UpdateSaborModal
-                show={showModalUpdate} 
-                onClose={() => setShowModalUpdate(false)}
+                show={showUpdateModal} 
+                onClose={() => setShowUpdateModal(false)}
                 sabor={selectedSabor}
             />
         </div>
