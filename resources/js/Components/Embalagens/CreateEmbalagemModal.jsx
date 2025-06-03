@@ -1,7 +1,6 @@
-import NumberFormat from 'react-number-format';
-import InputMask from 'react-input-mask';
 import Modal from '@/Components/Modal';
 import { useForm } from '@inertiajs/react';
+import InputMoney from '../InputMoney';
 
 export default function CreateEembalagemModal({ show, onClose }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -44,49 +43,33 @@ export default function CreateEembalagemModal({ show, onClose }) {
                         )}
                     </div>
                     <div>
-                        <InputMask
-                            mask="99"
+                        <input
+                            type="text"
+                            inputMode="numeric"
+                            placeholder="Número máximo de sabores"
                             value={data.maximo_sabores}
-                            onChange={(e) => setData('maximo_sabores', e.target.value)}
-                            >
-                            {(inputProps) => (
-                                <input
-                                {...inputProps}
-                                type="text"
-                                placeholder="Número máximo de sabores"
-                                className="w-full border border-gray-300 rounded px-3 py-2"
-                                />
-                            )}
-                        </InputMask>
+                            onChange={(e) => {
+                                let val = e.target.value.replace(/\D/g, '');
+                                if (val.length > 2) val = val.slice(0, 2);
+                                setData('maximo_sabores', val);
+                            }}
+                            className="w-full border border-gray-300 rounded px-3 py-2"
+                        />
                         {errors.maximo_sabores && <p className="text-red-500 text-sm mt-1">{errors.maximo_sabores}</p>}
                     </div>
                     <div>
-                        <NumberFormat
+                        <InputMoney
                             value={data.preco_sabor_extra}
-                            onValueChange={(values) => setData('preco_sabor_extra', values.floatValue)}
-                            thousandSeparator="."
-                            decimalSeparator=","
-                            decimalScale={2}
-                            fixedDecimalScale
-                            allowNegative={false}
-                            prefix="R$ "
-                            placeholder="Valor por sabor extra"
-                            className="w-full border border-gray-300 rounded px-3 py-2"
+                            onChange={(e) => setData('preco_sabor_extra', e.target.value)}
+                            placeholder='Preço por sabor adicional'
                         />
                         {errors.preco_sabor_extra && <p className="text-red-500 text-sm mt-1">{errors.preco_sabor_extra}</p>}
                     </div>
                     <div>
-                        <NumberFormat
+                        <InputMoney
                             value={data.valor_base}
-                            onValueChange={(values) => setData('valor_base', values.floatValue)}
-                            thousandSeparator="."
-                            decimalSeparator=","
-                            decimalScale={2}
-                            fixedDecimalScale
-                            allowNegative={false}
-                            prefix="R$ "
-                            placeholder="Valor base"
-                            className="w-full border border-gray-300 rounded px-3 py-2"
+                            onChange={(e) => setData('valor_base', e.target.value)}
+                            placeholder='Preço da embalagem'
                         />
                         {errors.valor_base && <p className="text-red-500 text-sm mt-1">{errors.valor_base}</p>}
                     </div>
