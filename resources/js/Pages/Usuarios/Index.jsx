@@ -4,6 +4,7 @@ import CreateUserModal from '@/Components/Usuarios/CreateUserModal';
 import UpdateUserModal from '@/Components/Usuarios/UpdateUserModal';
 import DeleteUserModal from '@/Components/Usuarios/DeleteUserModal';
 import { FaEdit, FaPlus } from "react-icons/fa";
+import { formataTelefone } from '@/Utils/telefone';
 
 export default function Index({ usuarios, cargos }) {
     const [showCreateModal, setShowCreateModal] = useState(false);
@@ -51,7 +52,7 @@ export default function Index({ usuarios, cargos }) {
                             <td className="p-2 border">{user.id}</td>
                             <td className="p-2 border">{user.name}</td>
                             <td className="p-2 border">{user.email}</td>
-                            <td className="p-2 border">{user.telefone}</td>
+                            <td className="p-2 border">{formataTelefone(user.telefone)}</td>
                             <td className="p-2 border">{cargos.find(cargo => cargo.id === user.cargo_id)?.name || 'Não informado'}</td>
                             <td className="p-2 border">{user.data_admissao}</td>
                             <td className="p-2 border space-x-2">

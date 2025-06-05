@@ -1,7 +1,7 @@
-import InputMask from 'react-input-mask';
 import Modal from '@/Components/Modal';
 import { useForm } from '@inertiajs/react';
 import { useEffect } from 'react';
+import InputTelefone from '../InputTelefone';
 
 export default function UpdateUserModal({ show, onClose, cargos, user }) {
     
@@ -68,20 +68,15 @@ export default function UpdateUserModal({ show, onClose, cargos, user }) {
                             <p className="text-red-500 text-sm mt-1">{errors.email}</p>
                         )}
                     </div>
-                    <InputMask
-                        mask="(99) 99999-9999"
-                        value={data.telefone}
-                        onChange={(e) => setData('telefone', e.target.value)}
-                    >
-                        {(inputProps) => (
-                            <input
-                                {...inputProps}
-                                type="text"
-                                placeholder="Telefone"
-                                className="w-full border border-gray-300 rounded px-3 py-2"
-                            />
+                    <div>
+                        <InputTelefone
+                            value={data.telefone}
+                            onChange={(value) => setData('telefone', value)}
+                        />
+                        {errors.telefone && (
+                            <p className="text-red-500 text-sm mt-1">{errors.telefone}</p>
                         )}
-                    </InputMask>
+                    </div>
                     <div>
                         <select
                             value={data.cargo_id}
