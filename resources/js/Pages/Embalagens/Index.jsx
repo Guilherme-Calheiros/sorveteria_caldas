@@ -5,16 +5,23 @@ import CreateEembalagemModal from "@/Components/Embalagens/CreateEmbalagemModal"
 import UpdateEembalagemModal from "@/Components/Embalagens/UpdateEmbalagemModal";
 import { formataMoeda } from '@/Utils/moeda';
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import DeleteEmbalagemModal from "@/Components/Embalagens/DeleteEmbalagemModal";
 
 export default function Index({ embalagens }){
     const [showCreateModal, setShowCreateModal] = useState(false)
     const [showUpdateModal, setShowUpdateModal] = useState(false)
+    const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [selectedEmbalagem, setSelectedEmbalagem] = useState(false)
 
     const editarEmbalagem = (embalagem) => {
         setSelectedEmbalagem(embalagem)
         setShowUpdateModal(true)
     }
+
+    const excluirEmbalagem = (embalagem) => {
+        setSelectedEmbalagem(embalagem);
+        setShowDeleteModal(true);
+    };
 
     return (
         <AuthenticatedLayout>
@@ -53,7 +60,7 @@ export default function Index({ embalagens }){
                                         <button onClick={() => editarEmbalagem(embalagem)}>
                                             <FaEdit/>
                                         </button>
-                                        <button onClick={() => {}} className="text-red-500">
+                                        <button onClick={() => excluirEmbalagem(embalagem)} className="text-red-500">
                                             <FaTrash/>
                                         </button>
                                     </div>
@@ -71,6 +78,12 @@ export default function Index({ embalagens }){
                 <UpdateEembalagemModal
                     show={showUpdateModal} 
                     onClose={() => setShowUpdateModal(false)}
+                    embalagem={selectedEmbalagem}
+                />
+
+                <DeleteEmbalagemModal
+                    show={showDeleteModal}
+                    onClose={() => setShowDeleteModal(false)}
                     embalagem={selectedEmbalagem}
                 />
             </div>
