@@ -6,7 +6,7 @@ import { Link, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 
 export default function AuthenticatedLayout({ header, children }) {
-    const user = usePage().props.auth.user;
+    const {user, temPermissao} = usePage().props.auth;
 
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
@@ -30,6 +30,19 @@ export default function AuthenticatedLayout({ header, children }) {
                                 >
                                     Dashboard
                                 </NavLink>
+                                {temPermissao && (
+                                    <>
+                                        <NavLink href={route('usuarios.index')} active={route().current('usuarios.index')}>
+                                            Usuários
+                                        </NavLink>
+                                        <NavLink href={route('sabores.index')} active={route().current('sabores.index')}>
+                                            Sabores
+                                        </NavLink>
+                                        <NavLink href={route('embalagens.index')} active={route().current('embalagens.index')}>
+                                            Embalagens
+                                        </NavLink>
+                                    </>
+                                )}
                             </div>
                         </div>
 
