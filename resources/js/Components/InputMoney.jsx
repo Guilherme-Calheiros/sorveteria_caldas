@@ -1,7 +1,5 @@
+import { formataNumeroParaInput, parseInputMoeda } from '@/Utils/moeda';
 import { useState, useEffect } from 'react';
-
-const DECIMAL_SIZE = 2;
-const MAX_LENGTH = 15;
 
 export default function InputMoney({ value = '', onChange, addonBefore = 'R$', ...props }) {
   const [currentValue, setCurrentValue] = useState('');
@@ -11,36 +9,18 @@ export default function InputMoney({ value = '', onChange, addonBefore = 'R$', .
     if (isNaN(parsed)) {
       setCurrentValue('');
     } else {
-      setCurrentValue(parsed.toLocaleString('pt-BR', {
-        minimumFractionDigits: DECIMAL_SIZE,
-        maximumFractionDigits: DECIMAL_SIZE,
-      }));
+      setCurrentValue(formataNumeroParaInput(parsed));
     }
   }, [value]);
 
   const handleChange = (e) => {
-    let onlyNums = e.target.value.replace(/\D/g, '');
+    const newValue = parseInputMoeda(e.target.value)
+    setCurrentValue(formataNumeroParaInput(newValue));
 
-    if (onlyNums.length > MAX_LENGTH) {
-      onlyNums = onlyNums.slice(0, MAX_LENGTH);
+    if (onChange) {
+      onChange(newValue);
     }
 
-    const padded = onlyNums.padStart(DECIMAL_SIZE + 1, '0');
-
-    const inteiro = padded.slice(0, -DECIMAL_SIZE);
-    const decimal = padded.slice(-DECIMAL_SIZE);
-
-    const newValue = `${parseInt(inteiro, 10)}.${decimal}`;
-
-    onChange({
-      ...e,
-      target: {
-        ...e.target,
-        value: newValue,
-      },
-    });
-
-    setCurrentValue(`${parseInt(inteiro, 10).toLocaleString('pt-BR')},${decimal}`);
   };
 
   return (

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Head } from '@inertiajs/react';
 import { FaTrash, FaEdit, FaPlus } from "react-icons/fa";
 import CreateEembalagemModal from "@/Components/Embalagens/CreateEmbalagemModal";
-import { formataPreco } from '@/Utils/formataPreco';
+import { formataMoeda } from '@/Utils/moeda';
 
 export default function Index({ embalagens }){
     const [showCreateModal, setShowCreateModal] = useState(false)
@@ -36,8 +36,8 @@ export default function Index({ embalagens }){
                             <td className="p-2 border">{embalagem.id}</td>
                             <td className="p-2 border capitalize">{embalagem.name}</td>
                             <td className="p-2 border">{embalagem.maximo_sabores}</td>
-                            <td className="p-2 border">{formataPreco(embalagem.preco_sabor_extra)}</td>
-                            <td className="p-2 border">{formataPreco(embalagem.valor_base)}</td>
+                            <td className="p-2 border">{formataMoeda(embalagem.preco_sabor_extra)}</td>
+                            <td className="p-2 border">{formataMoeda(embalagem.valor_base)}</td>
                             <td className="p-2 border">
                                 <div className="flex justify-center items-center gap-4">
                                     <button onClick={() => {}}>

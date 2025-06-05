@@ -60,7 +60,7 @@ export default function CreateEembalagemModal({ show, onClose }) {
                     <div>
                         <InputMoney
                             value={data.preco_sabor_extra}
-                            onChange={(e) => setData('preco_sabor_extra', e.target.value)}
+                            onChange={(value) => setData('preco_sabor_extra', value)}
                             placeholder='Preço por sabor adicional'
                         />
                         {errors.preco_sabor_extra && <p className="text-red-500 text-sm mt-1">{errors.preco_sabor_extra}</p>}
@@ -68,7 +68,7 @@ export default function CreateEembalagemModal({ show, onClose }) {
                     <div>
                         <InputMoney
                             value={data.valor_base}
-                            onChange={(e) => setData('valor_base', e.target.value)}
+                            onChange={(value) => setData('valor_base', value)}
                             placeholder='Preço da embalagem'
                         />
                         {errors.valor_base && <p className="text-red-500 text-sm mt-1">{errors.valor_base}</p>}
