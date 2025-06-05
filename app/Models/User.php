@@ -62,18 +62,22 @@ class User extends Authenticatable
         return $this->hasMany(Pedido::class);
     }
 
-    public function temPermissao(string $permissao){
+    public function temPermissao(string $nivelMinimo){
         
         if (!$this->cargo) {
             return false;
         }
-    
-        $permissoes = [
-            'acesso_completo' => ['Gerente', 'Administrador'],
-            'acesso_limitado' => ['Atendente'],
+
+        $hierarquia = [
+            'acesso_cliente' => 1,
+            'acesso_limitado' => 2,
+            'acesso_total' => 3,
         ];
-    
-        return in_array($this->cargo->name, $permissoes[$permissao] ?? []);
+
+        $nivelCargo = $hierarquia[$this->cargo->permissao] ?? 0;
+        $nivelRequerido = $hierarquia[$nivelMinimo] ?? 0;
+
+        return $nivelCargo >= $nivelRequerido;
     }
 
     public function setEmailAttribute($value){

@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PermissaoAcesso
 {
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next, string $nivelMinimo): Response
     {
         /** @var \App\Models\User $user */
         $user = Auth::user();
@@ -18,7 +18,7 @@ class PermissaoAcesso
             abort(401, 'Não autenticado.');
         }
 
-        if ($user->temPermissao('acesso_completo') && $user->ativo) {
+        if ($user->ativo && $user->temPermissao($nivelMinimo)) {
             return $next($request);
         }
 

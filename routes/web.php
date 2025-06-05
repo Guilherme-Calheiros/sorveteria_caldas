@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CargoController;
 use App\Http\Controllers\EmbalagemController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -28,11 +29,12 @@ Route::middleware('auth')->group(function () {
     })->name('password.change');
 });
 
-Route::middleware(['auth', 'verified', 'permissao.acesso'])->group(function () {
+Route::middleware(['auth', 'verified', 'permissao.acesso:acesso_total'])->group(function () {
     Route::resource('usuarios', UserController::class);
     Route::patch('usuarios/{user}/reativar', [UserController::class, 'reativar'])->name('usuarios.reativar');
     Route::resource('sabores', SaborController::class);
     Route::resource('embalagens', EmbalagemController::class);
+    Route::resource('cargos', CargoController::class);
 });
 
 require __DIR__.'/auth.php';
