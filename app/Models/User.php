@@ -73,13 +73,7 @@ class User extends Authenticatable
             'acesso_limitado' => ['Atendente'],
         ];
     
-        foreach ($permissoes[$permissao] ?? [] as $cargoPermitido) {
-            if ($this->cargo->name === $cargoPermitido) {
-                return true;
-            }
-        }
-    
-        return false;
+        return in_array($this->cargo->name, $permissoes[$permissao] ?? []);
     }
 
     public function setEmailAttribute($value){
