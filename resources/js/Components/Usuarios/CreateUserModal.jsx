@@ -1,4 +1,3 @@
-import InputMask from 'react-input-mask';
 import Modal from '@/Components/Modal';
 import { useForm } from '@inertiajs/react';
 import { useEffect } from 'react';
