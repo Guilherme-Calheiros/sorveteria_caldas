@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 
 export default function UpdateSaborModal({ show, onClose, sabor }) {
     
-    const { data, setData, put, processing, errors } = useForm({
+    const { data, setData, put, processing, errors, reset } = useForm({
         name: sabor ? sabor.name : '',
     });
 
@@ -19,14 +19,14 @@ export default function UpdateSaborModal({ show, onClose, sabor }) {
         put(route('sabores.update', sabor.id), {
             data: data,
             onSuccess: () => {
-                setData({ name: '' });
+                reset();
                 onClose();
             },
         });
     };
 
     const handleCancel = () => {
-        setData({ name: sabor.name });
+        reset();
         onClose();
     };
 

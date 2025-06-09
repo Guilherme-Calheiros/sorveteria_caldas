@@ -2,7 +2,7 @@ import Modal from '@/Components/Modal';
 import { useForm } from '@inertiajs/react';
 
 export default function CreateSaborModal({ show, onClose }) {
-    const { data, setData, post, processing, errors } = useForm({
+    const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
     });
 
@@ -10,14 +10,14 @@ export default function CreateSaborModal({ show, onClose }) {
         e.preventDefault();
         post(route('sabores.store'), {
             onSuccess: () => {
-                setData({ name: '' });
+                reset();
                 onClose();
             },
         });
     };
 
     const handleCancel = () => {
-        setData({ name: '' });
+        reset();
         onClose();
     };
 
