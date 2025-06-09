@@ -3,6 +3,8 @@ import { Head } from '@inertiajs/react';
 import { FaTrash, FaEdit, FaPlus } from "react-icons/fa";
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import CreateCargoModal from "@/Components/Cargos/CreateCargoModal";
+import UpdateCargoModal from "@/Components/Cargos/UpdateCargoModal";
+import DeleteCargoModal from "@/Components/Cargos/DeleteCargoModal";
 
 export default function Index({ cargos }){
     const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -64,6 +66,16 @@ export default function Index({ cargos }){
                     key={showCreateModal ? 'show' : 'hide'}
                     show={showCreateModal}
                     onClose={() => setShowCreateModal(false)}
+                />
+                <UpdateCargoModal
+                    show={showUpdateModal}
+                    onClose={() => setShowUpdateModal(false)}
+                    cargo={selectedCargo}
+                />
+                <DeleteCargoModal
+                    show={showDeleteModal}
+                    onClose={() => setShowDeleteModal(false)}
+                    cargo={selectedCargo}
                 />
             </div>
         </AuthenticatedLayout>
