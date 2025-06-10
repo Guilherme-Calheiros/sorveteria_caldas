@@ -2,6 +2,7 @@ import Modal from '@/Components/Modal';
 import { useForm } from '@inertiajs/react';
 import { useEffect } from 'react';
 import InputTelefone from '../InputTelefone';
+import InputEmail from '../InputEmail';
 
 export default function UpdateUserModal({ show, onClose, cargos, user }) {
     
@@ -57,12 +58,9 @@ export default function UpdateUserModal({ show, onClose, cargos, user }) {
                         )}
                     </div>
                     <div>
-                        <input
-                            type="text"
+                        <InputEmail
                             value={data.email}
-                            placeholder="Email"
-                            onChange={(e) => setData('email', e.target.value)}
-                            className="w-full border border-gray-300 rounded px-3 py-2"
+                            onChange={(value) => setData('email', value)}
                         />
                         {errors.email && (
                             <p className="text-red-500 text-sm mt-1">{errors.email}</p>
