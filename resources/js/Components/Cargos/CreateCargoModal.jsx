@@ -4,7 +4,7 @@ import { useForm } from '@inertiajs/react';
 export default function CreateCargoModal({ show, onClose }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
-        permissao: 'acesso_cliente',
+        permissao: '',
     });
 
     const handleSubmit = (e) => {
@@ -47,7 +47,6 @@ export default function CreateCargoModal({ show, onClose }) {
                         >
                             <option value="acesso_total">Acesso Total</option>
                             <option value="acesso_limitado">Acesso Limitado</option>
-                            <option value="acesso_cliente">Acesso Cliente</option>
                         </select>
                         {errors.permissao && (
                             <p className="text-red-500 text-sm mt-1">{errors.permissao}</p>

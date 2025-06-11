@@ -69,9 +69,8 @@ class User extends Authenticatable
         }
 
         $hierarquia = [
-            'acesso_cliente' => 1,
-            'acesso_limitado' => 2,
-            'acesso_total' => 3,
+            'acesso_limitado' => 1,
+            'acesso_total' => 2,
         ];
 
         $nivelCargo = $hierarquia[$this->cargo->permissao] ?? 0;

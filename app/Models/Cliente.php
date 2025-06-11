@@ -8,7 +8,7 @@ class Cliente extends Model
 {
     protected $fillable = [
         'name',
-        'telefone'
+        'cpf'
     ];
 
     public function pedidos(){

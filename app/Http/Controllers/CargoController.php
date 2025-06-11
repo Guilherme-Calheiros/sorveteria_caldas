@@ -22,7 +22,7 @@ class CargoController extends Controller
     {
         $validated = $request->validate([
             'name' =>  'required|string|max:255',
-            'permissao' => 'required|in:acesso_total,acesso_limitado,acesso_cliente',
+            'permissao' => 'required|in:acesso_total,acesso_limitado',
         ]);
 
         Cargo::create([
@@ -39,7 +39,7 @@ class CargoController extends Controller
 
         $validated = $request->validate([
             'name' =>  'required|string|max:255',
-            'permissao' => 'required|in:acesso_total,acesso_limitado,acesso_cliente',
+            'permissao' => 'required|in:acesso_total,acesso_limitado',
         ]);
     
         $cargo->update([
