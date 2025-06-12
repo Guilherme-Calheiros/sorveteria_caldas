@@ -33,7 +33,7 @@ class ItemPedido extends Model
             return 0;
         }
 
-        $quantidadeSabores = $this->sabores()->count();
+        $quantidadeSabores = $this->sabores->count();
 
         $saboresExtras = max(0, $quantidadeSabores - $embalagem->maximo_sabores);
 

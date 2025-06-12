@@ -28,14 +28,9 @@ class Pedido extends Model
 
     public function getTotalPedidoAttribute()
     {
-        $total = $this->itensPedido->sum(function ($itemPedido) {
+
+        return round($this->itensPedido->sum(function ($itemPedido) {
             return $itemPedido->preco_total;
-        });
-
-        $this->total = $total;
-
-        $this->save();
-
-        return round($total, 2);
+        }), 2);
     }
 }
