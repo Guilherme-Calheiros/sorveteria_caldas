@@ -8,7 +8,7 @@ export default function DeleteCargoModal({ show, onClose, cargo }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        destroy(route('cargo.destroy', cargo.id), {
+        destroy(route('cargos.destroy', cargo.id), {
             onSuccess: () => {
                 onClose();
             },
