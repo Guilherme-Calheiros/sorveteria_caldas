@@ -9,7 +9,6 @@ class Pedido extends Model
     protected $fillable = [
         'funcionario_id',
         'cliente_id',
-        'total',
         'observacao',
         'data_pedido'
     ];

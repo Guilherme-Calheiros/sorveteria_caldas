@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CargoController;
 use App\Http\Controllers\EmbalagemController;
+use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SaborController;
@@ -27,6 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/trocar-senha', function () {
         return Inertia::render('Auth/TrocarSenha');
     })->name('password.change');
+    Route::resource('pedidos', PedidoController::class);
 });
 
 Route::middleware(['auth', 'verified', 'permissao.acesso:acesso_total'])->group(function () {
