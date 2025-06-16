@@ -26,11 +26,14 @@ class Pedido extends Model
         return $this->belongsTo(Cliente::class);
     }
 
-    public function getTotalPedidoAttribute()
-    {
-
+    public function getTotalPedidoAttribute(){
         return round($this->itensPedido->sum(function ($itemPedido) {
             return $itemPedido->preco_total;
         }), 2);
+    }
+
+    public function atualizarTotal(){
+        $this->total = $this->total_pedido;
+        $this->save();
     }
 }

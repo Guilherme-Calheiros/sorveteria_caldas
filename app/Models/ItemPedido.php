@@ -27,20 +27,6 @@ class ItemPedido extends Model
 
     public function getPrecoTotalAttribute()
     {
-        $embalagem = $this->embalagem;
-
-        if (!$embalagem) {
-            return 0;
-        }
-
-        $quantidadeSabores = $this->sabores->count();
-
-        $saboresExtras = max(0, $quantidadeSabores - $embalagem->maximo_sabores);
-
-        $valorExtra = $saboresExtras * $embalagem->preco_sabor_extra;
-
-        $precoTotal = ($embalagem->valor_base + $valorExtra) * $this->quantidade;
-
-        return round($precoTotal, 2);
+        return round($this->valor_unitario * $this->quantidade, 2);
     }
 }
