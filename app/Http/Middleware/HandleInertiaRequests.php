@@ -34,7 +34,12 @@ class HandleInertiaRequests extends Middleware
         return [
             ...parent::share($request),
             'auth' => [
-                'user' => $request->user(),
+                'user' => $user
+                    ? [
+                        'id' => $user->id,
+                        'name' => $user->name,
+                    ]
+                    : null,
                 'temPermissao' => $user ? $user->temPermissao('acesso_completo') : false,
             ],
         ];
