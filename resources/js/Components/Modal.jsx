@@ -10,10 +10,11 @@ export default function Modal({
     show = false,
     maxWidth = '2xl',
     closeable = true,
+    disableOutsideClick = false,
     onClose = () => {},
 }) {
     const close = () => {
-        if (closeable) {
+        if (closeable && !disableOutsideClick) {
             onClose();
         }
     };

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CargoController;
+use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\EmbalagemController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\ProfileController;
@@ -19,6 +20,8 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::post('/clientes', [ClienteController::class, 'store'])->name('clientes.store');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

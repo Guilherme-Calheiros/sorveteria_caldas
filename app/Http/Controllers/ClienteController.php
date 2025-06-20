@@ -10,7 +10,7 @@ class ClienteController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nome' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'cpf' => 'nullable|string|max:14',
         ]);
 
