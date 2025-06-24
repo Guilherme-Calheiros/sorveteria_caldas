@@ -10,7 +10,11 @@ use App\Http\Controllers\SaborController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
+Route::get('/', [PedidoController::class, 'create'])->name('pedidos.create');
+
+Route::post('/pedidos', [PedidoController::class, 'store'])->name('pedidos.store');
+
+Route::get('/login', function () {
     return Inertia::render('Auth/Login', [
         'canResetPassword' => Route::has('password.request'),
         'status' => session('status'),
@@ -31,7 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/trocar-senha', function () {
         return Inertia::render('Auth/TrocarSenha');
     })->name('password.change');
-    Route::resource('pedidos', PedidoController::class);
+    Route::resource('pedidos', PedidoController::class)->except(['create', 'store']);
 });
 
 Route::middleware(['auth', 'verified', 'permissao.acesso:acesso_total'])->group(function () {

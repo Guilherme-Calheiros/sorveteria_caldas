@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Embalagem;
 use App\Models\Pedido;
+use App\Models\Sabor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -15,7 +16,7 @@ class PedidoController extends Controller
             ->latest()
             ->paginate(10);
 
-        return Inertia::render('Pedidos/index', [
+        return Inertia::render('Pedidos/Index', [
             'pedidos' => $pedidos,
         ]);
     }
@@ -24,8 +25,18 @@ class PedidoController extends Controller
         $pedido = Pedido::with(['itensPedido', 'funcionario', 'cliente'])
             ->findOrFail($pedidoId);
 
-        return Inertia::render('Pedidos/show', [
+        return Inertia::render('Pedidos/Show', [
             'pedido' => $pedido
+        ]);
+    }
+
+    public function create(){
+        $sabores = Sabor::orderBy('name')->get(['id', 'name']);
+        $embalagens = Embalagem::orderBy('name')->get(['id', 'name', 'valor_base', 'maximo_sabores', 'preco_sabor_extra']);
+
+        return Inertia::render('Pedidos/Create', [
+            'sabores' => $sabores,
+            'embalagens' => $embalagens
         ]);
     }
 

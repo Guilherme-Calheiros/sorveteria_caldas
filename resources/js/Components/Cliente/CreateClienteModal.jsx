@@ -2,6 +2,8 @@ import Modal from '@/Components/Modal';
 import { useForm } from '@inertiajs/react';
 import axios from 'axios';
 
+axios.defaults.withCredentials = true;
+
 export default function CreateClienteModal({ show, onClose, onClienteCriado }) {
     const { data, setData, processing, errors, reset } = useForm({
         name: '',
@@ -12,6 +14,7 @@ export default function CreateClienteModal({ show, onClose, onClienteCriado }) {
         e.preventDefault();
 
         try {
+            await axios.get('/sanctum/csrf-cookie');
             const response = await axios.post(route('clientes.store'), data);
             onClienteCriado(response.data);
             reset();

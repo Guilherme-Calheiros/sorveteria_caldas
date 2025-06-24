@@ -63,7 +63,7 @@ export default function UpdateEembalagemModal({ show, onClose, embalagem}) {
                             value={data.maximo_sabores}
                             onChange={(e) => {
                                 let val = e.target.value.replace(/\D/g, '');
-                                if (val.length > 2) val = val.slice(0, 2);
+                                if (val.length > 1) val = val.slice(0, 1);
                                 setData('maximo_sabores', val);
                             }}
                             className="w-full border border-gray-300 rounded px-3 py-2"
