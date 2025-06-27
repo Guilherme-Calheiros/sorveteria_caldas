@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LandingController;
 use App\Http\Controllers\CargoController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\EmbalagemController;
@@ -10,9 +11,11 @@ use App\Http\Controllers\SaborController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', [PedidoController::class, 'create'])->name('pedidos.create');
+Route::get('/', [LandingController::class, 'index']);
 
 Route::post('/pedidos', [PedidoController::class, 'store'])->name('pedidos.store');
+
+Route::post('/clientes', [ClienteController::class, 'store'])->name('clientes.store');
 
 Route::get('/login', function () {
     return Inertia::render('Auth/Login', [
@@ -21,13 +24,12 @@ Route::get('/login', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::post('/clientes', [ClienteController::class, 'store'])->name('clientes.store');
-
-Route::middleware('auth')->group(function () {
+Route::prefix('admin')->middleware('auth')->group(function () {
+    Route::get('/', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
+    
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -35,15 +37,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/trocar-senha', function () {
         return Inertia::render('Auth/TrocarSenha');
     })->name('password.change');
-    Route::resource('pedidos', PedidoController::class)->except(['create', 'store']);
-});
 
-Route::middleware(['auth', 'verified', 'permissao.acesso:acesso_total'])->group(function () {
-    Route::resource('usuarios', UserController::class);
-    Route::patch('usuarios/{user}/reativar', [UserController::class, 'reativar'])->name('usuarios.reativar');
-    Route::resource('sabores', SaborController::class);
-    Route::resource('embalagens', EmbalagemController::class);
-    Route::resource('cargos', CargoController::class);
+    Route::resource('pedidos', PedidoController::class)->except(['create', 'store']);
+
+    Route::middleware('permissao.acesso:acesso_total')->group(function () {
+        Route::resource('usuarios', UserController::class);
+        Route::patch('usuarios/{user}/reativar', [UserController::class, 'reativar'])->name('usuarios.reativar');
+        Route::resource('sabores', SaborController::class);
+        Route::resource('embalagens', EmbalagemController::class);
+        Route::resource('cargos', CargoController::class);
+    });
 });
 
 require __DIR__.'/auth.php';
