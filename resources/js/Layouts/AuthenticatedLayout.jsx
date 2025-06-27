@@ -14,40 +14,13 @@ export default function AuthenticatedLayout({ header, children }) {
     return (
         <div className="min-h-screen bg-gray-100">
             <nav className="border-b border-gray-100 bg-white">
-                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div className="mx-auto max-w-full px-4 sm:px-6 lg:px-8">
                     <div className="flex h-16 justify-between">
-                        <div className="flex">
-                            <div className="flex shrink-0 items-center">
-                                <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
-                                </Link>
-                            </div>
-
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink
-                                    href={route('dashboard')}
-                                    active={route().current('dashboard')}
-                                >
-                                    Dashboard
-                                </NavLink>
-                                {temPermissao && (
-                                    <>
-                                        <NavLink href={route('usuarios.index')} active={route().current('usuarios.index')}>
-                                            Usuários
-                                        </NavLink>
-                                        <NavLink href={route('sabores.index')} active={route().current('sabores.index')}>
-                                            Sabores
-                                        </NavLink>
-                                        <NavLink href={route('embalagens.index')} active={route().current('embalagens.index')}>
-                                            Embalagens
-                                        </NavLink>
-                                        <NavLink href={route('cargos.index')} active={route().current('cargos.index')}>
-                                            Cargos
-                                        </NavLink>
-                                    </>
-                                )}
-                            </div>
-                        </div>
+                        <div className="flex shrink-0 items-center">
+                            <Link href="/">
+                                <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
+                            </Link>
+                        </div>                   
 
                         <div className="hidden sm:ms-6 sm:flex sm:items-center">
                             <div className="relative ms-3">
@@ -80,14 +53,14 @@ export default function AuthenticatedLayout({ header, children }) {
                                         <Dropdown.Link
                                             href={route('profile.edit')}
                                         >
-                                            Profile
+                                            Perfil
                                         </Dropdown.Link>
                                         <Dropdown.Link
                                             href={route('logout')}
                                             method="post"
                                             as="button"
                                         >
-                                            Log Out
+                                            Sair
                                         </Dropdown.Link>
                                     </Dropdown.Content>
                                 </Dropdown>
@@ -150,6 +123,25 @@ export default function AuthenticatedLayout({ header, children }) {
                         >
                             Dashboard
                         </ResponsiveNavLink>
+                        {temPermissao && (
+                            <>
+                                <ResponsiveNavLink href={route('usuarios.index')} active={route().current('usuarios.index')}>
+                                    Usuários
+                                </ResponsiveNavLink>
+                                <ResponsiveNavLink href={route('sabores.index')} active={route().current('sabores.index')}>
+                                    Sabores
+                                </ResponsiveNavLink>
+                                <ResponsiveNavLink href={route('embalagens.index')} active={route().current('embalagens.index')}>
+                                    Embalagens
+                                </ResponsiveNavLink>
+                                <ResponsiveNavLink href={route('cargos.index')} active={route().current('cargos.index')}>
+                                    Cargos
+                                </ResponsiveNavLink>
+                                <ResponsiveNavLink href={route('pedidos.index')} active={route().current('pedidos.index')}>
+                                    Pedidos
+                                </ResponsiveNavLink>
+                            </>
+                        )}
                     </div>
 
                     <div className="border-t border-gray-200 pb-1 pt-4">
@@ -164,29 +156,70 @@ export default function AuthenticatedLayout({ header, children }) {
 
                         <div className="mt-3 space-y-1">
                             <ResponsiveNavLink href={route('profile.edit')}>
-                                Profile
+                                Perfil
                             </ResponsiveNavLink>
                             <ResponsiveNavLink
                                 method="post"
                                 href={route('logout')}
                                 as="button"
                             >
-                                Log Out
+                                Sair
                             </ResponsiveNavLink>
                         </div>
                     </div>
                 </div>
             </nav>
 
-            {header && (
-                <header className="bg-white shadow">
-                    <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                        {header}
-                    </div>
-                </header>
-            )}
+            <div className="flex min-h-screen">
+                <aside className="hidden w-40 bg-slate-200 text-white py-6 px-4 space-y-2 sm:flex flex-col">
+                    <NavLink
+                        href={route('dashboard')}
+                        active={route().current('dashboard')}
+                    >
+                        Dashboard
+                    </NavLink>
 
-            <main>{children}</main>
+                    {temPermissao && (
+                        <>
+                            <NavLink
+                                href={route('usuarios.index')}
+                                active={route().current('usuarios.index')}
+                            >
+                                Usuários
+                            </NavLink>
+
+                            <NavLink
+                                href={route('sabores.index')}
+                                active={route().current('sabores.index')}
+                            >
+                                Sabores
+                            </NavLink>
+
+                            <NavLink
+                                href={route('embalagens.index')}
+                                active={route().current('embalagens.index')}
+                            >
+                                Embalagens
+                            </NavLink>
+
+                            <NavLink
+                                href={route('cargos.index')}
+                                active={route().current('cargos.index')}
+                            >
+                                Cargos
+                            </NavLink>
+
+                            <NavLink
+                                href={route('pedidos.index')}
+                                active={route().current('pedidos.index')}
+                            >
+                                Pedidos
+                            </NavLink>
+                        </>
+                    )}
+                </aside>
+                <main className="flex-1 p-6 bg-gray-100">{children}</main>
+            </div>
         </div>
     );
 }
