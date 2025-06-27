@@ -38,6 +38,7 @@ class HandleInertiaRequests extends Middleware
                     ? [
                         'id' => $user->id,
                         'name' => $user->name,
+                        'email' => $user->email
                     ]
                     : null,
                 'temPermissao' => $user ? $user->temPermissao('acesso_completo') : false,
