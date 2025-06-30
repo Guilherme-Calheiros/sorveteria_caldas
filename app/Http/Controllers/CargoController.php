@@ -13,7 +13,7 @@ class CargoController extends Controller
 
     public function index()
     {
-        return Inertia::render('Cargos/Index', [
+        return Inertia::render('Admin/Cargos/Index', [
             'cargos' => Cargo::all(),
         ]);
     }

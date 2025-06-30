@@ -16,7 +16,7 @@ class PedidoController extends Controller
             ->latest()
             ->paginate(10);
 
-        return Inertia::render('Pedidos/Index', [
+        return Inertia::render('Admin/Pedidos/Index', [
             'pedidos' => $pedidos,
         ]);
     }
@@ -25,7 +25,7 @@ class PedidoController extends Controller
         $pedido = Pedido::with(['itensPedido', 'funcionario', 'cliente'])
             ->findOrFail($pedidoId);
 
-        return Inertia::render('Pedidos/Show', [
+        return Inertia::render('Admin/Pedidos/Show', [
             'pedido' => $pedido
         ]);
     }
@@ -34,7 +34,7 @@ class PedidoController extends Controller
         $sabores = Sabor::orderBy('name')->get(['id', 'name']);
         $embalagens = Embalagem::orderBy('name')->get(['id', 'name', 'valor_base', 'maximo_sabores', 'preco_sabor_extra']);
 
-        return Inertia::render('Pedidos/Create', [
+        return Inertia::render('Admin/Pedidos/Create', [
             'sabores' => $sabores,
             'embalagens' => $embalagens
         ]);

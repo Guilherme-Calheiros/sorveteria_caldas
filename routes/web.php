@@ -18,7 +18,7 @@ Route::post('/pedidos', [PedidoController::class, 'store'])->name('pedidos.store
 Route::post('/clientes', [ClienteController::class, 'store'])->name('clientes.store');
 
 Route::get('/login', function () {
-    return Inertia::render('Auth/Login', [
+    return Inertia::render('Admin/Auth/Login', [
         'canResetPassword' => Route::has('password.request'),
         'status' => session('status'),
     ]);
@@ -27,7 +27,7 @@ Route::get('/login', function () {
 
 Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/', function () {
-        return Inertia::render('Dashboard');
+        return Inertia::render('Admin/Dashboard');
     })->name('dashboard');
     
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -35,7 +35,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/trocar-senha', function () {
-        return Inertia::render('Auth/TrocarSenha');
+        return Inertia::render('Admin/Auth/TrocarSenha');
     })->name('password.change');
 
     Route::resource('pedidos', PedidoController::class)->except(['create', 'store']);

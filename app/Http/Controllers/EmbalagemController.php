@@ -14,7 +14,7 @@ class EmbalagemController extends Controller
     public function index()
     {
         $embalagens = Embalagem::all();
-        return Inertia::render('Embalagens/Index', [
+        return Inertia::render('Admin/Embalagens/Index', [
             'embalagens' => $embalagens
         ]);
     }

@@ -17,7 +17,7 @@ class UserController extends Controller
     {
         $usuarios = User::all();
         $cargos = Cargo::all();
-        return Inertia::render('Usuarios/Index', [
+        return Inertia::render('Admin/Usuarios/Index', [
             'usuarios' => $usuarios,
             'cargos' => $cargos,
         ]);
@@ -67,7 +67,7 @@ class UserController extends Controller
 
         $cargos = Cargo::all();
 
-        return Inertia::render('Usuarios/Edit', [
+        return Inertia::render('Admin/Usuarios/Edit', [
             'usuario' => $user,
             'cargos' => $cargos
         ]);

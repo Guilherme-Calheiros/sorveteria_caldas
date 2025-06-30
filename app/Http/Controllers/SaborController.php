@@ -16,7 +16,7 @@ class SaborController extends Controller
     {
 
         $sabores = Sabor::all();
-        return Inertia::render('Sabores/Index', [
+        return Inertia::render('Admin/Sabores/Index', [
             'sabores' => $sabores
         ]);
     }
