@@ -31,14 +31,14 @@ export default function Index({ usuarios, cargos }) {
                     <h1 className="text-2xl font-bold">Lista de usuários</h1>
                     <button
                         onClick={() => setShowCreateModal(true)}
-                        className="mb-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-2"
+                        className="mb-4 px-4 py-2 bg-secondary-color-500 text-white rounded hover:bg-secondary-color-700 flex items-center gap-2"
                         >
                         Adicionar Usuário <FaPlus/>
                     </button>
                 </div>
                 <table className="table-auto w-full border">
                     <thead>
-                        <tr className="bg-gray-100">
+                        <tr className="bg-primary-color-500 text-white">
                             <th className="p-2 border">ID</th>
                             <th className="p-2 border">Nome</th>
                             <th className="p-2 border">Email</th>
@@ -49,8 +49,8 @@ export default function Index({ usuarios, cargos }) {
                         </tr>
                     </thead>
                     <tbody>
-                        {usuarios.map((user) => (
-                            <tr key={user.id} className="text-center">
+                        {usuarios.data.map((user) => (
+                            <tr key={user.id} className="text-center bg-white">
                                 <td className="p-2 border">{user.id}</td>
                                 <td className="p-2 border">{user.name}</td>
                                 <td className="p-2 border">{user.email}</td>
@@ -69,6 +69,19 @@ export default function Index({ usuarios, cargos }) {
                         ))}
                     </tbody>
                 </table>
+                <div className="mt-5">
+                    {usuarios.prev_page_url && (
+                        <Link href={usuarios.prev_page_url}>&laquo; Anterior</Link>
+                    )}
+
+                    <span className="text-text-color-secondary my-3">
+                        Página {usuarios.current_page} de {usuarios.last_page}
+                    </span>
+
+                    {usuarios.next_page_url && (
+                        <Link href={usuarios.next_page_url}>Próxima &raquo;</Link>
+                    )}
+                </div>
 
                 <CreateUserModal
                     show={showCreateModal}

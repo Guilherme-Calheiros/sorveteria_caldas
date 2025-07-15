@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import { FaTrash, FaEdit, FaPlus } from "react-icons/fa";
 import CreateEembalagemModal from "@/Components/Embalagens/CreateEmbalagemModal";
 import UpdateEembalagemModal from "@/Components/Embalagens/UpdateEmbalagemModal";
@@ -31,25 +31,25 @@ export default function Index({ embalagens }){
                     <h1 className="text-2xl font-bold">Lista de embalagens</h1>
                     <button
                         onClick={() => setShowCreateModal(true)}
-                        className="mb-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-2"
+                        className="mb-4 px-4 py-2 bg-secondary-color-500 text-white rounded hover:bg-secondary-color-700 flex items-center gap-2"
                     >
                         Adicionar Embalagem <FaPlus/>
                     </button>
                 </div>
                 <table className="table-auto w-full border">
                     <thead>
-                        <tr className="bg-slate-500">
-                            <th className="p-2 border text-white">ID</th>
-                            <th className="p-2 border text-white">Nome</th>
-                            <th className="p-2 border text-white">Máximo de sabores</th>
-                            <th className="p-2 border text-white">Valor sabor extra </th>
-                            <th className="p-2 border text-white">Valor base</th>
-                            <th className="p-2 border text-white">Ações</th>
+                        <tr className="bg-primary-color-500 text-white">
+                            <th className="p-2 border">ID</th>
+                            <th className="p-2 border">Nome</th>
+                            <th className="p-2 border">Máximo de sabores</th>
+                            <th className="p-2 border">Valor sabor extra </th>
+                            <th className="p-2 border">Valor base</th>
+                            <th className="p-2 border">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {embalagens.map((embalagem) => (
-                            <tr key={embalagem.id} className="text-center">
+                        {embalagens.data.map((embalagem) => (
+                            <tr key={embalagem.id} className="text-center bg-white">
                                 <td className="p-2 border">{embalagem.id}</td>
                                 <td className="p-2 border capitalize">{embalagem.name}</td>
                                 <td className="p-2 border">{embalagem.maximo_sabores}</td>
@@ -69,6 +69,19 @@ export default function Index({ embalagens }){
                         ))}
                     </tbody>
                 </table>
+                <div className="mt-5">
+                    {embalagens.prev_page_url && (
+                        <Link href={embalagens.prev_page_url}>&laquo; Anterior</Link>
+                    )}
+
+                    <span className="text-text-color-secondary my-3">
+                        Página {embalagens.current_page} de {embalagens.last_page}
+                    </span>
+
+                    {embalagens.next_page_url && (
+                        <Link href={embalagens.next_page_url}>Próxima &raquo;</Link>
+                    )}
+                </div>
 
                 <CreateEembalagemModal
                     show={showCreateModal}

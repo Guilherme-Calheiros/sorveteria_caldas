@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import CreateSaborModal from "@/Components/Sabores/CreateSaborModal";
 import UpdateSaborModal from "@/Components/Sabores/UpdateSaborModal";
 import DeleteSaborModal from "@/Components/Sabores/DeleteSaborModal";
@@ -30,22 +30,22 @@ export default function Index({ sabores }){
                     <h1 className="text-2xl font-bold">Lista de sabores</h1>
                     <button
                         onClick={() => setShowCreateModal(true)}
-                        className="mb-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-2"
+                        className="mb-4 px-4 py-2 bg-secondary-color-500 text-white rounded hover:bg-secondary-color-700 flex items-center gap-2"
                     >
                         Adicionar Sabor <FaPlus/>
                     </button>
                 </div>
                 <table className="table-auto w-full border">
                     <thead>
-                        <tr className="bg-slate-500">
-                            <th className="p-2 border text-white">ID</th>
-                            <th className="p-2 border text-white">Sabor</th>
-                            <th className="p-2 border text-white">Ações</th>
+                        <tr className="bg-primary-color-500 text-white">
+                            <th className="p-2 border">ID</th>
+                            <th className="p-2 border">Sabor</th>
+                            <th className="p-2 border">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {sabores.map((sabor) => (
-                            <tr key={sabor.id} className="text-center">
+                        {sabores.data.map((sabor) => (
+                            <tr key={sabor.id} className="text-center bg-white">
                                 <td className="p-2 border">{sabor.id}</td>
                                 <td className="p-2 border">{sabor.name}</td>
                                 <td className="p-2 border">
@@ -62,6 +62,19 @@ export default function Index({ sabores }){
                         ))}
                     </tbody>
                 </table>
+                <div className="mt-5">
+                    {sabores.prev_page_url && (
+                        <Link href={sabores.prev_page_url}>&laquo; Anterior</Link>
+                    )}
+
+                    <span className="text-text-color-secondary my-3">
+                        Página {sabores.current_page} de {sabores.last_page}
+                    </span>
+
+                    {sabores.next_page_url && (
+                        <Link href={sabores.next_page_url}>Próxima &raquo;</Link>
+                    )}
+                </div>
                 <DeleteSaborModal
                     show={showDeleteModal}
                     onClose={() => setShowDeleteModal(false)}

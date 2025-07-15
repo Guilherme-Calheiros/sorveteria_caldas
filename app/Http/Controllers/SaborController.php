@@ -15,7 +15,7 @@ class SaborController extends Controller
     public function index()
     {
 
-        $sabores = Sabor::all();
+        $sabores = Sabor::orderBy('id', 'asc')->paginate(10);
         return Inertia::render('Admin/Sabores/Index', [
             'sabores' => $sabores
         ]);

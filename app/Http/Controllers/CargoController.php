@@ -14,7 +14,7 @@ class CargoController extends Controller
     public function index()
     {
         return Inertia::render('Admin/Cargos/Index', [
-            'cargos' => Cargo::all(),
+            'cargos' => Cargo::orderBy('id', 'asc')->paginate(10),
         ]);
     }
 

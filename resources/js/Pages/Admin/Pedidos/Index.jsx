@@ -13,22 +13,22 @@ export default function Index({pedidos}){
                 </div>
                 <table className="table-auto w-full border">
                     <thead>
-                        <tr className="bg-slate-500">
-                            <th className="p-2 border text-white">ID</th>
-                            <th className="p-2 border text-white">Cliente</th>
-                            <th className="p-2 border text-white">Funcionario</th>
-                            <th className="p-2 border text-white">Observação</th>
-                            <th className="p-2 border text-white">Data</th>
-                            <th className="p-2 border text-white">Total</th>
-                            <th className="p-2 border text-white">Ações</th>
+                        <tr className="bg-primary-color-500 text-white">
+                            <th className="p-2 border">ID</th>
+                            <th className="p-2 border">Cliente</th>
+                            <th className="p-2 border">Funcionario</th>
+                            <th className="p-2 border">Observação</th>
+                            <th className="p-2 border">Data</th>
+                            <th className="p-2 border">Total</th>
+                            <th className="p-2 border">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
                         {pedidos.data.map((pedido) =>
-                            <tr key={pedido.id} className="text-center">
+                            <tr key={pedido.id} className="text-center bg-white">
                                 <td className="p-2 border">{pedido.id}</td>
-                                <td className="p-2 border">{pedido.cliente.name}</td>
-                                <td className="p-2 border">{pedido.funcionario?.name ?? 'Autoatendimento'}</td>
+                                <td className="p-2 border capitalize">{pedido.cliente.name}</td>
+                                <td className="p-2 border capitalize">{pedido.funcionario?.name ?? 'Autoatendimento'}</td>
                                 <td className="p-2 border">{pedido.observacao || '-'}</td>
                                 <td className="p-2 border">{new Date(pedido.data_pedido).toLocaleDateString()}</td>
                                 <td className="p-2 border">{formataMoeda(pedido.total)}</td>
@@ -37,12 +37,12 @@ export default function Index({pedidos}){
                         )}
                     </tbody>
                 </table>
-                <div style={{ marginTop: '20px' }}>
+                <div className="mt-5">
                     {pedidos.prev_page_url && (
                         <Link href={pedidos.prev_page_url}>&laquo; Anterior</Link>
                     )}
 
-                    <span style={{ margin: '0 10px' }}>
+                    <span className="text-text-color-secondary my-3">
                         Página {pedidos.current_page} de {pedidos.last_page}
                     </span>
 

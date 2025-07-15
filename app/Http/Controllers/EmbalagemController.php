@@ -13,7 +13,7 @@ class EmbalagemController extends Controller
      */
     public function index()
     {
-        $embalagens = Embalagem::all();
+        $embalagens = Embalagem::orderBy('id', 'asc')->paginate(10);
         return Inertia::render('Admin/Embalagens/Index', [
             'embalagens' => $embalagens
         ]);

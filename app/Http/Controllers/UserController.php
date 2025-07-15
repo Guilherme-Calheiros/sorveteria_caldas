@@ -15,7 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $usuarios = User::all();
+        $usuarios = User::orderBy('id', 'asc')->paginate(10);
         $cargos = Cargo::all();
         return Inertia::render('Admin/Usuarios/Index', [
             'usuarios' => $usuarios,

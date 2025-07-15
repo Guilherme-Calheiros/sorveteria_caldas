@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import { FaTrash, FaEdit, FaPlus } from "react-icons/fa";
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import CreateCargoModal from "@/Components/Cargos/CreateCargoModal";
@@ -30,30 +30,30 @@ export default function Index({ cargos }){
                     <h1 className="text-2xl font-bold">Lista de cargos</h1>
                     <button
                         onClick={() => setShowCreateModal(true)}
-                        className="mb-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-2"
+                        className="mb-4 px-4 py-2 bg-secondary-color-500 text-white rounded hover:bg-secondary-color-700 flex items-center gap-2"
                     >
                         Adicionar Cargo <FaPlus/>
                     </button>
                 </div>
                 <table className="table-auto w-full border">
                     <thead>
-                        <tr className="bg-slate-500">
-                            <th className="p-2 border text-white">ID</th>
-                            <th className="p-2 border text-white">Cargo</th>
-                            <th className="p-2 border text-white">Ações</th>
+                        <tr className="bg-primary-color-500 text-white">
+                            <th className="p-2 border">ID</th>
+                            <th className="p-2 border">Cargo</th>
+                            <th className="p-2 border">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {cargos.map((cargo) => (
-                            <tr key={cargo.id} className="text-center">
+                        {cargos.data.map((cargo) => (
+                            <tr key={cargo.id} className="text-center bg-white">
                                 <td className="p-2 border">{cargo.id}</td>
                                 <td className="p-2 border">{cargo.name}</td>
                                 <td className="p-2 border">
                                     <div className="flex justify-center items-center gap-4">
-                                        <button onClick={() => editarCargo(cargo)}>
+                                        <button onClick={() => editarCargo(cargo)} className="text-text-color-primary">
                                             <FaEdit/>
                                         </button>
-                                        <button onClick={() => excluirCargo(cargo)} className="text-red-500">
+                                        <button onClick={() => excluirCargo(cargo)} className="text-text-color-primary">
                                             <FaTrash/>
                                         </button>
                                     </div>
@@ -62,6 +62,19 @@ export default function Index({ cargos }){
                         ))}
                     </tbody>
                 </table>
+                <div className="mt-5">
+                    {cargos.prev_page_url && (
+                        <Link href={cargos.prev_page_url}>&laquo; Anterior</Link>
+                    )}
+
+                    <span className="text-text-color-secondary my-3">
+                        Página {cargos.current_page} de {cargos.last_page}
+                    </span>
+
+                    {cargos.next_page_url && (
+                        <Link href={cargos.next_page_url}>Próxima &raquo;</Link>
+                    )}
+                </div>
                 <CreateCargoModal
                     key={showCreateModal ? 'show' : 'hide'}
                     show={showCreateModal}
