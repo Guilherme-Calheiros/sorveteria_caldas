@@ -1,4 +1,5 @@
 import Modal from '@/Components/Modal';
+import { Button } from '../ui/button';
 import { useForm } from '@inertiajs/react';
 import { useEffect } from 'react';
 
@@ -64,20 +65,19 @@ export default function UpdateCargoModal({ show, onClose, cargo}) {
                         )}
                     </div>
                     <div className="flex justify-end space-x-2">
-                        <button
-                            type="button"
+                        <Button
                             onClick={handleCancel}
-                            className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400"
+                            variant="outline"
                         >
                             Cancelar
-                        </button>
-                        <button
+                        </Button>
+                        <Button
                             type="submit"
+                            variant="secondary"
                             disabled={processing}
-                            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
                         >
                             {processing ? 'Salvando...' : 'Editar Cargo'}
-                        </button>
+                        </Button>
                     </div>
                 </form>
             </div>

@@ -1,5 +1,6 @@
 import Modal from '@/Components/Modal';
 import { useForm} from '@inertiajs/react';
+import { Button } from '../ui/button';
 
 
 export default function DeleteCargoModal({ show, onClose, cargo }) {
@@ -27,20 +28,19 @@ export default function DeleteCargoModal({ show, onClose, cargo }) {
                     Tem certeza que deseja exluir o cargo "{cargo?.name}"
                 </p>
                 <form onSubmit={handleSubmit} className="flex justify-end space-x-2">
-                    <button
-                        type="button"
+                    <Button
                         onClick={handleCancel}
-                        className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400"
+                        variant="outline"
                     >
                         Cancelar
-                    </button>
-                    <button
+                    </Button>
+                    <Button
                         type="submit"
                         disabled={processing}
-                        className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+                        variant="destructive"
                     >
                         {processing ? 'Excluindo...' : 'Excluir cargo'}
-                    </button>
+                    </Button>
                 </form>
             </div>
         </Modal>

@@ -5,6 +5,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import CreateCargoModal from "@/Components/Cargos/CreateCargoModal";
 import UpdateCargoModal from "@/Components/Cargos/UpdateCargoModal";
 import DeleteCargoModal from "@/Components/Cargos/DeleteCargoModal";
+import { Button } from "@/Components/ui/button";
 
 export default function Index({ cargos }){
     const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -28,12 +29,12 @@ export default function Index({ cargos }){
                 <Head title="Cargos"/>
                 <div className="p-2 flex justify-between items-center">
                     <h1 className="text-2xl font-bold">Lista de cargos</h1>
-                    <button
+                    <Button
                         onClick={() => setShowCreateModal(true)}
-                        className="mb-4 px-4 py-2 bg-secondary-color-500 text-white rounded hover:bg-secondary-color-700 flex items-center gap-2"
+                        variant="secondary"
                     >
                         Adicionar Cargo <FaPlus/>
-                    </button>
+                    </Button>
                 </div>
                 <table className="table-auto w-full border">
                     <thead>
@@ -49,13 +50,13 @@ export default function Index({ cargos }){
                                 <td className="p-2 border">{cargo.id}</td>
                                 <td className="p-2 border">{cargo.name}</td>
                                 <td className="p-2 border">
-                                    <div className="flex justify-center items-center gap-4">
-                                        <button onClick={() => editarCargo(cargo)} className="text-text-color-primary">
+                                    <div className="flex justify-center items-center">
+                                        <Button onClick={() => editarCargo(cargo)} variant="ghost" size="icon">
                                             <FaEdit/>
-                                        </button>
-                                        <button onClick={() => excluirCargo(cargo)} className="text-text-color-primary">
+                                        </Button>
+                                        <Button onClick={() => excluirCargo(cargo)} variant="ghost" size="icon">
                                             <FaTrash/>
-                                        </button>
+                                        </Button>
                                     </div>
                                 </td>
                             </tr>
