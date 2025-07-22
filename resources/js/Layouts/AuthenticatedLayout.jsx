@@ -1,9 +1,5 @@
 import ApplicationLogo from '@/Components/ApplicationLogo';
-import { RxDashboard } from "react-icons/rx";
-import { IoIceCreamOutline } from "react-icons/io5";
-import { FiPackage } from "react-icons/fi";
-import { MdPeople, MdOutlineShoppingCart } from "react-icons/md";
-import { BsSuitcaseLg } from "react-icons/bs";
+import { LuReceiptText, LuIceCreamCone, LuHouse, LuPackage, LuUsers, LuBriefcaseBusiness } from "react-icons/lu";
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
@@ -28,7 +24,7 @@ export default function AuthenticatedLayout({ header, children }) {
                             href={route('dashboard')}
                             active={route().current('dashboard')}
                         >
-                            <RxDashboard className='w-5 h-5 align-middle'/> 
+                            <LuHouse className='w-5 h-5 align-middle'/> 
                             Dashboard
                         </NavLink>
 
@@ -38,7 +34,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                     href={route('pedidos.index')}
                                     active={route().current('pedidos.index')}
                                 >
-                                    <MdOutlineShoppingCart className="w-5 h-5"/>
+                                    <LuReceiptText className="w-5 h-5"/>
                                     Pedidos
                                 </NavLink>
 
@@ -46,7 +42,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                     href={route('sabores.index')}
                                     active={route().current('sabores.index')}
                                 >
-                                    <IoIceCreamOutline className='w-5 h-5'/>
+                                    <LuIceCreamCone className='w-5 h-5'/>
                                     Sabores
                                 </NavLink>
 
@@ -54,7 +50,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                     href={route('embalagens.index')}
                                     active={route().current('embalagens.index')}
                                 >
-                                    <FiPackage className='w-5 h-5'/>
+                                    <LuPackage className='w-5 h-5'/>
                                     Embalagens
                                 </NavLink>
 
@@ -62,7 +58,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                     href={route('usuarios.index')}
                                     active={route().current('usuarios.index')}
                                 >
-                                    <MdPeople className='w-5 h-5'/>
+                                    <LuUsers className='w-5 h-5'/>
                                     Funcionários
                                 </NavLink>
 
@@ -70,7 +66,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                     href={route('cargos.index')}
                                     active={route().current('cargos.index')}
                                 >
-                                    <BsSuitcaseLg className='w-5 h-5'/>
+                                    <LuBriefcaseBusiness className='w-5 h-5'/>
                                     Cargos
                                 </NavLink>
                             </>
