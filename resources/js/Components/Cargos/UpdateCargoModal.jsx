@@ -4,7 +4,7 @@ import { useForm } from '@inertiajs/react';
 import { useEffect } from 'react';
 
 export default function UpdateCargoModal({ show, onClose, cargo}) {
-    const { data, setData, post, processing, errors, reset } = useForm({
+    const { data, setData, put, processing, errors, reset } = useForm({
         name: cargo ? cargo.name : '',
         permissao: cargo ? cargo.permissao : '',
     });
@@ -20,7 +20,7 @@ export default function UpdateCargoModal({ show, onClose, cargo}) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route('cargos.update', cargo.id), {
+        put(route('cargos.update', cargo.id), {
             data: data,
             onSuccess: () => {
                 reset();
