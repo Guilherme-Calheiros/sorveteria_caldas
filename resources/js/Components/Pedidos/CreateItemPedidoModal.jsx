@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Modal from "@/Components/Modal";
 import ModalAvisoSabor from "./ModalSaborAviso";
-import { FaPlus } from "react-icons/fa";
+import { LuPlus } from "react-icons/lu";
+import { Button } from "../ui/button";
 
 export default function CreateItemPedidoModal({ show, onClose, onItemAdd, sabores = [], embalagens = [] }) {
     const [embalagemId, setEmbalagemId] = useState('');
@@ -43,7 +44,7 @@ export default function CreateItemPedidoModal({ show, onClose, onItemAdd, sabore
     };
 
     const cancelarAdicionarExtra = () => {
-        setPendingExtraSabor('');
+        setSaborExtra('');
         setShowModalSaborAviso(false);
     };
 
@@ -140,14 +141,13 @@ export default function CreateItemPedidoModal({ show, onClose, onItemAdd, sabore
                                 <option key={s.id} value={s.id}>{s.name}</option>
                             ))}
                     </select>
-                    <button
-                        type="button"
+                    <Button
                         onClick={handleAddSabor}
-                        className="px-3 py-2 bg-blue-600 text-white rounded"
+                        variant="secondary"
                         disabled={!selectedSabor || !embalagemId}
                     >
-                        <FaPlus/>
-                    </button>
+                        <LuPlus/>
+                    </Button>
                 </div>
 
                 <ul className="list-disc ml-6 space-y-1">
@@ -156,12 +156,12 @@ export default function CreateItemPedidoModal({ show, onClose, onItemAdd, sabore
                         return (
                             <li key={id} className="flex items-center justify-between">
                                 {sabor?.name}
-                                <button
+                                <Button
                                     onClick={() => handleRemoveSabor(id)}
-                                    className="text-red-600 text-sm ml-2"
+                                    variant="link"
                                 >
-                                    remover
-                                </button>
+                                    Remover
+                                </Button>
                             </li>
                         );
                     })}
@@ -171,7 +171,7 @@ export default function CreateItemPedidoModal({ show, onClose, onItemAdd, sabore
                     <ModalAvisoSabor
                         show={showModalSaborAviso}
                         onClose={() => {
-                            cancelarAdicionarExtra
+                            cancelarAdicionarExtra()
                         }}
                         onConfirm={confirmarAdicionarExtra}
                         precoSaborExtra={selectedEmbalagem.preco_sabor_extra}
@@ -179,13 +179,13 @@ export default function CreateItemPedidoModal({ show, onClose, onItemAdd, sabore
                 )}
 
                 <div className="flex justify-end">
-                    <button
+                    <Button
                         onClick={handleAddItem}
-                        disabled={!embalagemId}
-                        className={`px-4 py-2 rounded text-white ${embalagemId ? 'bg-green-600' : 'bg-gray-400 cursor-not-allowed'}`}
+                        disabled={!embalagemId || selectedSabores.length == 0}
+                        variant="secondary"
                     >
                         Adicionar
-                    </button>
+                    </Button>
                 </div>
             </div>
         </Modal>

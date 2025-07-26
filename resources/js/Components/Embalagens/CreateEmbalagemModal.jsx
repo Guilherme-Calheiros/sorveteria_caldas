@@ -1,6 +1,7 @@
 import Modal from '@/Components/Modal';
 import { useForm } from '@inertiajs/react';
 import InputMoney from '../InputMoney';
+import ModalButtons from '../ModalButtons';
 
 export default function CreateEembalagemModal({ show, onClose }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -73,22 +74,11 @@ export default function CreateEembalagemModal({ show, onClose }) {
                         />
                         {errors.valor_base && <p className="text-red-500 text-sm mt-1">{errors.valor_base}</p>}
                     </div>
-                    <div className="flex justify-end space-x-2">
-                        <button
-                            type="button"
-                            onClick={handleCancel}
-                            className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400"
-                        >
-                            Cancelar
-                        </button>
-                        <button
-                            type="submit"
-                            disabled={processing}
-                            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                        >
-                            {processing ? 'Salvando...' : 'Criar Embalagem'}
-                        </button>
-                    </div>
+                    <ModalButtons
+                        onCancelar={handleCancel}
+                        processing={processing}
+                        textoConfirmar='Criar Embalagem'
+                    />
                 </form>
             </div>
         </Modal>

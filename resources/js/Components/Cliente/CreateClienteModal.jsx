@@ -1,6 +1,7 @@
 import Modal from '@/Components/Modal';
 import { useForm } from '@inertiajs/react';
 import axios from 'axios';
+import { Button } from '../ui/button';
 
 axios.defaults.withCredentials = true;
 
@@ -54,13 +55,13 @@ export default function CreateClienteModal({ show, onClose, onClienteCriado }) {
                         )}
                     </div>
                     <div className="flex justify-end space-x-2">
-                        <button
+                        <Button
                             type="submit"
                             disabled={processing}
-                            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                            variant="secondary"
                         >
                             {processing ? 'Salvando...' : 'Adicionar Cliente'}
-                        </button>
+                        </Button>
                     </div>
                 </form>
             </div>

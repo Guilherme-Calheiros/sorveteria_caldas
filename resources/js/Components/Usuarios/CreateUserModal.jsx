@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import InputTelefone from '../InputTelefone';
 import InputEmail from '../InputEmail';
 import { desformataTelefone } from '@/Utils/telefone';
+import ModalButtons from '../ModalButtons'
 
 export default function CreateUserModal({ show, onClose, cargos }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -37,7 +38,7 @@ export default function CreateUserModal({ show, onClose, cargos }) {
     return (
         <Modal show={show} onClose={onClose} maxWidth="md">
             <div className="p-6">
-                <h2 className="text-lg font-semibold text-gray-900 mb-4">Adicionar novo usuário</h2>
+                <h2 className="text-lg font-semibold text-gray-900 mb-4">Adicionar novo Funcionário</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
                         <input
@@ -83,22 +84,11 @@ export default function CreateUserModal({ show, onClose, cargos }) {
                         </select>
                         {errors.cargo_id && <p className="text-red-500">{errors.cargo_id}</p>}
                     </div>
-                    <div className="flex justify-end space-x-2">
-                        <button
-                            type="button"
-                            onClick={handleCancel}
-                            className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400"
-                        >
-                            Cancelar
-                        </button>
-                        <button
-                            type="submit"
-                            disabled={processing}
-                            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                        >
-                            {processing ? 'Salvando...' : 'Criar Usuário'}
-                        </button>
-                    </div>
+                    <ModalButtons
+                        onCancelar={handleCancel}
+                        processing={processing}
+                        textoConfirmar='Criar Funcionário'
+                    />
                 </form>
             </div>
         </Modal>

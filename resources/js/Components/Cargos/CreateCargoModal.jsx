@@ -1,6 +1,6 @@
 import Modal from '@/Components/Modal';
 import { useForm } from '@inertiajs/react';
-import { Button } from '../ui/button';
+import ModalButtons from '../ModalButtons';
 
 export default function CreateCargoModal({ show, onClose }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -53,21 +53,11 @@ export default function CreateCargoModal({ show, onClose }) {
                             <p className="text-red-500 text-sm mt-1">{errors.permissao}</p>
                         )}
                     </div>
-                    <div className="flex justify-end space-x-2">
-                        <Button
-                            onClick={handleCancel}
-                            variant="outline"
-                        >
-                            Cancelar
-                        </Button>
-                        <Button
-                            type="submit"
-                            variant="secondary"
-                            disabled={processing}
-                        >
-                            {processing ? 'Salvando...' : 'Criar Cargo'}
-                        </Button>
-                    </div>
+                    <ModalButtons
+                        onCancelar={handleCancel}
+                        processing={processing}
+                        textoConfirmar='Criar Cargo'
+                    />
                 </form>
             </div>
         </Modal>

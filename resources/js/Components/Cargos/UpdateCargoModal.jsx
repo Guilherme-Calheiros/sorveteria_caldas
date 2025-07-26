@@ -1,7 +1,7 @@
 import Modal from '@/Components/Modal';
-import { Button } from '../ui/button';
 import { useForm } from '@inertiajs/react';
 import { useEffect } from 'react';
+import ModalButtons from '../ModalButtons';
 
 export default function UpdateCargoModal({ show, onClose, cargo}) {
     const { data, setData, put, processing, errors, reset } = useForm({
@@ -64,21 +64,11 @@ export default function UpdateCargoModal({ show, onClose, cargo}) {
                             <p className="text-red-500 text-sm mt-1">{errors.permissao}</p>
                         )}
                     </div>
-                    <div className="flex justify-end space-x-2">
-                        <Button
-                            onClick={handleCancel}
-                            variant="outline"
-                        >
-                            Cancelar
-                        </Button>
-                        <Button
-                            type="submit"
-                            variant="secondary"
-                            disabled={processing}
-                        >
-                            {processing ? 'Salvando...' : 'Editar Cargo'}
-                        </Button>
-                    </div>
+                    <ModalButtons
+                        onCancelar={handleCancel}
+                        processing={processing}
+                        textoConfirmar='Editar Cargo'
+                    />
                 </form>
             </div>
         </Modal>

@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Head, Link } from '@inertiajs/react';
-import { FaTrash, FaEdit, FaPlus } from "react-icons/fa";
+import { LuTrash, LuSquarePen, LuPlus } from "react-icons/lu";
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import CreateCargoModal from "@/Components/Cargos/CreateCargoModal";
 import UpdateCargoModal from "@/Components/Cargos/UpdateCargoModal";
-import DeleteCargoModal from "@/Components/Cargos/DeleteCargoModal";
 import { Button } from "@/Components/ui/button";
+import DeleteModal from "@/Components/DeleteModal";
+import TableActions from "@/Components/TableActions";
 
 export default function Index({ cargos }){
     const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -32,8 +33,9 @@ export default function Index({ cargos }){
                     <Button
                         onClick={() => setShowCreateModal(true)}
                         variant="secondary"
+                        className="text-base"
                     >
-                        Adicionar Cargo <FaPlus/>
+                        <LuPlus/> Adicionar Cargo 
                     </Button>
                 </div>
                 <table className="table-auto w-full border">
@@ -50,14 +52,10 @@ export default function Index({ cargos }){
                                 <td className="p-2 border">{cargo.id}</td>
                                 <td className="p-2 border">{cargo.name}</td>
                                 <td className="p-2 border">
-                                    <div className="flex justify-center items-center">
-                                        <Button onClick={() => editarCargo(cargo)} variant="ghost" size="icon">
-                                            <FaEdit/>
-                                        </Button>
-                                        <Button onClick={() => excluirCargo(cargo)} variant="ghost" size="icon">
-                                            <FaTrash/>
-                                        </Button>
-                                    </div>
+                                    <TableActions
+                                        onEditar={() => editarCargo(cargo)}
+                                        onExcluir={() => excluirCargo(cargo)}
+                                    />
                                 </td>
                             </tr>
                         ))}
@@ -86,10 +84,13 @@ export default function Index({ cargos }){
                     onClose={() => setShowUpdateModal(false)}
                     cargo={selectedCargo}
                 />
-                <DeleteCargoModal
+                <DeleteModal
                     show={showDeleteModal}
                     onClose={() => setShowDeleteModal(false)}
-                    cargo={selectedCargo}
+                    element={selectedCargo}
+                    routeName='cargos.destroy'
+                    label='Cargo'
+                    message={`Tem certeza que deseja excluir o cargo "${selectedCargo?.name}"?`}
                 />
             </div>
         </AuthenticatedLayout>
