@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "@inertiajs/react";
-import { Button } from "./ui/button";
 import Modal from "./Modal";
+import ModalButtons from "./ModalButtons";
 
 export default function DeleteModal({show, onClose, element, routeName, label, message}){
     const {delete: destroy, processing} = useForm({});
@@ -27,19 +27,12 @@ export default function DeleteModal({show, onClose, element, routeName, label, m
                     {message ? message : `Deseja mesmo excluir ${element?.name}?`}
                 </p>
                 <form onSubmit={handleSubmit} className="flex justify-end space-x-2">
-                    <Button
-                        onClick={handleCancel}
-                        variant="outline"
-                    >
-                        Cancelar
-                    </Button>
-                    <Button
-                        type="submit"
-                        disabled={processing}
-                        variant="destructive"
-                    >
-                        {processing ? 'Excluindo...' : `Excluir ${label}`}
-                    </Button>
+                    <ModalButtons
+                        onCancelar={handleCancel}
+                        processing={processing}
+                        textoConfirmar={processing ? 'Excluindo...' : `Excluir ${label}`}
+                        variantConfirmar="destructive"
+                    />
                 </form>
             </div>
         </Modal>
