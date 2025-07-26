@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Head, Link } from '@inertiajs/react';
-import { LuTrash, LuSquarePen, LuPlus } from "react-icons/lu";
+import { LuPlus } from "react-icons/lu";
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import CreateCargoModal from "@/Components/Cargos/CreateCargoModal";
 import UpdateCargoModal from "@/Components/Cargos/UpdateCargoModal";

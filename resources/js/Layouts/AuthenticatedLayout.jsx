@@ -1,16 +1,13 @@
 import ApplicationLogo from '@/Components/ApplicationLogo';
-import { LuReceiptText, LuIceCreamCone, LuHouse, LuPackage, LuUsers, LuBriefcaseBusiness } from "react-icons/lu";
+import { LuReceiptText, LuIceCreamCone, LuHouse, LuPackage, LuUsers, LuBriefcaseBusiness, LuChevronDown } from "react-icons/lu";
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link, usePage } from '@inertiajs/react';
-import { useState } from 'react';
+import { Button } from '@/Components/ui/button';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 
 export default function AuthenticatedLayout({ header, children }) {
     const {user, temPermissao} = usePage().props.auth;
-
-    const [showingNavigationDropdown, setShowingNavigationDropdown] =
-        useState(false);
 
     return (
         <div className="min-h-screen bg-gray-100">
@@ -73,7 +70,34 @@ export default function AuthenticatedLayout({ header, children }) {
                         )}
                     </div>
                 </aside>
-                <main className="flex-1 p-6 bg-gray-100">{children}</main>
+                <main className="flex-1 p-6 bg-gray-100">
+                    <div className="w-full flex justify-end">
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <span className="inline-flex rounded-md">
+                                    <Button
+                                        variant="ghost"
+                                    >
+                                        {user.name} <LuChevronDown/>
+                                    </Button>
+                                </span>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent>
+                                <DropdownMenuItem asChild>
+                                    <Link href={route('profile.edit')}>
+                                        Perfil
+                                    </Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <Link href={route('logout')} method="post" as="button" className="w-full text-left">
+                                        Sair
+                                    </Link>
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    </div>
+                    {children}
+                </main>
             </div>
         </div>
     );
