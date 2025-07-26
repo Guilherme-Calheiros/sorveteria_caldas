@@ -38,7 +38,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
         return Inertia::render('Admin/Auth/TrocarSenha');
     })->name('password.change');
 
-    Route::resource('pedidos', PedidoController::class)->except(['create', 'store']);
+    Route::resource('pedidos', PedidoController::class)->except(['store']);
 
     Route::middleware('permissao.acesso:acesso_total')->group(function () {
         Route::resource('usuarios', UserController::class);
