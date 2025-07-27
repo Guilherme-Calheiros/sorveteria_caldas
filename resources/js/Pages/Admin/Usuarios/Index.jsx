@@ -7,6 +7,7 @@ import { LuSquarePen, LuPlus } from "react-icons/lu";
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { formataTelefone } from '@/Utils/telefone';
 import { Button } from '@/Components/ui/button';
+import PrimaryButton from '@/Components/PrimaryButton';
 
 export default function Index({ usuarios, cargos }) {
     const [showCreateModal, setShowCreateModal] = useState(false);
@@ -30,13 +31,12 @@ export default function Index({ usuarios, cargos }) {
                 <Head title="Funcionários" />
                 <div className="p-2 flex justify-between items-center">
                     <h1 className="text-2xl font-bold">Lista de usuários</h1>
-                    <Button
+                    <PrimaryButton
                         onClick={() => setShowCreateModal(true)}
-                        variant="secondary"
                         className="text-base"
                     >
                         <LuPlus/> Adicionar Funcionário
-                    </Button>
+                    </PrimaryButton>
                 </div>
                 <table className="table-auto w-full border">
                     <thead>

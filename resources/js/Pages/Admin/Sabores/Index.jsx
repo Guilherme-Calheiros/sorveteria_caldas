@@ -4,9 +4,9 @@ import CreateSaborModal from "@/Components/Sabores/CreateSaborModal";
 import UpdateSaborModal from "@/Components/Sabores/UpdateSaborModal";
 import { LuPlus } from "react-icons/lu";
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Button } from "@/Components/ui/button";
 import DeleteModal from "@/Components/DeleteModal";
 import TableActions from "@/Components/TableActions";
+import PrimaryButton from "@/Components/PrimaryButton";
 
 export default function Index({ sabores }){
     const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -30,13 +30,12 @@ export default function Index({ sabores }){
                 <Head title="Sabores"/>
                 <div className="p-2 flex justify-between items-center">
                     <h1 className="text-2xl font-bold">Lista de sabores</h1>
-                    <Button
+                    <PrimaryButton
                         onClick={() => setShowCreateModal(true)}
-                        variant="secondary"
                         className="text-base"
                     >
                         <LuPlus/> Adicionar Sabor
-                    </Button>
+                    </PrimaryButton>
                 </div>
                 <table className="table-auto w-full border">
                     <thead>

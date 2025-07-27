@@ -5,9 +5,9 @@ import CreateEembalagemModal from "@/Components/Embalagens/CreateEmbalagemModal"
 import UpdateEembalagemModal from "@/Components/Embalagens/UpdateEmbalagemModal";
 import { formataMoeda } from '@/Utils/moeda';
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Button } from "@/Components/ui/button";
 import DeleteModal from "@/Components/DeleteModal";
 import TableActions from "@/Components/TableActions";
+import PrimaryButton from "@/Components/PrimaryButton";
 
 export default function Index({ embalagens }){
     const [showCreateModal, setShowCreateModal] = useState(false)
@@ -31,13 +31,13 @@ export default function Index({ embalagens }){
                 <Head title="Embalagens"/>
                 <div className="p-2 flex justify-between items-center">
                     <h1 className="text-2xl font-bold">Lista de embalagens</h1>
-                    <Button
+                    <PrimaryButton
                         onClick={() => setShowCreateModal(true)}
                         variant="secondary"
                         className="text-base"
                     >
                         <LuPlus/> Adicionar Embalagem
-                    </Button>
+                    </PrimaryButton>
                 </div>
                 <table className="table-auto w-full border">
                     <thead>

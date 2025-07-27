@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import SecondaryButton from "./SecondaryButton";
 
 export default function ModalButtons({
     onCancelar,
@@ -7,13 +8,13 @@ export default function ModalButtons({
     textoCancelar = "Cancelar",
     processing = false,
     tipoConfirmar = "submit",
-    variantConfirmar = "secondary"
+    variantConfirmar = "default"
 }) {
     return (
         <div className="flex justify-end gap-2">
-            <Button onClick={onCancelar} variant="outline" type="button">
+            <SecondaryButton onClick={onCancelar}>
                 {textoCancelar}
-            </Button>
+            </SecondaryButton>
             <Button
                 type={tipoConfirmar}
                 disabled={processing}

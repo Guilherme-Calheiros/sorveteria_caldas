@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import CreateClienteModal from "@/Components/Cliente/CreateClienteModal";
 import CreateItemPedidoModal from "@/Components/Pedidos/CreateItemPedidoModal";
 import { formataMoeda } from "@/Utils/moeda";
-import { Button } from "@/Components/ui/button";
+import PrimaryButton from "@/Components/PrimaryButton";
 
 export default function Create({ sabores, embalagens}){
     const [showClienteModal, setShowClienteModal] = useState(false);
@@ -80,21 +80,19 @@ export default function Create({ sabores, embalagens}){
                             formataMoeda(itens.reduce((acc, item) => acc + (item.preco_total || 0), 0))
                         }
                     </p>
-                    <Button
+                    <PrimaryButton
                         onClick={() => setShowItemPedidoModal(true)}
-                        variant="secondary"
                     >
                         Adicionar Item
-                    </Button>
+                    </PrimaryButton>
                 </div>
                 <div>
-                    <Button
+                    <PrimaryButton
                         type="submit"
                         disabled={processing}
-                        variant="secondary"
                     >
                         {processing ? 'Salvando...' : 'Criar Pedido'}
-                    </Button>
+                    </PrimaryButton>
                 </div>
             </form>
             <CreateClienteModal

@@ -3,6 +3,7 @@ import Modal from "@/Components/Modal";
 import ModalAvisoSabor from "./ModalSaborAviso";
 import { LuPlus } from "react-icons/lu";
 import { Button } from "../ui/button";
+import PrimaryButton from "../PrimaryButton";
 
 export default function CreateItemPedidoModal({ show, onClose, onItemAdd, sabores = [], embalagens = [] }) {
     const [embalagemId, setEmbalagemId] = useState('');
@@ -141,13 +142,12 @@ export default function CreateItemPedidoModal({ show, onClose, onItemAdd, sabore
                                 <option key={s.id} value={s.id}>{s.name}</option>
                             ))}
                     </select>
-                    <Button
+                    <PrimaryButton
                         onClick={handleAddSabor}
-                        variant="secondary"
                         disabled={!selectedSabor || !embalagemId}
                     >
                         <LuPlus/>
-                    </Button>
+                    </PrimaryButton>
                 </div>
 
                 <ul className="list-disc ml-6 space-y-1">
@@ -179,13 +179,12 @@ export default function CreateItemPedidoModal({ show, onClose, onItemAdd, sabore
                 )}
 
                 <div className="flex justify-end">
-                    <Button
+                    <PrimaryButton
                         onClick={handleAddItem}
                         disabled={!embalagemId || selectedSabores.length == 0}
-                        variant="secondary"
                     >
                         Adicionar
-                    </Button>
+                    </PrimaryButton>
                 </div>
             </div>
         </Modal>
