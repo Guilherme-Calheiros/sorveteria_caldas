@@ -5,6 +5,7 @@ import InputTelefone from '../InputTelefone';
 import InputEmail from '../InputEmail';
 import { desformataTelefone } from '@/Utils/telefone';
 import ModalButtons from '../ModalButtons'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 export default function CreateUserModal({ show, onClose, cargos }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -36,7 +37,7 @@ export default function CreateUserModal({ show, onClose, cargos }) {
     };
 
     return (
-        <Modal show={show} onClose={onClose} maxWidth="md">
+        <Modal show={show} onClose={onClose} maxWidth="md" disableOutsideClick={true}>
             <div className="p-6">
                 <h2 className="text-lg font-semibold text-gray-900 mb-4">Adicionar novo Funcionário</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -71,17 +72,16 @@ export default function CreateUserModal({ show, onClose, cargos }) {
                         )}
                     </div>
                     <div>
-                        <select
-                            value={data.cargo_id}
-                            onChange={(e) => setData('cargo_id', e.target.value)}
-                            >
-                            <option value="">Selecione um cargo</option>
-                            {cargos.map((cargo) => (
-                                <option key={cargo.id} value={cargo.id}>
-                                {cargo.name}
-                                </option>
-                            ))}
-                        </select>
+                        <Select onValueChange={(value) => setData('cargo_id', value)}>
+                            <SelectTrigger className="w-full">
+                                <SelectValue placeholder="Selecione um cargo" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {cargos.map((cargo) => (
+                                    <SelectItem key={cargo.id} value={cargo.id}>{cargo.name}</SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
                         {errors.cargo_id && <p className="text-red-500">{errors.cargo_id}</p>}
                     </div>
                     <ModalButtons

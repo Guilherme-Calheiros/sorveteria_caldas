@@ -2,6 +2,7 @@ import Modal from '@/Components/Modal';
 import { useForm } from '@inertiajs/react';
 import { useEffect } from 'react';
 import ModalButtons from '../ModalButtons';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 export default function UpdateCargoModal({ show, onClose, cargo}) {
     const { data, setData, put, processing, errors, reset } = useForm({
@@ -16,7 +17,7 @@ export default function UpdateCargoModal({ show, onClose, cargo}) {
                 permissao: cargo.permissao
             })
         }
-    }, [cargo])
+    }, [show, cargo])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -35,7 +36,7 @@ export default function UpdateCargoModal({ show, onClose, cargo}) {
     };
 
     return (
-        <Modal show={show} onClose={onClose} maxWidth="md">
+        <Modal show={show} onClose={onClose} maxWidth="md" disableOutsideClick={true}>
             <div className="p-6">
                 <h2 className="text-lg font-semibold text-gray-900 mb-4">Editar cargo</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -52,14 +53,15 @@ export default function UpdateCargoModal({ show, onClose, cargo}) {
                         )}
                     </div>
                     <div>
-                        <select
-                            value={data.permissao}
-                            onChange={(e) => setData('permissao', e.target.value)}
-                            className="w-full border border-gray-300 rounded px-3 py-2"
-                        >
-                            <option value="acesso_total">Acesso Total</option>
-                            <option value="acesso_limitado">Acesso Limitado</option>
-                        </select>
+                        <Select onValueChange={(value) => setData('permissao', value)} value={data.permissao}>
+                            <SelectTrigger className="w-full">
+                                <SelectValue placeholder="Cargo" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="acesso_total">Acesso Total</SelectItem>
+                                <SelectItem value="acesso_limitado">Acesso Limitado</SelectItem>
+                            </SelectContent>
+                        </Select>
                         {errors.permissao && (
                             <p className="text-red-500 text-sm mt-1">{errors.permissao}</p>
                         )}

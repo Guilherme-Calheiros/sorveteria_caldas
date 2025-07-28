@@ -33,7 +33,6 @@ export default function Index({ embalagens }){
                     <h1 className="text-2xl font-bold">Lista de embalagens</h1>
                     <PrimaryButton
                         onClick={() => setShowCreateModal(true)}
-                        variant="secondary"
                         className="text-base"
                     >
                         <LuPlus/> Adicionar Embalagem

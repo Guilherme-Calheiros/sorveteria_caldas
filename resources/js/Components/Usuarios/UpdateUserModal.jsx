@@ -3,7 +3,8 @@ import { useForm } from '@inertiajs/react';
 import { useEffect } from 'react';
 import InputTelefone from '../InputTelefone';
 import InputEmail from '../InputEmail';
-import ModalButtons from '../ModalButtons';
+import ModalButtons from '../ModalButtons'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 export default function UpdateUserModal({ show, onClose, cargos, user }) {
     
@@ -77,17 +78,18 @@ export default function UpdateUserModal({ show, onClose, cargos, user }) {
                         )}
                     </div>
                     <div>
-                        <select
-                            value={data.cargo_id}
-                            onChange={(e) => setData('cargo_id', e.target.value)}
-                            >
-                            <option value="">Selecione um cargo</option>
-                            {cargos.map((cargo) => (
-                                <option key={cargo.id} value={cargo.id}>
-                                {cargo.name}
-                                </option>
-                            ))}
-                        </select>
+                        <Select onValueChange={(value) => setData('cargo_id', value)} value={data.cargo_id}>
+                            <SelectTrigger className="w-full">
+                                <SelectValue placeholder="Selecione um cargo">
+                                    {cargos.find(c => String(c.id) === String(data.cargo_id))?.name}
+                                </SelectValue>
+                            </SelectTrigger>
+                            <SelectContent>
+                                {cargos.map((cargo) => (
+                                    <SelectItem key={cargo.id} value={cargo.id}>{cargo.name}</SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
                         {errors.cargo_id && <p className="text-red-500">{errors.cargo_id}</p>}
                     </div>
                     <ModalButtons
