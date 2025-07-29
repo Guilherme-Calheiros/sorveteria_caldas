@@ -1,4 +1,7 @@
 import { useState } from "react";
+import InputError from "./InputError";
+import { Input } from "./ui/input";
+
 
 export default function InputEmail({ value, onChange}) {
     const [emailError, setEmailError] = useState('')
@@ -17,17 +20,15 @@ export default function InputEmail({ value, onChange}) {
 
     return(
         <div>
-            <input
-                type="text"
+            <Input
+                type="email"
                 value={value}
                 placeholder="Email"
+                isFocused={false}
                 onBlur={handleBlur}
                 onChange={(e) => onChange(e.target.value)}
-                className="w-full border border-gray-300 rounded px-3 py-2"
             />
-            {emailError && (
-                <p className="text-red-500 text-sm mt-1">{emailError}</p>
-            )}
+            <InputError message={emailError} className="mt-1" />
         </div>
     )
 }

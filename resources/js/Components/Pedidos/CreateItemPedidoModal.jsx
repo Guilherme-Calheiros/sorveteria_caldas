@@ -6,6 +6,7 @@ import { Button } from "../ui/button";
 import PrimaryButton from "../PrimaryButton";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import ModalButtons from "../ModalButtons";
+import { Input } from "../ui/input";
 
 export default function CreateItemPedidoModal({ show, onClose, onItemAdd, sabores = [], embalagens = [] }) {
     const [embalagemId, setEmbalagemId] = useState('');
@@ -138,7 +139,7 @@ export default function CreateItemPedidoModal({ show, onClose, onItemAdd, sabore
                 )}
 
                 <div>
-                    <input
+                    <Input
                         type="number"
                         min={1}
                         max={10}
@@ -147,7 +148,6 @@ export default function CreateItemPedidoModal({ show, onClose, onItemAdd, sabore
                             const val = parseInt(e.target.value.replace(/\D/g, ''), 10);
                             setQuantidade(val > 0 ? val : 1);
                         }}
-                        className="w-full border border-gray-300 rounded px-3 py-2"
                     />
                 </div>
 

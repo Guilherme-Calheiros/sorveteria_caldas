@@ -3,6 +3,8 @@ import { useForm } from '@inertiajs/react';
 import InputMoney from '../InputMoney';
 import { useEffect } from 'react';
 import ModalButtons from '../ModalButtons';
+import TextInput from '../TextInput';
+import { Input } from '../ui/input';
 
 export default function UpdateEembalagemModal({ show, onClose, embalagem}) {
     const { data, setData, put, processing, errors, reset } = useForm({
@@ -45,20 +47,17 @@ export default function UpdateEembalagemModal({ show, onClose, embalagem}) {
                 <h2 className="text-lg font-semibold text-gray-900 mb-4">Editar embalagem</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
-                        <input
-                            type="text"
+                        <TextInput
                             value={data.name}
                             placeholder="Nome"
                             onChange={(e) => setData('name', e.target.value)}
-                            className="w-full border border-gray-300 rounded px-3 py-2"
                         />
                         {errors.name && (
                             <p className="text-red-500 text-sm mt-1">{errors.name}</p>
                         )}
                     </div>
                     <div>
-                        <input
-                            type="text"
+                        <Input
                             inputMode="numeric"
                             placeholder="Número máximo de sabores"
                             value={data.maximo_sabores}
@@ -67,7 +66,6 @@ export default function UpdateEembalagemModal({ show, onClose, embalagem}) {
                                 if (val.length > 1) val = val.slice(0, 1);
                                 setData('maximo_sabores', val);
                             }}
-                            className="w-full border border-gray-300 rounded px-3 py-2"
                         />
                         {errors.maximo_sabores && <p className="text-red-500 text-sm mt-1">{errors.maximo_sabores}</p>}
                     </div>

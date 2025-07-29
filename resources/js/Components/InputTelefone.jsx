@@ -1,5 +1,6 @@
 import { desformataTelefone, formataTelefone, isTelefoneValido } from '@/Utils/telefone';
 import React, { useState, useEffect } from 'react';
+import { Input } from './ui/input';
 
 export default function InputTelefone({ value = '', onChange }) {
     const [telefone, setTelefone] = useState(formataTelefone(value));
@@ -30,13 +31,12 @@ export default function InputTelefone({ value = '', onChange }) {
 
     return (
         <div>
-        <input
+        <Input
             type="tel"
             value={telefone}
             onChange={handleChange}
             onBlur={handleBlur}
             placeholder="(00) 00000-0000"
-            className='w-full border border-gray-300 rounded px-3 py-2'
         />
         {error && <p style={{ color: 'red' }}>{error}</p>}
         </div>
