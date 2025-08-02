@@ -7,6 +7,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import DeleteModal from "@/Components/DeleteModal";
 import TableActions from "@/Components/TableActions";
 import PrimaryButton from "@/Components/PrimaryButton";
+import Paginator from "@/Components/Paginator";
 
 export default function Index({ sabores }){
     const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -60,19 +61,7 @@ export default function Index({ sabores }){
                         ))}
                     </tbody>
                 </table>
-                <div className="mt-5">
-                    {sabores.prev_page_url && (
-                        <Link href={sabores.prev_page_url}>&laquo; Anterior</Link>
-                    )}
-
-                    <span className="text-text-color-secondary my-3">
-                        Página {sabores.current_page} de {sabores.last_page}
-                    </span>
-
-                    {sabores.next_page_url && (
-                        <Link href={sabores.next_page_url}>Próxima &raquo;</Link>
-                    )}
-                </div>
+                <Paginator items={sabores}/>
                 <CreateSaborModal
                     key={showCreateModal ? 'show' : 'hide'}
                     show={showCreateModal}

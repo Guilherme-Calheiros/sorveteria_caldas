@@ -2,6 +2,7 @@ import { Head, Link } from "@inertiajs/react";
 import React from "react";
 import { formataMoeda } from '@/Utils/moeda';
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import Paginator from "@/Components/Paginator";
 
 export default function Index({pedidos}){
     return (
@@ -37,19 +38,7 @@ export default function Index({pedidos}){
                         )}
                     </tbody>
                 </table>
-                <div className="mt-5">
-                    {pedidos.prev_page_url && (
-                        <Link href={pedidos.prev_page_url}>&laquo; Anterior</Link>
-                    )}
-
-                    <span className="text-text-color-secondary my-3">
-                        Página {pedidos.current_page} de {pedidos.last_page}
-                    </span>
-
-                    {pedidos.next_page_url && (
-                        <Link href={pedidos.next_page_url}>Próxima &raquo;</Link>
-                    )}
-                </div>
+                <Paginator items={pedidos}/>
             </div>
         </AuthenticatedLayout>
     )

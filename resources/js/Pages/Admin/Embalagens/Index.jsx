@@ -8,6 +8,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import DeleteModal from "@/Components/DeleteModal";
 import TableActions from "@/Components/TableActions";
 import PrimaryButton from "@/Components/PrimaryButton";
+import Paginator from "@/Components/Paginator";
 
 export default function Index({ embalagens }){
     const [showCreateModal, setShowCreateModal] = useState(false)
@@ -67,19 +68,8 @@ export default function Index({ embalagens }){
                         ))}
                     </tbody>
                 </table>
-                <div className="mt-5">
-                    {embalagens.prev_page_url && (
-                        <Link href={embalagens.prev_page_url}>&laquo; Anterior</Link>
-                    )}
-
-                    <span className="text-text-color-secondary my-3">
-                        Página {embalagens.current_page} de {embalagens.last_page}
-                    </span>
-
-                    {embalagens.next_page_url && (
-                        <Link href={embalagens.next_page_url}>Próxima &raquo;</Link>
-                    )}
-                </div>
+                
+                <Paginator items={embalagens}/>
 
                 <CreateEembalagemModal
                     show={showCreateModal}

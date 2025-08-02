@@ -8,6 +8,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { formataTelefone } from '@/Utils/telefone';
 import { Button } from '@/Components/ui/button';
 import PrimaryButton from '@/Components/PrimaryButton';
+import Paginator from '@/Components/Paginator';
 
 export default function Index({ usuarios, cargos }) {
     const [showCreateModal, setShowCreateModal] = useState(false);
@@ -73,19 +74,8 @@ export default function Index({ usuarios, cargos }) {
                         ))}
                     </tbody>
                 </table>
-                <div className="mt-5">
-                    {usuarios.prev_page_url && (
-                        <Link href={usuarios.prev_page_url}>&laquo; Anterior</Link>
-                    )}
-
-                    <span className="text-text-color-secondary my-3">
-                        Página {usuarios.current_page} de {usuarios.last_page}
-                    </span>
-
-                    {usuarios.next_page_url && (
-                        <Link href={usuarios.next_page_url}>Próxima &raquo;</Link>
-                    )}
-                </div>
+                
+                <Paginator items={usuarios}/>
 
                 <CreateUserModal
                     show={showCreateModal}

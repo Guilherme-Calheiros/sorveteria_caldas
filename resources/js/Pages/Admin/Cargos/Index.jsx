@@ -7,6 +7,7 @@ import UpdateCargoModal from "@/Components/Cargos/UpdateCargoModal";
 import DeleteModal from "@/Components/DeleteModal";
 import TableActions from "@/Components/TableActions";
 import PrimaryButton from "@/Components/PrimaryButton";
+import Paginator from "@/Components/Paginator";
 
 export default function Index({ cargos }){
     const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -60,19 +61,9 @@ export default function Index({ cargos }){
                         ))}
                     </tbody>
                 </table>
-                <div className="mt-5">
-                    {cargos.prev_page_url && (
-                        <Link href={cargos.prev_page_url}>&laquo; Anterior</Link>
-                    )}
 
-                    <span className="text-text-color-secondary my-3">
-                        Página {cargos.current_page} de {cargos.last_page}
-                    </span>
+                <Paginator items={cargos}/>
 
-                    {cargos.next_page_url && (
-                        <Link href={cargos.next_page_url}>Próxima &raquo;</Link>
-                    )}
-                </div>
                 <CreateCargoModal
                     key={showCreateModal ? 'show' : 'hide'}
                     show={showCreateModal}
