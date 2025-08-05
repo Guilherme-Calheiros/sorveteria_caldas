@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Modal from "@/Components/Modal";
 import ModalAvisoSabor from "./ModalSaborAviso";
-import { FaPlus } from "react-icons/fa";
+import { LuPlus } from "react-icons/lu";
+import { Button } from "../ui/button";
+import PrimaryButton from "../PrimaryButton";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import ModalButtons from "../ModalButtons";
+import { Input } from "../ui/input";
 
 export default function CreateItemPedidoModal({ show, onClose, onItemAdd, sabores = [], embalagens = [] }) {
     const [embalagemId, setEmbalagemId] = useState('');
@@ -43,7 +48,7 @@ export default function CreateItemPedidoModal({ show, onClose, onItemAdd, sabore
     };
 
     const cancelarAdicionarExtra = () => {
-        setPendingExtraSabor('');
+        setSaborExtra('');
         setShowModalSaborAviso(false);
     };
 
@@ -87,26 +92,44 @@ export default function CreateItemPedidoModal({ show, onClose, onItemAdd, sabore
         setSelectedSabores(selectedSabores.filter(id => id !== saborId));
     };
 
+    const handleCancel = () => {
+        setEmbalagemId('');
+        setSelectedEmbalagem({});
+        setQuantidade(1);
+        setMaximoSabores(0);
+        setSaborExtra('');
+        setSelectedSabores([]);
+        setSelectedSabor('');
+        setShowModalSaborAviso(false);
+        onClose();
+    };
+
+    const selectedIds = selectedSabores.map(id => Number(id));
+    const filteredSabores = sabores.filter(s => !selectedIds.includes(s.id));
+
     return (
-        <Modal show={show} onClose={onClose} maxWidth="md">
+        <Modal show={show} onClose={onClose} maxWidth="md" disableOutsideClick={true}>
             <div className="p-6 space-y-4">
                 <h2 className="text-lg font-semibold">Adicionar Item</h2>
 
                 <div>
-                    <select
-                        value={embalagemId}
-                        onChange={e => {
-                            setEmbalagemId(e.target.value);
+                    <Select 
+                        onValueChange={(value) => {
+                            setEmbalagemId(value);
                             setSelectedSabores([]);
                             setSelectedSabor('');
                         }}
-                        className="w-full border rounded px-2 py-1"
+                        value={embalagemId}  
                     >
-                        <option value="">Selecione a Embalagem</option>
-                        {embalagens.map(e => (
-                            <option key={e.id} value={e.id}>{e.name}</option>
-                        ))}
-                    </select>
+                        <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Selecione a Embalagem" />
+                        </SelectTrigger>
+                        <SelectContent>
+                           {embalagens.map(e => (
+                                <SelectItem key={e.id} value={e.id}>{e.name}</SelectItem>
+                           ))}
+                        </SelectContent>
+                    </Select>
                 </div>
 
                 {selectedEmbalagem && selectedEmbalagem.maximo_sabores > 0 &&(
@@ -116,38 +139,35 @@ export default function CreateItemPedidoModal({ show, onClose, onItemAdd, sabore
                 )}
 
                 <div>
-                    <input
+                    <Input
                         type="number"
                         min={1}
                         max={10}
                         value={quantidade}
-                        onChange={(e) => setQuantidade(e.target.value.replace(/\D/g, ''))}
-                        className="w-full border border-gray-300 rounded px-3 py-2"
+                        onChange={(e) => {
+                            const val = parseInt(e.target.value.replace(/\D/g, ''), 10);
+                            setQuantidade(val > 0 ? val : 1);
+                        }}
                     />
                 </div>
 
                 <div className="flex items-center space-x-2">
-                    <select
-                        value={selectedSabor}
-                        onChange={e => setSelectedSabor(e.target.value)}
-                        className="flex-1 border rounded px-2 py-1"
-                        disabled={!embalagemId}
-                    >
-                        <option value="">Escolha um sabor</option>
-                        {sabores
-                            .filter(s => !selectedSabores.includes(String(s.id)))
-                            .map(s => (
-                                <option key={s.id} value={s.id}>{s.name}</option>
+                    <Select onValueChange={(value) => setSelectedSabor(value)} value={selectedSabor}>
+                        <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Selecione um sabor" />
+                        </SelectTrigger>
+                        <SelectContent>
+                           {filteredSabores.map(s => (
+                                <SelectItem key={s.id} value={s.id}>{s.name}</SelectItem>
                             ))}
-                    </select>
-                    <button
-                        type="button"
+                        </SelectContent>
+                    </Select>
+                    <PrimaryButton
                         onClick={handleAddSabor}
-                        className="px-3 py-2 bg-blue-600 text-white rounded"
                         disabled={!selectedSabor || !embalagemId}
                     >
-                        <FaPlus/>
-                    </button>
+                        <LuPlus/>
+                    </PrimaryButton>
                 </div>
 
                 <ul className="list-disc ml-6 space-y-1">
@@ -156,12 +176,12 @@ export default function CreateItemPedidoModal({ show, onClose, onItemAdd, sabore
                         return (
                             <li key={id} className="flex items-center justify-between">
                                 {sabor?.name}
-                                <button
+                                <Button
                                     onClick={() => handleRemoveSabor(id)}
-                                    className="text-red-600 text-sm ml-2"
+                                    variant="link"
                                 >
-                                    remover
-                                </button>
+                                    Remover
+                                </Button>
                             </li>
                         );
                     })}
@@ -171,7 +191,7 @@ export default function CreateItemPedidoModal({ show, onClose, onItemAdd, sabore
                     <ModalAvisoSabor
                         show={showModalSaborAviso}
                         onClose={() => {
-                            cancelarAdicionarExtra
+                            cancelarAdicionarExtra()
                         }}
                         onConfirm={confirmarAdicionarExtra}
                         precoSaborExtra={selectedEmbalagem.preco_sabor_extra}
@@ -179,13 +199,13 @@ export default function CreateItemPedidoModal({ show, onClose, onItemAdd, sabore
                 )}
 
                 <div className="flex justify-end">
-                    <button
-                        onClick={handleAddItem}
-                        disabled={!embalagemId}
-                        className={`px-4 py-2 rounded text-white ${embalagemId ? 'bg-green-600' : 'bg-gray-400 cursor-not-allowed'}`}
-                    >
-                        Adicionar
-                    </button>
+                    <ModalButtons
+                        onCancelar={handleCancel}
+                        onConfirmar={handleAddItem}
+                        textoConfirmar="Adicionar"
+                        processing={false}
+                        tipoConfirmar="button"
+                    />
                 </div>
             </div>
         </Modal>

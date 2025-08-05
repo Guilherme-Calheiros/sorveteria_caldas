@@ -1,6 +1,9 @@
 import Modal from '@/Components/Modal';
 import { useForm } from '@inertiajs/react';
 import InputMoney from '../InputMoney';
+import ModalButtons from '../ModalButtons';
+import TextInput from '../TextInput';
+import { Input } from '../ui/input';
 
 export default function CreateEembalagemModal({ show, onClose }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -31,20 +34,17 @@ export default function CreateEembalagemModal({ show, onClose }) {
                 <h2 className="text-lg font-semibold text-gray-900 mb-4">Adicionar nova embalagem</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
-                        <input
-                            type="text"
+                        <TextInput
                             value={data.name}
                             placeholder="Nome"
                             onChange={(e) => setData('name', e.target.value)}
-                            className="w-full border border-gray-300 rounded px-3 py-2"
                         />
                         {errors.name && (
                             <p className="text-red-500 text-sm mt-1">{errors.name}</p>
                         )}
                     </div>
                     <div>
-                        <input
-                            type="text"
+                        <Input
                             inputMode="numeric"
                             placeholder="Número máximo de sabores"
                             value={data.maximo_sabores}
@@ -53,7 +53,6 @@ export default function CreateEembalagemModal({ show, onClose }) {
                                 if (val.length > 1) val = val.slice(0, 1);
                                 setData('maximo_sabores', val);
                             }}
-                            className="w-full border border-gray-300 rounded px-3 py-2"
                         />
                         {errors.maximo_sabores && <p className="text-red-500 text-sm mt-1">{errors.maximo_sabores}</p>}
                     </div>
@@ -73,22 +72,11 @@ export default function CreateEembalagemModal({ show, onClose }) {
                         />
                         {errors.valor_base && <p className="text-red-500 text-sm mt-1">{errors.valor_base}</p>}
                     </div>
-                    <div className="flex justify-end space-x-2">
-                        <button
-                            type="button"
-                            onClick={handleCancel}
-                            className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400"
-                        >
-                            Cancelar
-                        </button>
-                        <button
-                            type="submit"
-                            disabled={processing}
-                            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                        >
-                            {processing ? 'Salvando...' : 'Criar Embalagem'}
-                        </button>
-                    </div>
+                    <ModalButtons
+                        onCancelar={handleCancel}
+                        processing={processing}
+                        textoConfirmar='Criar Embalagem'
+                    />
                 </form>
             </div>
         </Modal>

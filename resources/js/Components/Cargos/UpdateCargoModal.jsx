@@ -1,9 +1,12 @@
 import Modal from '@/Components/Modal';
 import { useForm } from '@inertiajs/react';
 import { useEffect } from 'react';
+import ModalButtons from '../ModalButtons';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import TextInput from '../TextInput';
 
 export default function UpdateCargoModal({ show, onClose, cargo}) {
-    const { data, setData, post, processing, errors, reset } = useForm({
+    const { data, setData, put, processing, errors, reset } = useForm({
         name: cargo ? cargo.name : '',
         permissao: cargo ? cargo.permissao : '',
     });
@@ -15,11 +18,11 @@ export default function UpdateCargoModal({ show, onClose, cargo}) {
                 permissao: cargo.permissao
             })
         }
-    }, [cargo])
+    }, [show, cargo])
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route('cargos.update', cargo.id), {
+        put(route('cargos.update', cargo.id), {
             data: data,
             onSuccess: () => {
                 reset();
@@ -34,51 +37,39 @@ export default function UpdateCargoModal({ show, onClose, cargo}) {
     };
 
     return (
-        <Modal show={show} onClose={onClose} maxWidth="md">
+        <Modal show={show} onClose={onClose} maxWidth="md" disableOutsideClick={true}>
             <div className="p-6">
                 <h2 className="text-lg font-semibold text-gray-900 mb-4">Editar cargo</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
-                        <input
-                            type="text"
+                        <TextInput
                             value={data.name}
                             placeholder="Nome"
                             onChange={(e) => setData('name', e.target.value)}
-                            className="w-full border border-gray-300 rounded px-3 py-2"
                         />
                         {errors.name && (
                             <p className="text-red-500 text-sm mt-1">{errors.name}</p>
                         )}
                     </div>
                     <div>
-                        <select
-                            value={data.permissao}
-                            onChange={(e) => setData('permissao', e.target.value)}
-                            className="w-full border border-gray-300 rounded px-3 py-2"
-                        >
-                            <option value="acesso_total">Acesso Total</option>
-                            <option value="acesso_limitado">Acesso Limitado</option>
-                        </select>
+                        <Select onValueChange={(value) => setData('permissao', value)} value={data.permissao}>
+                            <SelectTrigger className="w-full">
+                                <SelectValue placeholder="Cargo" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="acesso_total">Acesso Total</SelectItem>
+                                <SelectItem value="acesso_limitado">Acesso Limitado</SelectItem>
+                            </SelectContent>
+                        </Select>
                         {errors.permissao && (
                             <p className="text-red-500 text-sm mt-1">{errors.permissao}</p>
                         )}
                     </div>
-                    <div className="flex justify-end space-x-2">
-                        <button
-                            type="button"
-                            onClick={handleCancel}
-                            className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400"
-                        >
-                            Cancelar
-                        </button>
-                        <button
-                            type="submit"
-                            disabled={processing}
-                            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                        >
-                            {processing ? 'Salvando...' : 'Editar Cargo'}
-                        </button>
-                    </div>
+                    <ModalButtons
+                        onCancelar={handleCancel}
+                        processing={processing}
+                        textoConfirmar='Editar Cargo'
+                    />
                 </form>
             </div>
         </Modal>

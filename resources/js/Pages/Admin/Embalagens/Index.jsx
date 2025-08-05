@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { Head, Link } from '@inertiajs/react';
-import { FaTrash, FaEdit, FaPlus } from "react-icons/fa";
+import { LuPlus } from "react-icons/lu";
 import CreateEembalagemModal from "@/Components/Embalagens/CreateEmbalagemModal";
 import UpdateEembalagemModal from "@/Components/Embalagens/UpdateEmbalagemModal";
 import { formataMoeda } from '@/Utils/moeda';
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import DeleteEmbalagemModal from "@/Components/Embalagens/DeleteEmbalagemModal";
+import DeleteModal from "@/Components/DeleteModal";
+import TableActions from "@/Components/TableActions";
+import PrimaryButton from "@/Components/PrimaryButton";
+import Paginator from "@/Components/Paginator";
 
 export default function Index({ embalagens }){
     const [showCreateModal, setShowCreateModal] = useState(false)
@@ -29,12 +32,12 @@ export default function Index({ embalagens }){
                 <Head title="Embalagens"/>
                 <div className="p-2 flex justify-between items-center">
                     <h1 className="text-2xl font-bold">Lista de embalagens</h1>
-                    <button
+                    <PrimaryButton
                         onClick={() => setShowCreateModal(true)}
-                        className="mb-4 px-4 py-2 bg-secondary-color-500 text-white rounded hover:bg-secondary-color-700 flex items-center gap-2"
+                        className="text-base"
                     >
-                        Adicionar Embalagem <FaPlus/>
-                    </button>
+                        <LuPlus/> Adicionar Embalagem
+                    </PrimaryButton>
                 </div>
                 <table className="table-auto w-full border">
                     <thead>
@@ -56,32 +59,17 @@ export default function Index({ embalagens }){
                                 <td className="p-2 border">{formataMoeda(embalagem.preco_sabor_extra)}</td>
                                 <td className="p-2 border">{formataMoeda(embalagem.valor_base)}</td>
                                 <td className="p-2 border">
-                                    <div className="flex justify-center items-center gap-4">
-                                        <button onClick={() => editarEmbalagem(embalagem)}>
-                                            <FaEdit/>
-                                        </button>
-                                        <button onClick={() => excluirEmbalagem(embalagem)} className="text-red-500">
-                                            <FaTrash/>
-                                        </button>
-                                    </div>
+                                    <TableActions
+                                        onEditar={() => editarEmbalagem(embalagem)}
+                                        onExcluir={() => excluirEmbalagem(embalagem)}
+                                    />
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
-                <div className="mt-5">
-                    {embalagens.prev_page_url && (
-                        <Link href={embalagens.prev_page_url}>&laquo; Anterior</Link>
-                    )}
-
-                    <span className="text-text-color-secondary my-3">
-                        Página {embalagens.current_page} de {embalagens.last_page}
-                    </span>
-
-                    {embalagens.next_page_url && (
-                        <Link href={embalagens.next_page_url}>Próxima &raquo;</Link>
-                    )}
-                </div>
+                
+                <Paginator items={embalagens}/>
 
                 <CreateEembalagemModal
                     show={showCreateModal}
@@ -94,10 +82,13 @@ export default function Index({ embalagens }){
                     embalagem={selectedEmbalagem}
                 />
 
-                <DeleteEmbalagemModal
+                <DeleteModal
                     show={showDeleteModal}
                     onClose={() => setShowDeleteModal(false)}
-                    embalagem={selectedEmbalagem}
+                    element={selectedEmbalagem}
+                    routeName='embalagens.destroy'
+                    label='Embalagem'
+                    message={`Tem certeza que deseja excluir a embalagem "${selectedEmbalagem?.name}"?`}
                 />
             </div>
         </AuthenticatedLayout>

@@ -2,6 +2,7 @@ import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
+import { Input } from '@/Components/ui/input';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
 
@@ -70,12 +71,13 @@ export default function Login({ status, canResetPassword }) {
                             type="checkbox"
                             name="remember"
                             checked={data.remember}
+                            className="rounded"
                             onChange={(e) =>
                                 setData('remember', e.target.checked)
                             }
                         />
                         <span className="ms-2 text-sm text-gray-600">
-                            Remember me
+                            Lembre de mim
                         </span>
                     </label>
                 </div>
@@ -90,7 +92,7 @@ export default function Login({ status, canResetPassword }) {
                         </Link>
                     )}
 
-                    <PrimaryButton className="ms-4" disabled={processing}>
+                    <PrimaryButton className="ms-4" disabled={processing} type="submit">
                         Log in
                     </PrimaryButton>
                 </div>

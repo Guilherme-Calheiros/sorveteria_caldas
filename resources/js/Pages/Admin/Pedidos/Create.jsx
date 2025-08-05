@@ -4,9 +4,10 @@ import { useEffect, useState } from "react";
 import CreateClienteModal from "@/Components/Cliente/CreateClienteModal";
 import CreateItemPedidoModal from "@/Components/Pedidos/CreateItemPedidoModal";
 import { formataMoeda } from "@/Utils/moeda";
+import PrimaryButton from "@/Components/PrimaryButton";
 
 export default function Create({ sabores, embalagens}){
-    const [showClienteModal, setShowClienteModal] = useState(true);
+    const [showClienteModal, setShowClienteModal] = useState(false);
     const [showItemPedidoModal, setShowItemPedidoModal] = useState(false);
     const [itens, setItens] = useState([])
     const [cliente, setCliente] = useState([]);
@@ -79,22 +80,19 @@ export default function Create({ sabores, embalagens}){
                             formataMoeda(itens.reduce((acc, item) => acc + (item.preco_total || 0), 0))
                         }
                     </p>
-                    <button
-                        type="button"
+                    <PrimaryButton
                         onClick={() => setShowItemPedidoModal(true)}
-                        className="mt-4 bg-blue-500 text-white px-4 py-2 rounded"
                     >
                         Adicionar Item
-                    </button>
+                    </PrimaryButton>
                 </div>
                 <div>
-                    <button
+                    <PrimaryButton
                         type="submit"
                         disabled={processing}
-                        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
                     >
                         {processing ? 'Salvando...' : 'Criar Pedido'}
-                    </button>
+                    </PrimaryButton>
                 </div>
             </form>
             <CreateClienteModal

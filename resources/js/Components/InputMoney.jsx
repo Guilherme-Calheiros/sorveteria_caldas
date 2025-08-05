@@ -1,5 +1,6 @@
 import { formataNumeroParaInput, parseInputMoeda } from '@/Utils/moeda';
 import { useState, useEffect } from 'react';
+import { Input } from './ui/input';
 
 export default function InputMoney({ value = '', onChange, addonBefore = 'R$', ...props }) {
   const [currentValue, setCurrentValue] = useState('');
@@ -28,11 +29,11 @@ export default function InputMoney({ value = '', onChange, addonBefore = 'R$', .
         <span className="absolute left-2 top-1/2 -translate-y-1/2 pointer-events-none text-gray-600">
             {addonBefore}
         </span>
-        <input
+        <Input
             {...props}
             value={currentValue}
             onChange={handleChange}
-            className='w-full border border-gray-300 rounded px-8 py-2'
+            className='px-8'
             inputMode="numeric"
         />
     </div>

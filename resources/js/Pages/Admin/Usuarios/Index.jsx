@@ -3,9 +3,12 @@ import { Head } from '@inertiajs/react';
 import CreateUserModal from '@/Components/Usuarios/CreateUserModal';
 import UpdateUserModal from '@/Components/Usuarios/UpdateUserModal';
 import DeleteUserModal from '@/Components/Usuarios/DeleteUserModal';
-import { FaEdit, FaPlus } from "react-icons/fa";
+import { LuSquarePen, LuPlus } from "react-icons/lu";
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { formataTelefone } from '@/Utils/telefone';
+import { Button } from '@/Components/ui/button';
+import PrimaryButton from '@/Components/PrimaryButton';
+import Paginator from '@/Components/Paginator';
 
 export default function Index({ usuarios, cargos }) {
     const [showCreateModal, setShowCreateModal] = useState(false);
@@ -29,12 +32,12 @@ export default function Index({ usuarios, cargos }) {
                 <Head title="Funcionários" />
                 <div className="p-2 flex justify-between items-center">
                     <h1 className="text-2xl font-bold">Lista de usuários</h1>
-                    <button
+                    <PrimaryButton
                         onClick={() => setShowCreateModal(true)}
-                        className="mb-4 px-4 py-2 bg-secondary-color-500 text-white rounded hover:bg-secondary-color-700 flex items-center gap-2"
-                        >
-                        Adicionar Usuário <FaPlus/>
-                    </button>
+                        className="text-base"
+                    >
+                        <LuPlus/> Adicionar Funcionário
+                    </PrimaryButton>
                 </div>
                 <table className="table-auto w-full border">
                     <thead>
@@ -57,31 +60,22 @@ export default function Index({ usuarios, cargos }) {
                                 <td className="p-2 border">{formataTelefone(user.telefone)}</td>
                                 <td className="p-2 border">{cargos.find(cargo => cargo.id === user.cargo_id)?.name || 'Não informado'}</td>
                                 <td className="p-2 border">{user.data_admissao}</td>
-                                <td className="p-2 border space-x-2">
-                                    <button onClick={() => editarUser(user)}>
-                                        <FaEdit/>
-                                    </button>
-                                    <button onClick={() => excluirUser(user)} className={user.ativo ? 'text-red-500 hover:underline' : 'text-green-500 hover:underline'}>
-                                        {user.ativo ? 'Desativar' : 'Ativar'}
-                                    </button>
+                                <td className="p-2 border">
+                                    <div className='flex justify-center items-center'>
+                                        <Button onClick={() => editarUser(user)} variant="ghost" size="icon">
+                                            <LuSquarePen/>
+                                        </Button>
+                                        <Button onClick={() => excluirUser(user)} variant="link" className={user.ativo ? 'text-red-500' : 'text-green-500 hover:underline'}>
+                                            {user.ativo ? 'Desativar' : 'Ativar'}
+                                        </Button>
+                                    </div>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
-                <div className="mt-5">
-                    {usuarios.prev_page_url && (
-                        <Link href={usuarios.prev_page_url}>&laquo; Anterior</Link>
-                    )}
-
-                    <span className="text-text-color-secondary my-3">
-                        Página {usuarios.current_page} de {usuarios.last_page}
-                    </span>
-
-                    {usuarios.next_page_url && (
-                        <Link href={usuarios.next_page_url}>Próxima &raquo;</Link>
-                    )}
-                </div>
+                
+                <Paginator items={usuarios}/>
 
                 <CreateUserModal
                     show={showCreateModal}

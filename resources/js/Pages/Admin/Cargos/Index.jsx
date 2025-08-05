@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { Head, Link } from '@inertiajs/react';
-import { FaTrash, FaEdit, FaPlus } from "react-icons/fa";
+import { LuPlus } from "react-icons/lu";
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import CreateCargoModal from "@/Components/Cargos/CreateCargoModal";
 import UpdateCargoModal from "@/Components/Cargos/UpdateCargoModal";
-import DeleteCargoModal from "@/Components/Cargos/DeleteCargoModal";
+import DeleteModal from "@/Components/DeleteModal";
+import TableActions from "@/Components/TableActions";
+import PrimaryButton from "@/Components/PrimaryButton";
+import Paginator from "@/Components/Paginator";
 
 export default function Index({ cargos }){
     const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -28,12 +31,12 @@ export default function Index({ cargos }){
                 <Head title="Cargos"/>
                 <div className="p-2 flex justify-between items-center">
                     <h1 className="text-2xl font-bold">Lista de cargos</h1>
-                    <button
+                    <PrimaryButton
                         onClick={() => setShowCreateModal(true)}
-                        className="mb-4 px-4 py-2 bg-secondary-color-500 text-white rounded hover:bg-secondary-color-700 flex items-center gap-2"
+                        className="text-base"
                     >
-                        Adicionar Cargo <FaPlus/>
-                    </button>
+                        <LuPlus/> Adicionar Cargo 
+                    </PrimaryButton>
                 </div>
                 <table className="table-auto w-full border">
                     <thead>
@@ -49,32 +52,18 @@ export default function Index({ cargos }){
                                 <td className="p-2 border">{cargo.id}</td>
                                 <td className="p-2 border">{cargo.name}</td>
                                 <td className="p-2 border">
-                                    <div className="flex justify-center items-center gap-4">
-                                        <button onClick={() => editarCargo(cargo)} className="text-text-color-primary">
-                                            <FaEdit/>
-                                        </button>
-                                        <button onClick={() => excluirCargo(cargo)} className="text-text-color-primary">
-                                            <FaTrash/>
-                                        </button>
-                                    </div>
+                                    <TableActions
+                                        onEditar={() => editarCargo(cargo)}
+                                        onExcluir={() => excluirCargo(cargo)}
+                                    />
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
-                <div className="mt-5">
-                    {cargos.prev_page_url && (
-                        <Link href={cargos.prev_page_url}>&laquo; Anterior</Link>
-                    )}
 
-                    <span className="text-text-color-secondary my-3">
-                        Página {cargos.current_page} de {cargos.last_page}
-                    </span>
+                <Paginator items={cargos}/>
 
-                    {cargos.next_page_url && (
-                        <Link href={cargos.next_page_url}>Próxima &raquo;</Link>
-                    )}
-                </div>
                 <CreateCargoModal
                     key={showCreateModal ? 'show' : 'hide'}
                     show={showCreateModal}
@@ -85,10 +74,13 @@ export default function Index({ cargos }){
                     onClose={() => setShowUpdateModal(false)}
                     cargo={selectedCargo}
                 />
-                <DeleteCargoModal
+                <DeleteModal
                     show={showDeleteModal}
                     onClose={() => setShowDeleteModal(false)}
-                    cargo={selectedCargo}
+                    element={selectedCargo}
+                    routeName='cargos.destroy'
+                    label='Cargo'
+                    message={`Tem certeza que deseja excluir o cargo "${selectedCargo?.name}"?`}
                 />
             </div>
         </AuthenticatedLayout>
