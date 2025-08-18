@@ -11,10 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('clientes', function (Blueprint $table) {
+        Schema::create('funcionarios', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('telefone');
+            $table->string('cpf')->unique();
+            $table->string('telefone')->nullable();
+            $table->foreignId('cargo_id')->constrained('cargos');
+            $table->boolean('ativo')->default(true);
+            $table->date('data_admissao');
             $table->timestamps();
         });
     }
@@ -24,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('clientes');
+        Schema::dropIfExists('funcionarios');
     }
 };

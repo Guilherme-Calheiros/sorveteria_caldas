@@ -1,12 +1,9 @@
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import { LuReceiptText, LuIceCreamCone, LuHouse, LuPackage, LuUsers, LuBriefcaseBusiness, LuChevronDown } from "react-icons/lu";
-import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
-import { Link, usePage } from '@inertiajs/react';
-import { Button } from '@/Components/ui/button';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { usePage } from '@inertiajs/react';
 
-export default function AuthenticatedLayout({ header, children }) {
+export default function AuthenticatedLayout({ children }) {
     const {user, temPermissao} = usePage().props.auth;
 
     return (
@@ -71,31 +68,6 @@ export default function AuthenticatedLayout({ header, children }) {
                     </div>
                 </aside>
                 <main className="flex-1 p-6 bg-gray-100">
-                    <div className="w-full flex justify-end">
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <span className="inline-flex rounded-md">
-                                    <Button
-                                        variant="ghost"
-                                    >
-                                        {user.name} <LuChevronDown/>
-                                    </Button>
-                                </span>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent>
-                                <DropdownMenuItem asChild>
-                                    <Link href={route('profile.edit')}>
-                                        Perfil
-                                    </Link>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem asChild>
-                                    <Link href={route('logout')} method="post" as="button" className="w-full text-left">
-                                        Sair
-                                    </Link>
-                                </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                    </div>
                     {children}
                 </main>
             </div>

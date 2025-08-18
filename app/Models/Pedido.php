@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Pedido extends Model
 {
     protected $fillable = [
+        'user_id',
         'funcionario_id',
-        'cliente_id',
+        'cliente_nome',
         'observacao',
+        'total',
         'data_pedido'
     ];
 
@@ -17,12 +19,12 @@ class Pedido extends Model
         return $this->hasMany(ItemPedido::class);
     }
 
-    public function funcionario(){
+    public function user(){
         return $this->belongsTo(User::class);
     }
 
-    public function cliente(){
-        return $this->belongsTo(Cliente::class);
+    public function funcionario(){
+        return $this->belongsTo(Funcionario::class);
     }
 
     public function getTotalPedidoAttribute(){
@@ -32,7 +34,6 @@ class Pedido extends Model
     }
 
     public function atualizarTotal(){
-        $this->total = $this->total_pedido;
-        $this->save();
+        $this->update(['total' => $this->total_pedido]);
     }
 }

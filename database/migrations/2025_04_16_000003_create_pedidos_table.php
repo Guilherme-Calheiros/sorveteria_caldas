@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('pedidos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('funcionario_id')->constrained('users');
-            $table->foreignId('cliente_id')->constrained('clientes');
-            $table->decimal('total', 8, 2);
+            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('funcionario_id')->constrained('funcionarios');
+            $table->string('cliente_nome')->nullable();
             $table->text('observacao')->nullable();
+            $table->decimal('total', 8, 2);
             $table->dateTime('data_pedido');
             $table->timestamps();
         });

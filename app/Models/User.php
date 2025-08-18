@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -21,12 +20,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'telefone',
-        'cargo_id',
-        'data_admissao',
+        'perfil',
         'password',
-        'ativo',
-        'trocar_senha',
     ];
 
     /**
@@ -47,15 +42,8 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'ativo' => 'boolean',
-            'trocar_senha' => 'boolean',
         ];
-    }
-
-    public function cargo(){
-        return $this->belongsTo(Cargo::class);
     }
 
     public function pedidos(){
@@ -64,16 +52,16 @@ class User extends Authenticatable
 
     public function temPermissao(string $nivelMinimo){
         
-        if (!$this->cargo) {
+        if (!$this->perfil) {
             return false;
         }
 
         $hierarquia = [
-            'acesso_limitado' => 1,
-            'acesso_total' => 2,
+            'caixa' => 1,
+            'administrador' => 2,
         ];
 
-        $nivelCargo = $hierarquia[$this->cargo->permissao] ?? 0;
+        $nivelCargo = $hierarquia[$this->perfil] ?? 0;
         $nivelRequerido = $hierarquia[$nivelMinimo] ?? 0;
 
         return $nivelCargo >= $nivelRequerido;

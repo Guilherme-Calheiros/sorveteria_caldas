@@ -9,8 +9,15 @@ class Sabor extends Model
     protected $table = 'sabores';
 
     protected $fillable = [
-        'name'
+        'name',
+        'disponivel'
     ];
+
+    protected function casts(): array {
+        return [
+            'disponivel' => 'boolean',
+        ];
+    }
 
     public function itemPedidos(){
         return $this->belongsToMany(ItemPedido::class, 'itens_pedido_sabor', 'sabor_id', 'item_pedido_id');

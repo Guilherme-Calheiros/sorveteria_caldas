@@ -13,10 +13,6 @@ use Inertia\Inertia;
 
 Route::get('/', [LandingController::class, 'index']);
 
-Route::post('/pedidos', [PedidoController::class, 'store'])->name('pedidos.store');
-
-Route::post('/clientes', [ClienteController::class, 'store'])->name('clientes.store');
-
 Route::get('/login', function () {
     return Inertia::render('Admin/Auth/Login', [
         'canResetPassword' => Route::has('password.request'),
@@ -38,7 +34,9 @@ Route::prefix('admin')->middleware('auth')->group(function () {
         return Inertia::render('Admin/Auth/TrocarSenha');
     })->name('password.change');
 
-    Route::resource('pedidos', PedidoController::class)->except(['store']);
+    Route::resource('pedidos', PedidoController::class);
+
+    Route::post('/clientes', [ClienteController::class, 'store'])->name('clientes.store');
 
     Route::middleware('permissao.acesso:acesso_total')->group(function () {
         Route::resource('usuarios', UserController::class);

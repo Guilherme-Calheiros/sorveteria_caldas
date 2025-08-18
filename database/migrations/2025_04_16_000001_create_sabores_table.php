@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('sabores', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->boolean('disponivel')->default(true);
             $table->timestamps();
         });
     }
