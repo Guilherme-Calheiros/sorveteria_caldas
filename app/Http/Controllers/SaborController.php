@@ -15,7 +15,7 @@ class SaborController extends Controller
     public function index()
     {
 
-        $sabores = Sabor::orderBy('id', 'asc')->paginate(10);
+        $sabores = Sabor::orderBy('name', 'asc')->paginate(10);
         return Inertia::render('Admin/Sabores/Index', [
             'sabores' => $sabores
         ]);
@@ -32,6 +32,7 @@ class SaborController extends Controller
 
         Sabor::create([
             'name' => $validated['name'],
+            'disponivel' => true
         ]);
 
         return redirect()->route('sabores.index');
@@ -72,7 +73,17 @@ class SaborController extends Controller
     {
         $sabor = Sabor::findOrFail($id);
 
-        $sabor->delete();
+        $sabor->disponivel = false;
+        $sabor->save();
+
+        return redirect()->route('sabores.index');
+    }
+
+    public function reativar(Sabor $sabor){
+        if (!$sabor->disponivel) {
+            $sabor->disponivel = true;
+            $sabor->save();
+        }
 
         return redirect()->route('sabores.index');
     }

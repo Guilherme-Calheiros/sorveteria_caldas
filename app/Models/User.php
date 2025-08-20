@@ -12,6 +12,9 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasApiTokens, HasFactory, Notifiable;
 
+    const PERFIL_CAIXA = 'caixa';
+    const PERFIL_ADMIN = 'administrador';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -57,8 +60,8 @@ class User extends Authenticatable
         }
 
         $hierarquia = [
-            'caixa' => 1,
-            'administrador' => 2,
+            self::PERFIL_CAIXA => 1,
+            self::PERFIL_ADMIN => 2,
         ];
 
         $nivelCargo = $hierarquia[$this->perfil] ?? 0;

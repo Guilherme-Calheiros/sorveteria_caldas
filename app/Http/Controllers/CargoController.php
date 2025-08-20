@@ -22,12 +22,10 @@ class CargoController extends Controller
     {
         $validated = $request->validate([
             'name' =>  'required|string|max:255',
-            'permissao' => 'required|in:acesso_total,acesso_limitado',
         ]);
 
         Cargo::create([
             'name' => $validated['name'],
-            'permissao' => $validated['permissao'],
         ]);
 
         return redirect()->route('cargos.index');
@@ -39,12 +37,10 @@ class CargoController extends Controller
 
         $validated = $request->validate([
             'name' =>  'required|string|max:255',
-            'permissao' => 'required|in:acesso_total,acesso_limitado',
         ]);
     
         $cargo->update([
             'name' => $validated['name'],
-            'permissao' => $validated['permissao'],
         ]);
     
         return redirect()->route('cargos.index');

@@ -27,13 +27,12 @@ class Pedido extends Model
         return $this->belongsTo(Funcionario::class);
     }
 
-    public function getTotalPedidoAttribute(){
-        return round($this->itensPedido->sum(function ($itemPedido) {
-            return $itemPedido->preco_total;
-        }), 2);
-    }
-
     public function atualizarTotal(){
-        $this->update(['total' => $this->total_pedido]);
+        $total = $this->itensPedido()
+            ->selectRaw('SUM(quantidade * valor_unitario) as total')
+            ->pluck('total')
+            ->first() ?? 0;
+
+        $this->update(['total' => $total]);
     }
 }
