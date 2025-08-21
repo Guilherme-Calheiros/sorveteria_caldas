@@ -14,13 +14,13 @@ export default function AuthenticatedLayout({ children }) {
                     <ApplicationLogo className="w-36 mx-auto mb-10"/>
                     
                     <div>
-                        <NavLink
+                        {/* <NavLink
                             href={route('dashboard')}
                             active={route().current('dashboard')}
                         >
                             <LuHouse className='w-5 h-5 align-middle'/> 
                             Dashboard
-                        </NavLink>
+                        </NavLink> */}
 
                         {temPermissao && (
                             <>

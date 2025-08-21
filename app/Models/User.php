@@ -70,6 +70,14 @@ class User extends Authenticatable
         return $nivelCargo >= $nivelRequerido;
     }
 
+    public function isAdmin(){
+        return $this->perfil === self::PERFIL_ADMIN;
+    }
+
+    public function isCaixa(){
+        return $this->perfil === self::PERFIL_CAIXA;
+    }
+
     public function setEmailAttribute($value){
         $this->attributes['email'] = strtolower($value);
     }

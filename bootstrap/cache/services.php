@@ -36,6 +36,7 @@
     32 => 'Pest\\Laravel\\PestServiceProvider',
     33 => 'Tighten\\Ziggy\\ZiggyServiceProvider',
     34 => 'App\\Providers\\AppServiceProvider',
+    35 => 'App\\Providers\\AuthServiceProvider',
   ),
   'eager' => 
   array (
@@ -58,6 +59,7 @@
     16 => 'Pest\\Laravel\\PestServiceProvider',
     17 => 'Tighten\\Ziggy\\ZiggyServiceProvider',
     18 => 'App\\Providers\\AppServiceProvider',
+    19 => 'App\\Providers\\AuthServiceProvider',
   ),
   'deferred' => 
   array (

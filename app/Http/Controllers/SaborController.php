@@ -4,16 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Sabor;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Inertia\Inertia;
 
 class SaborController extends Controller
 {
+    use AuthorizesRequests;
 
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        $this->authorize('viewAny', Sabor::class);
 
         $sabores = Sabor::orderBy('name', 'asc')->paginate(10);
         return Inertia::render('Admin/Sabores/Index', [
@@ -26,6 +29,8 @@ class SaborController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Sabor::class);
+
         $validated = $request->validate([
             'name' =>  'required|string|max:255',
         ]);
@@ -43,6 +48,8 @@ class SaborController extends Controller
      */
     public function show(string $id)
     {
+        $this->authorize('view', Sabor::class);
+
         $sabor = Sabor::findOrFail($id);
 
         return $sabor;
@@ -53,6 +60,8 @@ class SaborController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('update', Sabor::class);
+
         $sabor = Sabor::findOrFail($id);
 
         $validated = $request->validate([
@@ -71,6 +80,8 @@ class SaborController extends Controller
      */
     public function destroy(string $id)
     {
+        $this->authorize('delete', Sabor::class);
+
         $sabor = Sabor::findOrFail($id);
 
         $sabor->disponivel = false;
@@ -80,6 +91,9 @@ class SaborController extends Controller
     }
 
     public function reativar(Sabor $sabor){
+
+        $this->authorize('reativar', $sabor);
+
         if (!$sabor->disponivel) {
             $sabor->disponivel = true;
             $sabor->save();

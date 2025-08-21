@@ -5,13 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\Embalagem;
 use App\Models\Pedido;
 use App\Models\Sabor;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class PedidoController extends Controller
 {
+    use AuthorizesRequests;
+
     public function index(){
+
+        $this->authorize('viewAny', Pedido::class);
+
         $pedidos = Pedido::with(['itensPedido', 'funcionario', 'user'])
             ->latest()
             ->paginate(10);
@@ -22,6 +28,9 @@ class PedidoController extends Controller
     }
 
     public function show(string $pedidoId){
+        
+        $this->authorize('view', Pedido::class);
+
         $pedido = Pedido::with(['itensPedido', 'funcionario', 'user'])
             ->findOrFail($pedidoId);
 
@@ -31,6 +40,9 @@ class PedidoController extends Controller
     }
 
     public function create(){
+
+        $this->authorize('create', Pedido::class);
+
         $sabores = Sabor::orderBy('name')->get(['id', 'name']);
         $embalagens = Embalagem::orderBy('name')->get(['id', 'name', 'valor_base', 'maximo_sabores', 'preco_sabor_extra']);
 
@@ -41,6 +53,9 @@ class PedidoController extends Controller
     }
 
     public function store(Request $request){
+
+        $this->authorize('create', Pedido::class);
+
         $validated = $request->validate([
             'user_id' => 'required|exists:users,id',
             'funcionario_id' => 'required|exists:funcionarios,id',
@@ -95,6 +110,9 @@ class PedidoController extends Controller
 
     public function update(Request $request, int $pedidoId)
     {
+
+        $this->authorize('update', Pedido::class);
+
         $pedido = Pedido::findOrFail($pedidoId);
 
         $validated = $request->validate([
@@ -162,6 +180,9 @@ class PedidoController extends Controller
 
     public function destroy(int $pedidoId)
     {
+
+        $this->authorize('delete', Pedido::class);
+
         $pedido = Pedido::findOrFail($pedidoId);
 
         DB::beginTransaction();
