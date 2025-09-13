@@ -18,7 +18,7 @@ class PedidoPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Pedido $pedido): bool
+    public function view(User $user): bool
     {
         return $user->isAdmin() || $user->isCaixa();
     }
@@ -35,7 +35,7 @@ class PedidoPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Pedido $pedido): bool
+    public function update(User $user): bool
     {
         return $user->isAdmin();
     }
@@ -43,7 +43,7 @@ class PedidoPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Pedido $pedido): bool
+    public function delete(User $user): bool
     {
         return $user->isAdmin();
     }

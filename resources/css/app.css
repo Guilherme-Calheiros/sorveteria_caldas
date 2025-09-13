@@ -43,6 +43,11 @@
   }
 }
 
+.obrigatorio::after{
+  content: ' *';
+  color: #ef4444;
+}
+
 @layer base {
   * {
     @apply border-border;

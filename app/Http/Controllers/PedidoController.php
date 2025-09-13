@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Embalagem;
+use App\Models\Funcionario;
 use App\Models\Pedido;
 use App\Models\Sabor;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -18,12 +19,19 @@ class PedidoController extends Controller
 
         $this->authorize('viewAny', Pedido::class);
 
+        $sabores = Sabor::orderBy('name')->get(['id', 'name']);
+        $embalagens = Embalagem::orderBy('name')->get(['id', 'name', 'valor_base', 'maximo_sabores', 'preco_sabor_extra']);
+        $funcionarios = Funcionario::orderBy('name')->get(['id', 'name']);
+
         $pedidos = Pedido::with(['itensPedido', 'funcionario', 'user'])
             ->latest()
             ->paginate(10);
 
         return Inertia::render('Admin/Pedidos/Index', [
             'pedidos' => $pedidos,
+            'sabores' => $sabores,
+            'funcionarios' => $funcionarios,
+            'embalagens' => $embalagens
         ]);
     }
 
@@ -36,19 +44,6 @@ class PedidoController extends Controller
 
         return Inertia::render('Admin/Pedidos/Show', [
             'pedido' => $pedido
-        ]);
-    }
-
-    public function create(){
-
-        $this->authorize('create', Pedido::class);
-
-        $sabores = Sabor::orderBy('name')->get(['id', 'name']);
-        $embalagens = Embalagem::orderBy('name')->get(['id', 'name', 'valor_base', 'maximo_sabores', 'preco_sabor_extra']);
-
-        return Inertia::render('Admin/Pedidos/Create', [
-            'sabores' => $sabores,
-            'embalagens' => $embalagens
         ]);
     }
 

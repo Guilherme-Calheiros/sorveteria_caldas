@@ -57,8 +57,8 @@ export default function AuthenticatedLayout({ children }) {
                                         Embalagens
                                     </NavLink>
                                     <NavLink
-                                        href={route('usuarios.index')}
-                                        active={route().current('usuarios.index')}
+                                        href={route('funcionarios.index')}
+                                        active={route().current('funcionarios.index')}
                                     >
                                         <LuUsers className='w-5 h-5'/>
                                         Funcionários

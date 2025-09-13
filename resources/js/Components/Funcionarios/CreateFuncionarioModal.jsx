@@ -2,16 +2,16 @@ import Modal from '@/Components/Modal';
 import { useForm } from '@inertiajs/react';
 import { useEffect } from 'react';
 import InputTelefone from '../InputTelefone';
-import InputEmail from '../InputEmail';
 import { desformataTelefone } from '@/Utils/telefone';
 import ModalButtons from '../ModalButtons'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import TextInput from '../TextInput';
+import { formataCpf } from '@/Utils/cpf';
 
 export default function CreateUserModal({ show, onClose, cargos }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
-        email: '',
+        cpf: '',
         telefone: '',
         cargo_id: '',
     });
@@ -24,7 +24,7 @@ export default function CreateUserModal({ show, onClose, cargos }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route('usuarios.store'), {
+        post(route('funcionarios.store'), {
             onSuccess: () => {
                 reset();
                 onClose();
@@ -53,12 +53,14 @@ export default function CreateUserModal({ show, onClose, cargos }) {
                         )}
                     </div>
                     <div>
-                        <InputEmail
-                            value={data.email}
-                            onChange={(value) => setData('email', value)}
+                        <TextInput
+                            value={formataCpf(data.cpf)}
+                            maxLength={14}
+                            placeholder="CPF"
+                            onChange={(e) => setData('cpf', e.target.value)}
                         />
-                        {errors.email && (
-                            <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+                        {errors.cpf && (
+                            <p className="text-red-500 text-sm mt-1">{errors.cpf}</p>
                         )}
                     </div>
                     <div>
@@ -71,13 +73,18 @@ export default function CreateUserModal({ show, onClose, cargos }) {
                         )}
                     </div>
                     <div>
-                        <Select onValueChange={(value) => setData('cargo_id', value)}>
+                        <Select 
+                            value={String(data.cargo_id)}
+                            onValueChange={(value) => setData('cargo_id', value)}
+                        >
                             <SelectTrigger className="w-full">
                                 <SelectValue placeholder="Selecione um cargo" />
                             </SelectTrigger>
                             <SelectContent>
                                 {cargos.map((cargo) => (
-                                    <SelectItem key={cargo.id} value={cargo.id}>{cargo.name}</SelectItem>
+                                <SelectItem key={cargo.id} value={String(cargo.id)}>
+                                    {cargo.name}
+                                </SelectItem>
                                 ))}
                             </SelectContent>
                         </Select>

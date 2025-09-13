@@ -2,34 +2,34 @@ import Modal from '@/Components/Modal';
 import { useForm } from '@inertiajs/react';
 import { useEffect } from 'react';
 import InputTelefone from '../InputTelefone';
-import InputEmail from '../InputEmail';
 import ModalButtons from '../ModalButtons'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import TextInput from '../TextInput';
+import { formataCpf } from '@/Utils/cpf';
 
-export default function UpdateUserModal({ show, onClose, cargos, user }) {
+export default function UpdateFuncionarioModal({ show, onClose, cargos, funcionario }) {
     
     const { data, setData, put, processing, errors, reset } = useForm({
-        name: user ? user.name : '',
-        email: user ? user.email : '',
-        telefone: user ? user.telefone : '',
-        cargo_id: user ? user.cargo_id : '',
+        name: funcionario ? funcionario.name : '',
+        cpf: funcionario ? funcionario.cpf : '',
+        telefone: funcionario ? funcionario.telefone : '',
+        cargo_id: funcionario ? funcionario.cargo_id : '',
     });
 
     useEffect(() => {
-        if (user) {
+        if (funcionario) {
             setData({
-                name: user.name || '',
-                email: user.email || '',
-                telefone: user.telefone || '',
-                cargo_id: user.cargo_id || '',
+                name: funcionario.name || '',
+                cpf: funcionario.cpf || '',
+                telefone: funcionario.telefone || '',
+                cargo_id: funcionario.cargo_id || '',
             });
         }
-    }, [user, show]);
+    }, [funcionario, show]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        put(route('usuarios.update', user.id), {
+        put(route('funcionarios.update', funcionario.id), {
             data: data,
             onSuccess: () => {
                 reset();
@@ -59,12 +59,14 @@ export default function UpdateUserModal({ show, onClose, cargos, user }) {
                         )}
                     </div>
                     <div>
-                        <InputEmail
-                            value={data.email}
-                            onChange={(value) => setData('email', value)}
+                        <TextInput
+                            value={formataCpf(data.cpf)}
+                            maxLength={14}
+                            placeholder="CPF"
+                            onChange={(e) => setData('cpf', e.target.value)}
                         />
-                        {errors.email && (
-                            <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+                        {errors.cpf && (
+                            <p className="text-red-500 text-sm mt-1">{errors.cpf}</p>
                         )}
                     </div>
                     <div>
@@ -77,15 +79,18 @@ export default function UpdateUserModal({ show, onClose, cargos, user }) {
                         )}
                     </div>
                     <div>
-                        <Select onValueChange={(value) => setData('cargo_id', value)} value={data.cargo_id}>
+                        <Select 
+                            value={String(data.cargo_id)}
+                            onValueChange={(value) => setData('cargo_id', value)}
+                        >
                             <SelectTrigger className="w-full">
-                                <SelectValue placeholder="Selecione um cargo">
-                                    {cargos.find(c => String(c.id) === String(data.cargo_id))?.name}
-                                </SelectValue>
+                                <SelectValue placeholder="Selecione um cargo" />
                             </SelectTrigger>
                             <SelectContent>
                                 {cargos.map((cargo) => (
-                                    <SelectItem key={cargo.id} value={cargo.id}>{cargo.name}</SelectItem>
+                                <SelectItem key={cargo.id} value={String(cargo.id)}>
+                                    {cargo.name}
+                                </SelectItem>
                                 ))}
                             </SelectContent>
                         </Select>

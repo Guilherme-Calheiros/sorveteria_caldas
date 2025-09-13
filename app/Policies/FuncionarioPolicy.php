@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use App\Models\Funcionario;
 use App\Models\User;
 
 class FuncionarioPolicy
@@ -18,7 +17,7 @@ class FuncionarioPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Funcionario $funcionario): bool
+    public function view(User $user): bool
     {
         return $user->isAdmin() || $user->isCaixa();
     }
@@ -34,7 +33,7 @@ class FuncionarioPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Funcionario $funcionario): bool
+    public function update(User $user): bool
     {
         return $user->isAdmin();
     }
@@ -42,12 +41,12 @@ class FuncionarioPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Funcionario $funcionario): bool
+    public function delete(User $user): bool
     {
         return $user->isAdmin();
     }
 
-    public function reativar(User $user, Funcionario $funcionario): bool
+    public function reativar(User $user): bool
     {
         return $user->isAdmin();
     }
