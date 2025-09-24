@@ -8,11 +8,10 @@ class Cargo extends Model
 {
     protected $fillable = [
         'name',
-        'permissao'
     ];
 
-    public function usuarios()
+    public function funcionarios()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(Funcionario::class);
     }
 }

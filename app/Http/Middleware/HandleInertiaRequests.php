@@ -41,7 +41,7 @@ class HandleInertiaRequests extends Middleware
                         'email' => $user->email
                     ]
                     : null,
-                'temPermissao' => $user ? $user->temPermissao('acesso_completo') : false,
+                'temPermissao' => $user ? $user->temPermissao('administrador') : false,
             ],
         ];
     }

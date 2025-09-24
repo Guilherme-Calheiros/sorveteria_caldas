@@ -26,7 +26,7 @@ export default function InputMoney({ value = '', onChange, addonBefore = 'R$', .
 
   return (
     <div className="relative">
-        <span className="absolute left-2 top-1/2 -translate-y-1/2 pointer-events-none text-gray-600">
+        <span className="absolute text-xs left-2 top-1/2 -translate-y-1/2 pointer-events-none text-gray-600">
             {addonBefore}
         </span>
         <Input

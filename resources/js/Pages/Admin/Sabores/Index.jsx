@@ -40,7 +40,7 @@ export default function Index({ sabores }){
                 </div>
                 <table className="table-auto w-full border">
                     <thead>
-                        <tr className="bg-primary-color-500 text-white">
+                        <tr className="bg-primary text-white">
                             <th className="p-2 border">ID</th>
                             <th className="p-2 border">Sabor</th>
                             <th className="p-2 border">Ações</th>

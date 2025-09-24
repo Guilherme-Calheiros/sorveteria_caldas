@@ -6,7 +6,7 @@
 @layer base {
   :root {
     --background: 0 0% 100%;         /* #ffffff */
-    --foreground: 0 0% 3.9%;         /* #0a0a0a */
+    --foreground: 345 100% 4%;       /* #140005 */
 
     --card: 0 0% 100%;               /* #ffffff */
     --card-foreground: 0 0% 3.9%;    /* #0a0a0a */
@@ -14,11 +14,15 @@
     --popover: 0 0% 100%;            /* #ffffff */
     --popover-foreground: 0 0% 3.9%; /* #0a0a0a */
 
-    --primary: 346 97% 79%;          /* #fe96af */
-    --primary-foreground: 345 100% 4%; /* #140005 */
+    --primary: 346, 99%, 72%;          /* #FE7292 */
+    --primary-dark: 346, 94%, 63%;     /* #F94670 */
+    --primary-light: 346, 97%, 88%;    /* #FEC2D0 */
+    --primary-foreground: 0 0% 100%; /* #ffffff */
 
     --secondary: 172 61% 56%;        /* #4fcfc0 */
-    --secondary-foreground: 0 0% 97%; /* #f8f8f8 */
+    --secondary-dark: 173, 57%, 24%;     /* #1a6058 */
+    --secondary-light: 171, 53%, 87%;    /* #cef0eb */
+    --secondary-foreground: 0, 0%, 27%; /* #444444 */
 
     --muted: 0 0% 96%;               /* #f5f5f5 */
     --muted-foreground: 0 0% 45%;    /* #737373 */
@@ -41,6 +45,11 @@
 
     --radius: 0.5rem;
   }
+}
+
+.obrigatorio::after{
+  content: ' *';
+  color: #ef4444;
 }
 
 @layer base {

@@ -3,16 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Embalagem;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class EmbalagemController extends Controller
 {
+    use AuthorizesRequests;
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        $this->authorize('viewAny', Embalagem::class);
+
         $embalagens = Embalagem::orderBy('id', 'asc')->paginate(10);
         return Inertia::render('Admin/Embalagens/Index', [
             'embalagens' => $embalagens
@@ -24,6 +29,8 @@ class EmbalagemController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Embalagem::class);
+
         $validated = $request->validate([
             'name' =>  'required|string|max:255',
             'maximo_sabores' =>  'required|integer',
@@ -46,6 +53,8 @@ class EmbalagemController extends Controller
      */
     public function show(string $id)
     {
+        $this->authorize('view', Embalagem::class);
+
         $embalagem = Embalagem::findOrFail($id);
 
         return $embalagem;
@@ -56,6 +65,8 @@ class EmbalagemController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $this->authorize('update', Embalagem::class);
+
         $embalagem = Embalagem::findOrFail($id);
 
         $validated = $request->validate([
@@ -80,6 +91,8 @@ class EmbalagemController extends Controller
      */
     public function destroy(string $id)
     {
+        $this->authorize('delete', Embalagem::class);
+
         $embalagem = Embalagem::findOrFail($id);
 
         $embalagem->delete();

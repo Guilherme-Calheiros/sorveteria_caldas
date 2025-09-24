@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -13,6 +12,9 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasApiTokens, HasFactory, Notifiable;
 
+    const PERFIL_CAIXA = 'caixa';
+    const PERFIL_ADMIN = 'administrador';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -21,12 +23,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'telefone',
-        'cargo_id',
-        'data_admissao',
+        'perfil',
         'password',
-        'ativo',
-        'trocar_senha',
     ];
 
     /**
@@ -47,15 +45,8 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'ativo' => 'boolean',
-            'trocar_senha' => 'boolean',
         ];
-    }
-
-    public function cargo(){
-        return $this->belongsTo(Cargo::class);
     }
 
     public function pedidos(){
@@ -64,19 +55,27 @@ class User extends Authenticatable
 
     public function temPermissao(string $nivelMinimo){
         
-        if (!$this->cargo) {
+        if (!$this->perfil) {
             return false;
         }
 
         $hierarquia = [
-            'acesso_limitado' => 1,
-            'acesso_total' => 2,
+            self::PERFIL_CAIXA => 1,
+            self::PERFIL_ADMIN => 2,
         ];
 
-        $nivelCargo = $hierarquia[$this->cargo->permissao] ?? 0;
+        $nivelCargo = $hierarquia[$this->perfil] ?? 0;
         $nivelRequerido = $hierarquia[$nivelMinimo] ?? 0;
 
         return $nivelCargo >= $nivelRequerido;
+    }
+
+    public function isAdmin(){
+        return $this->perfil === self::PERFIL_ADMIN;
+    }
+
+    public function isCaixa(){
+        return $this->perfil === self::PERFIL_CAIXA;
     }
 
     public function setEmailAttribute($value){

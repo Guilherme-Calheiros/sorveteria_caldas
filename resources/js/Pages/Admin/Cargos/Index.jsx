@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Head, Link } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
 import { LuPlus } from "react-icons/lu";
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import CreateCargoModal from "@/Components/Cargos/CreateCargoModal";
@@ -40,7 +40,7 @@ export default function Index({ cargos }){
                 </div>
                 <table className="table-auto w-full border">
                     <thead>
-                        <tr className="bg-primary-color-500 text-white">
+                        <tr className="bg-primary text-white">
                             <th className="p-2 border">ID</th>
                             <th className="p-2 border">Cargo</th>
                             <th className="p-2 border">Ações</th>

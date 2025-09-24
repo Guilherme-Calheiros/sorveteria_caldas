@@ -18,7 +18,7 @@ class PermissaoAcesso
             abort(401, 'Não autenticado.');
         }
 
-        if ($user->ativo && $user->temPermissao($nivelMinimo)) {
+        if ($user->temPermissao($nivelMinimo)) {
             return $next($request);
         }
 

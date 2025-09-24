@@ -10,7 +10,7 @@ export default function NavLink({
         <Link
             {...props}
             className={`flex items-center gap-2 px-6 py-3 rounded-md transition-colors
-                ${active ? 'bg-secondary-color-100 text-text-color-primary font-semibold hover:bg-secondary-color-300' : 'text-gray-700 hover:bg-gray-100'}
+                ${active ? 'bg-secondary-light text-foreground font-semibold hover:bg-secondary/50' : 'text-gray-700 hover:bg-gray-100'}
             `}
         >
             {children}

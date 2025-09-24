@@ -3,26 +3,43 @@
 namespace App\Http\Controllers;
 
 use App\Models\Embalagem;
+use App\Models\Funcionario;
 use App\Models\Pedido;
 use App\Models\Sabor;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class PedidoController extends Controller
 {
+    use AuthorizesRequests;
+
     public function index(){
-        $pedidos = Pedido::with(['itensPedido', 'funcionario', 'cliente'])
+
+        $this->authorize('viewAny', Pedido::class);
+
+        $sabores = Sabor::orderBy('name')->get(['id', 'name']);
+        $embalagens = Embalagem::orderBy('name')->get(['id', 'name', 'valor_base', 'maximo_sabores', 'preco_sabor_extra']);
+        $funcionarios = Funcionario::orderBy('name')->get(['id', 'name']);
+
+        $pedidos = Pedido::with(['itensPedido.sabores', 'itensPedido.embalagem', 'funcionario', 'user'])
             ->latest()
             ->paginate(10);
 
         return Inertia::render('Admin/Pedidos/Index', [
             'pedidos' => $pedidos,
+            'sabores' => $sabores,
+            'funcionarios' => $funcionarios,
+            'embalagens' => $embalagens
         ]);
     }
 
     public function show(string $pedidoId){
-        $pedido = Pedido::with(['itensPedido', 'funcionario', 'cliente'])
+        
+        $this->authorize('view', Pedido::class);
+
+        $pedido = Pedido::with(['itensPedido.sabores', 'itensPedido.embalagem', 'funcionario', 'user'])
             ->findOrFail($pedidoId);
 
         return Inertia::render('Admin/Pedidos/Show', [
@@ -30,20 +47,14 @@ class PedidoController extends Controller
         ]);
     }
 
-    public function create(){
-        $sabores = Sabor::orderBy('name')->get(['id', 'name']);
-        $embalagens = Embalagem::orderBy('name')->get(['id', 'name', 'valor_base', 'maximo_sabores', 'preco_sabor_extra']);
-
-        return Inertia::render('Admin/Pedidos/Create', [
-            'sabores' => $sabores,
-            'embalagens' => $embalagens
-        ]);
-    }
-
     public function store(Request $request){
+
+        $this->authorize('create', Pedido::class);
+
         $validated = $request->validate([
-            'cliente_id' => 'required|exists:clientes,id',
-            'funcionario_id' => 'nullable|exists:users,id',
+            'user_id' => 'required|exists:users,id',
+            'funcionario_id' => 'required|exists:funcionarios,id',
+            'cliente_nome' => 'nullable|string',
             'observacao' => 'nullable|string',
             'itens' => 'required|array|min:1',
             'itens.*.embalagem_id' => 'required|exists:embalagens,id',
@@ -55,8 +66,9 @@ class PedidoController extends Controller
         DB::beginTransaction();
         try{
             $pedido = Pedido::create([
-                'cliente_id' => $validated['cliente_id'],
-                'funcionario_id' => $validated['funcionario_id'] ?? null,
+                'user_id' => $validated['user_id'],
+                'funcionario_id' => $validated['funcionario_id'],
+                'cliente_nome' => $validated['cliente_nome'] ?? null,
                 'observacao' => $validated['observacao'] ?? null,
                 'data_pedido' => now(),
                 'total' => 0,
@@ -80,7 +92,6 @@ class PedidoController extends Controller
                 $itemPedido->sabores()->attach($item['sabores']);
             };
 
-            $pedido->load('itensPedido.sabores');
             $pedido->atualizarTotal();
 
             DB::commit();
@@ -91,4 +102,5 @@ class PedidoController extends Controller
             return redirect()->back()->withErrors(['erro' => 'Falha ao criar pedido: ' . $e->getMessage()]);
         }
     }
+
 }

@@ -2,10 +2,9 @@
 
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\CargoController;
-use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\EmbalagemController;
+use App\Http\Controllers\FuncionarioController;
 use App\Http\Controllers\PedidoController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SaborController;
 use Illuminate\Support\Facades\Route;
@@ -13,40 +12,32 @@ use Inertia\Inertia;
 
 Route::get('/', [LandingController::class, 'index']);
 
-Route::post('/pedidos', [PedidoController::class, 'store'])->name('pedidos.store');
-
-Route::post('/clientes', [ClienteController::class, 'store'])->name('clientes.store');
-
 Route::get('/login', function () {
-    return Inertia::render('Admin/Auth/Login', [
-        'canResetPassword' => Route::has('password.request'),
-        'status' => session('status'),
-    ]);
+    return Inertia::render('Auth/Login');
 });
 
+Route::middleware('auth')->group(function () {
 
-Route::prefix('admin')->middleware('auth')->group(function () {
-    Route::get('/', function () {
+    Route::get('/admin', function () {
         return Inertia::render('Admin/Dashboard');
-    })->name('dashboard');
+    })->middleware('permissao.acesso:administrador')->name('admin.dashboard');
     
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/caixa', function () {
+        return Inertia::render('Caixa/Dashboard');
+    })->middleware('permissao.acesso:caixa')->name('caixa.dashboard');
 
-    Route::get('/trocar-senha', function () {
-        return Inertia::render('Admin/Auth/TrocarSenha');
-    })->name('password.change');
+    Route::resource('pedidos', PedidoController::class);
 
-    Route::resource('pedidos', PedidoController::class)->except(['store']);
+    Route::resource('usuarios', UserController::class)->middleware('permissao.acesso:administrador');
+       
+    Route::resource('funcionarios', FuncionarioController::class);
+    Route::patch('funcionarios/{funcionario}/reativar', [FuncionarioController::class, 'reativar'])->name('funcionarios.reativar');
 
-    Route::middleware('permissao.acesso:acesso_total')->group(function () {
-        Route::resource('usuarios', UserController::class);
-        Route::patch('usuarios/{user}/reativar', [UserController::class, 'reativar'])->name('usuarios.reativar');
-        Route::resource('sabores', SaborController::class);
-        Route::resource('embalagens', EmbalagemController::class);
-        Route::resource('cargos', CargoController::class);
-    });
+    Route::resource('sabores', SaborController::class);
+    Route::patch('sabores/{sabor}/reativar', [SaborController::class, 'reativar'])->name('sabores.reativar');
+
+    Route::resource('embalagens', EmbalagemController::class);
+    Route::resource('cargos', CargoController::class)->middleware('permissao.acesso:administrador');
 });
 
 require __DIR__.'/auth.php';

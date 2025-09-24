@@ -1,6 +1,7 @@
 import { useState } from "react";
 import InputError from "./InputError";
 import { Input } from "./ui/input";
+import InputLabel from "./InputLabel";
 
 
 export default function InputEmail({ value, onChange}) {

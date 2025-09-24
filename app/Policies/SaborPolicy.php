@@ -1,0 +1,54 @@
+<?php
+
+namespace App\Policies;
+
+use App\Models\Sabor;
+use App\Models\User;
+
+class SaborPolicy
+{
+    /**
+     * Determine whether the user can view any models.
+     */
+    public function viewAny(User $user): bool
+    {
+        return $user->isAdmin() || $user->isCaixa();
+    }
+
+    /**
+     * Determine whether the user can view the model.
+     */
+    public function view(User $user, Sabor $sabor): bool
+    {
+       return $user->isAdmin() || $user->isCaixa();
+    }
+
+    /**
+     * Determine whether the user can create models.
+     */
+    public function create(User $user): bool
+    {
+        return $user->isAdmin();
+    }
+
+    /**
+     * Determine whether the user can update the model.
+     */
+    public function update(User $user, Sabor $sabor): bool
+    {
+        return $user->isAdmin();
+    }
+
+    /**
+     * Determine whether the user can delete the model.
+     */
+    public function delete(User $user, Sabor $sabor): bool
+    {
+        return $user->isAdmin();
+    }
+
+    public function reativar(User $user)
+    {
+        return $user->isAdmin();
+    }
+}
