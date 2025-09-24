@@ -16,7 +16,7 @@ export default function AuthenticatedLayout({ children }) {
         <div className="min-h-screen bg-gray-100">
 
             <div className="flex min-h-screen">
-                <aside className="hidden w-52 bg-white py-4 px-4 space-y-2 sm:flex flex-col justify-between">
+                <aside className="hidden w-52 fixed top-0 left-0 bg-white py-4 px-4 space-y-2 sm:flex flex-col justify-between h-screen">
                     <div>
                         <ApplicationLogo className="w-36 mx-auto mb-10"/>
                         {!temPermissao ?
@@ -79,7 +79,7 @@ export default function AuthenticatedLayout({ children }) {
                         <LuLogOut className='w-5 h-5 align-middle'/> Sair
                     </Button>
                 </aside>
-                <main className="flex-1 p-6 bg-gray-100">
+                <main className="flex-1 p-6 bg-[#fffcfd] ml-52">
                     {children}
                 </main>
             </div>

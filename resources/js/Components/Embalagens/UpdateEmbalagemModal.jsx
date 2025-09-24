@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import ModalButtons from '../ModalButtons';
 import TextInput from '../TextInput';
 import { Input } from '../ui/input';
+import InputLabel from '../InputLabel';
 
 export default function UpdateEembalagemModal({ show, onClose, embalagem}) {
     const { data, setData, put, processing, errors, reset } = useForm({
@@ -47,7 +48,9 @@ export default function UpdateEembalagemModal({ show, onClose, embalagem}) {
                 <h2 className="text-lg font-semibold text-gray-900 mb-4">Editar embalagem</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
+                        <InputLabel value="Nome" htmlFor="nome"/>
                         <TextInput
+                            id="nome"
                             value={data.name}
                             placeholder="Nome"
                             onChange={(e) => setData('name', e.target.value)}
@@ -57,7 +60,9 @@ export default function UpdateEembalagemModal({ show, onClose, embalagem}) {
                         )}
                     </div>
                     <div>
+                        <InputLabel value="Número máximo de sabores" htmlFor="max_sabores"/>
                         <Input
+                            id="max_sabores"
                             inputMode="numeric"
                             placeholder="Número máximo de sabores"
                             value={data.maximo_sabores}
@@ -70,7 +75,9 @@ export default function UpdateEembalagemModal({ show, onClose, embalagem}) {
                         {errors.maximo_sabores && <p className="text-red-500 text-sm mt-1">{errors.maximo_sabores}</p>}
                     </div>
                     <div>
+                        <InputLabel value="Preço por sabor adicional" htmlFor="sabor_adicional"/>
                         <InputMoney
+                            id="sabor_adicional"
                             value={data.preco_sabor_extra}
                             onChange={(value) => setData('preco_sabor_extra', value)}
                             placeholder='Preço por sabor adicional'
@@ -78,7 +85,9 @@ export default function UpdateEembalagemModal({ show, onClose, embalagem}) {
                         {errors.preco_sabor_extra && <p className="text-red-500 text-sm mt-1">{errors.preco_sabor_extra}</p>}
                     </div>
                     <div>
+                        <InputLabel value="Preço da embalagem" htmlFor="preco_embalagem"/>
                         <InputMoney
+                            id="preco_embalagem"
                             value={data.valor_base}
                             onChange={(value) => setData('valor_base', value)}
                             placeholder='Preço da embalagem'

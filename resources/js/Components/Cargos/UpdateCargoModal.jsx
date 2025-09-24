@@ -3,6 +3,7 @@ import { useForm } from '@inertiajs/react';
 import { useEffect } from 'react';
 import ModalButtons from '../ModalButtons';
 import TextInput from '../TextInput';
+import InputLabel from '../InputLabel';
 
 export default function UpdateCargoModal({ show, onClose, cargo}) {
     const { data, setData, put, processing, errors, reset } = useForm({
@@ -39,7 +40,9 @@ export default function UpdateCargoModal({ show, onClose, cargo}) {
                 <h2 className="text-lg font-semibold text-gray-900 mb-4">Editar cargo</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
+                        <InputLabel value="Cargo" htmlFor="cargo"/>
                         <TextInput
+                            id="id"
                             value={data.name}
                             placeholder="Nome"
                             onChange={(e) => setData('name', e.target.value)}

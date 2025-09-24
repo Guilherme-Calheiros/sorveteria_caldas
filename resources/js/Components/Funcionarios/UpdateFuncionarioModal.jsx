@@ -6,6 +6,7 @@ import ModalButtons from '../ModalButtons'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import TextInput from '../TextInput';
 import { formataCpf } from '@/Utils/cpf';
+import InputLabel from '../InputLabel';
 
 export default function UpdateFuncionarioModal({ show, onClose, cargos, funcionario }) {
     
@@ -49,7 +50,9 @@ export default function UpdateFuncionarioModal({ show, onClose, cargos, funciona
                 <h2 className="text-lg font-semibold text-gray-900 mb-4">Editar Funcionário</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
+                        <InputLabel value="Nome" htmlFor="nome"/>
                         <TextInput
+                            id="nome"
                             value={data.name}
                             placeholder="Nome"
                             onChange={(e) => setData('name', e.target.value)}
@@ -59,7 +62,9 @@ export default function UpdateFuncionarioModal({ show, onClose, cargos, funciona
                         )}
                     </div>
                     <div>
+                        <InputLabel value="CPF" htmlFor="cpf"/>
                         <TextInput
+                            id="cpf"
                             value={formataCpf(data.cpf)}
                             maxLength={14}
                             placeholder="CPF"
@@ -70,7 +75,9 @@ export default function UpdateFuncionarioModal({ show, onClose, cargos, funciona
                         )}
                     </div>
                     <div>
+                        <InputLabel value="Celular" htmlFor="celular"/>
                         <InputTelefone
+                            id="celular"
                             value={data.telefone}
                             onChange={(value) => setData('telefone', value)}
                         />
@@ -79,7 +86,9 @@ export default function UpdateFuncionarioModal({ show, onClose, cargos, funciona
                         )}
                     </div>
                     <div>
-                        <Select 
+                        <InputLabel value="Cargo" htmlFor="cargo"/>
+                        <Select
+                            id="cargo"
                             value={String(data.cargo_id)}
                             onValueChange={(value) => setData('cargo_id', value)}
                         >

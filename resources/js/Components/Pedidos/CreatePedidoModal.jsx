@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useForm, usePage } from "@inertiajs/react";
 import { useState } from "react";
 import { formataMoeda } from "@/Utils/moeda";
@@ -8,7 +8,7 @@ import TextInput from "../TextInput";
 import InputLabel from "../InputLabel";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { Input } from "../ui/input";
-import { LuPlus, LuSquarePen, LuTrash, LuX } from "react-icons/lu";
+import { LuPlus, LuTrash, LuX } from "react-icons/lu";
 import { Button } from "@headlessui/react";
 import ModalButtons from "../ModalButtons";
 
@@ -42,16 +42,19 @@ export default function CreatePedidoModal({ show, onClose, sabores, embalagens, 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        setData('itens', itens);
-
         post(route('pedidos.store'), {
             onSuccess: () => {
+                console.log('sucesso')
                 reset();
                 resetFormulario();
                 onClose();
             },
         });
     };
+
+    useEffect(() => {
+        setData('itens', itens);
+    }, [itens]);
 
     const resetFormulario = () => {
         setItens([]);
@@ -185,7 +188,7 @@ export default function CreatePedidoModal({ show, onClose, sabores, embalagens, 
                     <div className="grid grid-cols-1 gap-4 mb-4">
                         <h2 className="text-lg font-bold">Itens do Pedido</h2>
                         <div className="p-2 rounded bg-neutral-50 border col-span-full">
-                            <h3 className="text-text-color-secondary">Adicionar Item</h3>
+                            <h3 className="text-secondary-foreground">Adicionar Item</h3>
                             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
                                 <div className="md:col-span-3">
                                     <InputLabel value="Embalagem" htmlFor="embalagem"/>
@@ -229,8 +232,8 @@ export default function CreatePedidoModal({ show, onClose, sabores, embalagens, 
                                             Escolha até <strong>{selectedEmbalagem.maximo_sabores}</strong> {selectedEmbalagem.maximo_sabores === 1 ? 'sabor' : 'sabores'} sem custo adicional.
                                         </p>
                                         {showSaborExtra && (
-                                            <div className="bg-secondary-color-100 rounded border border-secondary-color-500 p-2">
-                                                <h3 className="text-text-color-primary font-bold">Confirmar sabor extra</h3>
+                                            <div className="bg-secondary-light rounded border border-secondary p-2">
+                                                <h3 className="text-foreground font-bold">Confirmar sabor extra</h3>
                                                 <p className="text-sm">Deseja adicionar o sabor <strong>{selectedSabor.name}</strong>?</p>
                                                 <p className="text-sm">Cada sabor extra tem acréscimo de <strong>{formataMoeda(selectedEmbalagem.preco_sabor_extra)}</strong></p>
                                                 <ModalButtons
@@ -277,10 +280,10 @@ export default function CreatePedidoModal({ show, onClose, sabores, embalagens, 
                                         <LuPlus />
                                     </PrimaryButton>
 
-                                    <ul cclassName="flex items-center gap-2 flex-wrap">
+                                    <ul className="col-span-full flex items-center gap-2 flex-wrap">
                                         {selectedSabores && Object.keys(selectedSabores).length > 0 && (
                                             selectedSabores.map(sabor => (
-                                                <li key={sabor.id} className="bg-secondary-color-100 text-sm px-2 py-1 rounded-full text-secondary-color-900 flex items-center gap-1">
+                                                <li key={sabor.id} className="bg-secondary-light text-sm px-2 py-1 rounded-full text-secondary-dark flex items-center gap-1">
                                                     {sabor?.name}
                                                     <Button
                                                         onClick={() => handleRemoveSabor(sabor)}
@@ -327,13 +330,6 @@ export default function CreatePedidoModal({ show, onClose, sabores, embalagens, 
                                                     <div className="font-medium">Total: {formataMoeda(item.preco_total)}</div>
                                                 </div>
                                                 <div className="flex items-center">
-                                                    <Button
-                                                        type="button"
-                                                        onClick={() => handleEditItem(index)}
-                                                        className="p-1"
-                                                    >
-                                                        <LuSquarePen />
-                                                    </Button>
                                                     <Button
                                                         type="button"
                                                         onClick={() => handleRemoveItem(index)}
