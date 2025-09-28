@@ -23,7 +23,7 @@ export default function Index({pedidos, embalagens, sabores, funcionarios}){
                         <LuPlus/> Adicionar Pedido
                     </PrimaryButton>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-4">
                     {pedidos.data.map((pedido) =>
                         <CardPedido
                             key={pedido.id}

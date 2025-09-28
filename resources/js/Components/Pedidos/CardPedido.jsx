@@ -10,7 +10,7 @@ export default function CardPedido({pedido}) {
                 <h3 className="font-bold text-lg">
                     {pedido.cliente_nome ? `Pedido de ${pedido.cliente_nome}` : `Pedido #${pedido.id}`}
                 </h3>
-                <div className="flex items-center justify-between">
+                <div className="flex flex-wrap items-center justify-between">
                     <p className="flex items-center gap-1 text-secondary-foreground">
                         <LuUser/>
                         {pedido.funcionario.name}

@@ -21,11 +21,11 @@ export default function AuthenticatedLayout({ children }) {
                         <ApplicationLogo className="w-36 mx-auto mb-10"/>
                         {!temPermissao ?
                             <NavLink
-                                href={route('caixa.dashboard')}
-                                active={route().current('caixa.dashboard')}
+                                href={route('pedidos.index')}
+                                active={route().current('pedidos.index')}
                             >
-                                <LuHouse className='w-5 h-5 align-middle'/>
-                                Dashboard
+                                <LuReceiptText className="w-5 h-5"/>
+                                Pedidos
                             </NavLink> : (
                                 <>
                                     <NavLink
@@ -79,7 +79,7 @@ export default function AuthenticatedLayout({ children }) {
                         <LuLogOut className='w-5 h-5 align-middle'/> Sair
                     </Button>
                 </aside>
-                <main className="flex-1 p-6 bg-[#fffcfd] ml-52">
+                <main className="flex-1 p-6 bg-[#f9f9f4] ml-52">
                     {children}
                 </main>
             </div>

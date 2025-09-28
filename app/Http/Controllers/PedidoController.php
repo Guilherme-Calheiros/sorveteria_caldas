@@ -19,7 +19,7 @@ class PedidoController extends Controller
 
         $this->authorize('viewAny', Pedido::class);
 
-        $sabores = Sabor::orderBy('name')->get(['id', 'name']);
+        $sabores = Sabor::orderBy('name')->get(['id', 'name', 'disponivel']);
         $embalagens = Embalagem::orderBy('name')->get(['id', 'name', 'valor_base', 'maximo_sabores', 'preco_sabor_extra']);
         $funcionarios = Funcionario::orderBy('name')->get(['id', 'name']);
 

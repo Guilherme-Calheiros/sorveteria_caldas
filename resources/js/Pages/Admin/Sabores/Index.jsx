@@ -8,6 +8,8 @@ import DeleteModal from "@/Components/DeleteModal";
 import TableActions from "@/Components/TableActions";
 import PrimaryButton from "@/Components/PrimaryButton";
 import Paginator from "@/Components/Paginator";
+import CardSabor from "@/Components/Sabores/CardSabor";
+import DeleteSaborModal from "@/Components/Sabores/DeleteSaborModal";
 
 export default function Index({ sabores }){
     const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -38,29 +40,20 @@ export default function Index({ sabores }){
                         <LuPlus/> Adicionar Sabor
                     </PrimaryButton>
                 </div>
-                <table className="table-auto w-full border">
-                    <thead>
-                        <tr className="bg-primary text-white">
-                            <th className="p-2 border">ID</th>
-                            <th className="p-2 border">Sabor</th>
-                            <th className="p-2 border">Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {sabores.data.map((sabor) => (
-                            <tr key={sabor.id} className="text-center bg-white">
-                                <td className="p-2 border">{sabor.id}</td>
-                                <td className="p-2 border">{sabor.name}</td>
-                                <td className="p-2 border">
-                                    <TableActions
-                                        onEditar={() => editarSabor(sabor)}
-                                        onExcluir={() => excluirSabor(sabor)}
-                                    />
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+
+                <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-4">
+                    {sabores.data.map((sabor) =>
+                        <CardSabor
+                            key={sabor.id}
+                            sabor={sabor}
+                            onEditar={() => editarSabor(sabor)}
+                            onExcluir={() => excluirSabor(sabor)}
+                        />
+                    )}
+                    {sabores.data.length === 0 && (
+                        <div className="text-xl text-center col-span-full mt-10">Nenhum sabor encontrado</div>
+                    )}
+                </div>
                 <Paginator items={sabores}/>
                 <CreateSaborModal
                     key={showCreateModal ? 'show' : 'hide'}
@@ -72,13 +65,10 @@ export default function Index({ sabores }){
                     onClose={() => setShowUpdateModal(false)}
                     sabor={selectedSabor}
                 />
-                <DeleteModal
+                <DeleteSaborModal
                     show={showDeleteModal}
                     onClose={() => setShowDeleteModal(false)}
-                    element={selectedSabor}
-                    routeName='sabores.destroy'
-                    label='Sabor'
-                    message={`Tem certeza que deseja excluir o sabor "${selectedSabor?.name}"?`}
+                    sabor={selectedSabor}
                 />
             </div>
         </AuthenticatedLayout>

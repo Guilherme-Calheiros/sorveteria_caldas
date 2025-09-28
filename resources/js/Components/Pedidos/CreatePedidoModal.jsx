@@ -32,7 +32,7 @@ export default function CreatePedidoModal({ show, onClose, sabores, embalagens, 
 
     const filteredSabores = useMemo(() => {
         const selectedIds = selectedSabores.map(s => s.id);
-        return sabores.filter(s => !selectedIds.includes(s.id));
+        return sabores.filter(s => !selectedIds.includes(s.id) && s.disponivel === true);
     }, [sabores, selectedSabores])
 
     const totalPedido = useMemo(() => {
