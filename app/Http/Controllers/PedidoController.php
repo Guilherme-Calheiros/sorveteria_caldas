@@ -25,9 +25,9 @@ class PedidoController extends Controller
 
         $pedidos = Pedido::with(['itensPedido.sabores', 'itensPedido.embalagem', 'funcionario', 'user'])
             ->latest()
-            ->paginate(10);
+            ->paginate(12);
 
-        return Inertia::render('Admin/Pedidos/Index', [
+        return Inertia::render('Pedidos/Index', [
             'pedidos' => $pedidos,
             'sabores' => $sabores,
             'funcionarios' => $funcionarios,
@@ -42,7 +42,7 @@ class PedidoController extends Controller
         $pedido = Pedido::with(['itensPedido.sabores', 'itensPedido.embalagem', 'funcionario', 'user'])
             ->findOrFail($pedidoId);
 
-        return Inertia::render('Admin/Pedidos/Show', [
+        return Inertia::render('Pedidos/Show', [
             'pedido' => $pedido
         ]);
     }

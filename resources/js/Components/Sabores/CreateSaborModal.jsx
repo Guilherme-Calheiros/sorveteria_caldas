@@ -7,6 +7,7 @@ import InputLabel from '../InputLabel';
 export default function CreateSaborModal({ show, onClose }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
+        color: '#ffffff'
     });
 
     const handleSubmit = (e) => {
@@ -40,6 +41,10 @@ export default function CreateSaborModal({ show, onClose }) {
                         {errors.name && (
                             <p className="text-red-500 text-sm mt-1">{errors.name}</p>
                         )}
+                    </div>
+                    <div>
+                        <InputLabel value="Cor do card" htmlFor="card_color"/>
+                        <input type="color" value={data.color} id="card_color" onChange={(e) => setData('color', e.target.value)}/>
                     </div>
                     <ModalButtons
                         onCancelar={handleCancel}

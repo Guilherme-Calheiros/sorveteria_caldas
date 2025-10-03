@@ -1,10 +1,11 @@
 import React from "react";
 import { Button } from "../ui/button";
+import { LuPencil, LuTrash } from "react-icons/lu";
 
-export default function CardSabor({sabor, onEditar, onExcluir}) {
+export default function CardSabor({sabor, onToggleEstado, onEditar, onExcluir}) {
 
     return(
-        <div key={sabor.id} className="rounded-xl bg-white col-span-1 border-t-4 border-secondary p-4 shadow-sm transition-all hover:scale-105">
+        <div key={sabor.id} className="rounded-xl bg-white col-span-1 border-t-4 p-4 shadow-sm transition-all hover:scale-105" style={{ borderTop: `6px solid ${sabor.color}` }}>
             <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-1">
                     <h2 className="text-lg font-bold">
@@ -23,12 +24,15 @@ export default function CardSabor({sabor, onEditar, onExcluir}) {
                     #{sabor.id}
                 </div>
             </div>
-            <div className="grid grid-cols-2 gap-4">
-                <Button variant='outline' onClick={onEditar}>
-                    Editar
-                </Button>
-                <Button onClick={onExcluir}>
+            <div className="flex items-center gap-4">
+                <Button className="flex-1" onClick={onToggleEstado}>
                     {sabor.disponivel === true ? 'Desativar' : 'Ativar'}
+                </Button>
+                <Button variant='outline' onClick={onEditar}>
+                    <LuPencil/>
+                </Button>
+                <Button variant='outline' onClick={onExcluir}>
+                    <LuTrash/>
                 </Button>
             </div>
         </div>

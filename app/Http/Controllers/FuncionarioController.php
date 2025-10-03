@@ -17,9 +17,9 @@ class FuncionarioController extends Controller
     {
         $this->authorize('viewAny', Funcionario::class);
 
-        $funcionarios = Funcionario::orderBy('name')->paginate(10);
+        $funcionarios = Funcionario::orderBy('name')->paginate(12);
         $cargos = Cargo::select('id', 'name')->get();
-        return Inertia::render('Admin/Funcionarios/Index', [
+        return Inertia::render('Funcionarios/Index', [
             'funcionarios' => $funcionarios,
             'cargos' => $cargos,
         ]);
@@ -88,6 +88,17 @@ class FuncionarioController extends Controller
     public function destroy(string $id)
     {
         $this->authorize('delete', Funcionario::class);
+
+        $funcionario = Funcionario::findOrFail($id);
+
+        $funcionario->delete();
+
+        return redirect()->route('funcionarios.index');
+    }
+
+    public function desativar(string $id)
+    {
+        $this->authorize('desativar', Funcionario::class);
 
         $funcionario = Funcionario::findOrFail($id);
 

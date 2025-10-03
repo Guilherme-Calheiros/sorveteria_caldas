@@ -36,7 +36,7 @@ class AuthenticatedSessionController extends Controller
             return redirect()->route('admin.dashboard');
         }
 
-        return redirect()->route('caixa.dashboard');
+        return redirect()->route('pedidos.index');
     }
 
     /**

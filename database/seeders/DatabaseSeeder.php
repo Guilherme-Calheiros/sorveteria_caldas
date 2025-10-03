@@ -44,20 +44,23 @@ class DatabaseSeeder extends Seeder
         }
 
         $sabores = [
-            'Chocolate',
-            'Morango',
-            'Baunilha',
-            'Napolitano',
-            'Coco',
-            'Menta com Chocolate',
-            'Açaí',
-            'Doce de Leite',
-            'Pistache',
-            'Creme'
+            ['name' => 'Chocolate', 'color' => '#7B3F00'],
+            ['name' => 'Morango', 'color' => '#FF4D6D'],
+            ['name' => 'Baunilha', 'color' => '#F3E5AB'],
+            ['name' => 'Napolitano', 'color' => '#D99B6C'],
+            ['name' => 'Coco', 'color' => '#FFF8E7'],
+            ['name' => 'Menta com Chocolate', 'color' => '#98FF98'],
+            ['name' => 'Açaí', 'color' => '#5D1451'],
+            ['name' => 'Doce de Leite', 'color' => '#D2A679'],
+            ['name' => 'Pistache', 'color' => '#93C572'],
+            ['name' => 'Creme', 'color' => '#FFFDD0'],
         ];
 
         foreach ($sabores as $sabor) {
-            Sabor::firstOrCreate(['name' => $sabor]);
+            Sabor::firstOrCreate(
+                ['name' => $sabor['name']],
+                ['color' => $sabor['color'], 'disponivel' => true]
+            );
         }
 
         $embalagens = [

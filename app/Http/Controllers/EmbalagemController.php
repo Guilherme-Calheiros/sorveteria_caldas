@@ -18,8 +18,8 @@ class EmbalagemController extends Controller
     {
         $this->authorize('viewAny', Embalagem::class);
 
-        $embalagens = Embalagem::orderBy('id', 'asc')->paginate(10);
-        return Inertia::render('Admin/Embalagens/Index', [
+        $embalagens = Embalagem::orderBy('id', 'asc')->paginate(12);
+        return Inertia::render('Embalagens/Index', [
             'embalagens' => $embalagens
         ]);
     }

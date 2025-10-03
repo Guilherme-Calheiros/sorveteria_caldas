@@ -1,21 +1,31 @@
 import React, { useState } from "react";
-import { Head, Link } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 import CreateSaborModal from "@/Components/Sabores/CreateSaborModal";
 import UpdateSaborModal from "@/Components/Sabores/UpdateSaborModal";
-import { LuPlus } from "react-icons/lu";
+import { LuPlus, LuSearch } from "react-icons/lu";
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import DeleteModal from "@/Components/DeleteModal";
-import TableActions from "@/Components/TableActions";
 import PrimaryButton from "@/Components/PrimaryButton";
 import Paginator from "@/Components/Paginator";
 import CardSabor from "@/Components/Sabores/CardSabor";
-import DeleteSaborModal from "@/Components/Sabores/DeleteSaborModal";
+import TextInput from "@/Components/TextInput";
 
 export default function Index({ sabores }){
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [showUpdateModal, setShowUpdateModal] = useState(false);
     const [selectedSabor, setSelectedSabor] = useState(null)
+    const [termoBusca, setTermoBusca] = useState("");
+
+    const { patch } = useForm();
+
+    const toggleEstadoSabor = (sabor) => {
+        if (sabor?.disponivel) {
+            patch(route('sabores.desativar', sabor.id));
+        } else {
+            patch(route('sabores.reativar', sabor.id));
+        }
+    };
 
     const excluirSabor = (sabor) => {
         setSelectedSabor(sabor);
@@ -27,30 +37,48 @@ export default function Index({ sabores }){
         setShowUpdateModal(true)
     }
 
+    const saboresFiltrados = sabores.data.filter((sabor) =>
+        sabor.name.toLowerCase().includes(termoBusca.toLowerCase())
+    );
+
     return (
         <AuthenticatedLayout>
             <div className="p-4">
                 <Head title="Sabores"/>
-                <div className="p-2 flex justify-between items-center">
+                <div className="p-2 flex justify-between items-center mb-4">
                     <h1 className="text-2xl font-bold">Lista de sabores</h1>
-                    <PrimaryButton
-                        onClick={() => setShowCreateModal(true)}
-                        className="text-base"
-                    >
-                        <LuPlus/> Adicionar Sabor
-                    </PrimaryButton>
+                    <div className="flex gap-4">
+                        <div className="relative">
+                            <span className="absolute text-xs left-2 top-1/2 -translate-y-1/2 pointer-events-none text-gray-600">
+                                <LuSearch/>
+                            </span>
+                            <TextInput
+                                className="px-8 bg-white"
+                                placeholder="Buscar sabor..."
+                                value={termoBusca}
+                                onChange={(e) => setTermoBusca(e.target.value)}
+                            />
+                        </div>
+                        <PrimaryButton
+                            onClick={() => setShowCreateModal(true)}
+                            className="text-base"
+                        >
+                            <LuPlus/> Adicionar Sabor
+                        </PrimaryButton>
+                    </div>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-4">
-                    {sabores.data.map((sabor) =>
+                    {saboresFiltrados.map((sabor) =>
                         <CardSabor
                             key={sabor.id}
                             sabor={sabor}
+                            onToggleEstado={() => toggleEstadoSabor(sabor)}
                             onEditar={() => editarSabor(sabor)}
                             onExcluir={() => excluirSabor(sabor)}
                         />
                     )}
-                    {sabores.data.length === 0 && (
+                    {saboresFiltrados.length === 0 && (
                         <div className="text-xl text-center col-span-full mt-10">Nenhum sabor encontrado</div>
                     )}
                 </div>
@@ -65,10 +93,13 @@ export default function Index({ sabores }){
                     onClose={() => setShowUpdateModal(false)}
                     sabor={selectedSabor}
                 />
-                <DeleteSaborModal
+                <DeleteModal
                     show={showDeleteModal}
                     onClose={() => setShowDeleteModal(false)}
-                    sabor={selectedSabor}
+                    element={selectedSabor}
+                    routeName='sabores.destroy'
+                    label='Sabor'
+                    message={`Tem certeza que deseja excluir o sabor "${selectedSabor?.name}"?`}
                 />
             </div>
         </AuthenticatedLayout>

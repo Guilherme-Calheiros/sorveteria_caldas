@@ -9,11 +9,12 @@ export default function UpdateSaborModal({ show, onClose, sabor }) {
     
     const { data, setData, put, processing, errors, reset } = useForm({
         name: sabor ? sabor.name : '',
+        color: sabor ? sabor.color : '#ffffff'
     });
 
     useEffect(() => {
         if (sabor) {
-            setData({ name: sabor.name });
+            setData({ name: sabor.name, color: sabor.color });
         }
     }, [show, sabor]);
 
@@ -49,6 +50,10 @@ export default function UpdateSaborModal({ show, onClose, sabor }) {
                         {errors.name && (
                             <p className="text-red-500 text-sm mt-1">{errors.name}</p>
                         )}
+                    </div>
+                    <div>
+                        <InputLabel value="Cor do card" htmlFor="card_color"/>
+                        <input type="color" value={data.color} id="card_color" onChange={(e) => setData('color', e.target.value)}/>
                     </div>
                     <ModalButtons
                         onCancelar={handleCancel}

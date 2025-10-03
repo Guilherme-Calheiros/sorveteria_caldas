@@ -10,7 +10,8 @@ class Sabor extends Model
 
     protected $fillable = [
         'name',
-        'disponivel'
+        'disponivel',
+        'color'
     ];
 
     protected function casts(): array {

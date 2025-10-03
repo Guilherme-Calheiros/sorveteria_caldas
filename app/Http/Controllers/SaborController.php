@@ -18,8 +18,8 @@ class SaborController extends Controller
     {
         $this->authorize('viewAny', Sabor::class);
 
-        $sabores = Sabor::orderBy('name', 'asc')->paginate(10);
-        return Inertia::render('Admin/Sabores/Index', [
+        $sabores = Sabor::orderBy('id', 'asc')->paginate(12);
+        return Inertia::render('Sabores/Index', [
             'sabores' => $sabores
         ]);
     }
@@ -33,11 +33,13 @@ class SaborController extends Controller
 
         $validated = $request->validate([
             'name' =>  'required|string|max:255',
+            'color' => 'nullable|string|size:7',
         ]);
 
         Sabor::create([
             'name' => $validated['name'],
-            'disponivel' => true
+            'disponivel' => true,
+            'color' => $validated['color'] ?? '#ffffff',
         ]);
 
         return redirect()->route('sabores.index');
@@ -66,21 +68,32 @@ class SaborController extends Controller
 
         $validated = $request->validate([
             'name' =>  'required|string|max:255',
+            'color' => 'nullable|string|size:7',
         ]);
     
         $sabor->update([
             'name' => $validated['name'],
+            'color' => $validated['color'] ?? $sabor->color,
         ]);
     
         return redirect()->route('sabores.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+
+        public function destroy(string $id)
     {
         $this->authorize('delete', Sabor::class);
+
+        $sabor = Sabor::findOrFail($id);
+
+        $sabor->delete();
+
+        return redirect()->route('sabores.index');
+    }
+
+    public function desativar(string $id)
+    {
+        $this->authorize('desativar', Sabor::class);
 
         $sabor = Sabor::findOrFail($id);
 

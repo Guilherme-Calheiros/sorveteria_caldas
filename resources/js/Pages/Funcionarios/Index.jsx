@@ -1,21 +1,31 @@
 import React, { useState } from 'react';
-import { Head } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 import CreateFuncionarioModal from '@/Components/Funcionarios/CreateFuncionarioModal';
 import UpdateFuncionarioModal from '@/Components/Funcionarios/UpdateFuncionarioModal';
-import DeleteFuncionarioModal from '@/Components/Funcionarios/DeleteFuncionarioModal';
-import { LuSquarePen, LuPlus } from "react-icons/lu";
+import { LuPlus, LuPen, LuTrash } from "react-icons/lu";
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { formataTelefone } from '@/Utils/telefone';
 import { Button } from '@/Components/ui/button';
 import PrimaryButton from '@/Components/PrimaryButton';
 import Paginator from '@/Components/Paginator';
 import { formataCpf } from '@/Utils/cpf';
+import DeleteModal from '@/Components/DeleteModal';
 
 export default function Index({ funcionarios, cargos }) {
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [showUpdateModal, setShowUpdateModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedFuncionario, setSelectedFuncionario] = useState(null);
+
+    const { patch } = useForm();
+
+    const toggleEstadoFuncionario = (funcionario) => {
+        if (funcionario?.disponivel) {
+            patch(route('funcionarios.desativar', funcionario.id));
+        } else {
+            patch(route('funcionarios.reativar', funcionario.id));
+        }
+    };
 
     const editarFuncionario = (funcionario) => {
         setSelectedFuncionario(funcionario)
@@ -31,7 +41,7 @@ export default function Index({ funcionarios, cargos }) {
         <AuthenticatedLayout>
             <div className="p-4">
                 <Head title="Funcionários" />
-                <div className="p-2 flex justify-between items-center">
+                <div className="p-2 flex justify-between items-center m-4">
                     <h1 className="text-2xl font-bold">Lista de usuários</h1>
                     <PrimaryButton
                         onClick={() => setShowCreateModal(true)}
@@ -63,11 +73,14 @@ export default function Index({ funcionarios, cargos }) {
                                 <td className="p-2 border">{funcionario.data_admissao}</td>
                                 <td className="p-2 border">
                                     <div className='flex justify-center items-center'>
-                                        <Button onClick={() => editarFuncionario(funcionario)} variant="ghost" size="icon">
-                                            <LuSquarePen/>
-                                        </Button>
-                                        <Button onClick={() => excluirFuncionario(funcionario)} variant="link" className={funcionario.ativo ? 'text-red-500' : 'text-green-500 hover:underline'}>
+                                        <Button onClick={() => toggleEstadoFuncionario(funcionario)} variant="link" className={funcionario.ativo ? 'text-red-500' : 'text-green-500 hover:underline'}>
                                             {funcionario.ativo ? 'Desativar' : 'Ativar'}
+                                        </Button>
+                                        <Button onClick={() => editarFuncionario(funcionario)} variant="ghost" size="icon">
+                                            <LuPen/>
+                                        </Button>
+                                        <Button onClick={() => excluirFuncionario(funcionario)} variant="ghost">
+                                            <LuTrash/>
                                         </Button>
                                     </div>
                                 </td>
@@ -91,10 +104,13 @@ export default function Index({ funcionarios, cargos }) {
                     funcionario={selectedFuncionario}
                 />
 
-                <DeleteFuncionarioModal
-                    show={showDeleteModal} 
+               <DeleteModal
+                    show={showDeleteModal}
                     onClose={() => setShowDeleteModal(false)}
-                    funcionario={selectedFuncionario}
+                    element={selectedFuncionario}
+                    routeName='funcionarios.destroy'
+                    label='Funcionário'
+                    message={`Tem certeza que deseja excluir o funcionário "${selectedFuncionario?.name}"?`}
                 />
 
             </div>

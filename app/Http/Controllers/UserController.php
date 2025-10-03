@@ -11,7 +11,7 @@ class UserController extends Controller
     public function index()
     {
         $usuarios = User::orderBy('id', 'asc')->get();
-        return Inertia::render('Admin/Usuarios/Index', [
+        return Inertia::render('Usuarios/Index', [
             'usuarios' => $usuarios,
         ]);
     }
@@ -19,7 +19,7 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
-        return Inertia::render('Admin/Usuarios/Show', [
+        return Inertia::render('Usuarios/Show', [
             'usuario' => $user
         ]);
     }

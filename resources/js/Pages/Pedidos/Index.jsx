@@ -14,7 +14,7 @@ export default function Index({pedidos, embalagens, sabores, funcionarios}){
         <AuthenticatedLayout>
             <div className="p-4">
                 <Head title="Pedidos"/>
-                <div className="p-2 flex justify-between items-center">
+                <div className="p-2 flex justify-between items-center mb-4">
                     <h1 className="text-2xl font-bold">Lista de pedidos</h1>
                     <PrimaryButton
                         onClick={() => setShowCreateModal(true)}

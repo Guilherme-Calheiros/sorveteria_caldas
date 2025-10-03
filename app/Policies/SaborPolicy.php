@@ -47,6 +47,11 @@ class SaborPolicy
         return $user->isAdmin();
     }
 
+    public function desativar(User $user)
+    {
+        return $user->isAdmin();
+    }
+
     public function reativar(User $user)
     {
         return $user->isAdmin();

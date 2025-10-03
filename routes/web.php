@@ -19,12 +19,8 @@ Route::get('/login', function () {
 Route::middleware('auth')->group(function () {
 
     Route::get('/admin', function () {
-        return Inertia::render('Admin/Dashboard');
+        return Inertia::render('Dashboard');
     })->middleware('permissao.acesso:administrador')->name('admin.dashboard');
-    
-    Route::get('/caixa', function () {
-        return Inertia::render('Caixa/Dashboard');
-    })->middleware('permissao.acesso:caixa')->name('caixa.dashboard');
 
     Route::resource('pedidos', PedidoController::class);
 
@@ -32,9 +28,11 @@ Route::middleware('auth')->group(function () {
        
     Route::resource('funcionarios', FuncionarioController::class);
     Route::patch('funcionarios/{funcionario}/reativar', [FuncionarioController::class, 'reativar'])->name('funcionarios.reativar');
+    Route::patch('funcionarios/{funcionario}/desativar', [FuncionarioController::class, 'desativar'])->name('funcionarios.desativar');
 
     Route::resource('sabores', SaborController::class);
     Route::patch('sabores/{sabor}/reativar', [SaborController::class, 'reativar'])->name('sabores.reativar');
+    Route::patch('sabores/{sabor}/desativar', [SaborController::class, 'desativar'])->name('sabores.desativar');
 
     Route::resource('embalagens', EmbalagemController::class);
     Route::resource('cargos', CargoController::class)->middleware('permissao.acesso:administrador');

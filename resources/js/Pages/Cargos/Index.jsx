@@ -29,7 +29,7 @@ export default function Index({ cargos }){
         <AuthenticatedLayout>
             <div className="p-4">
                 <Head title="Cargos"/>
-                <div className="p-2 flex justify-between items-center">
+                <div className="p-2 flex justify-between items-center mb-4">
                     <h1 className="text-2xl font-bold">Lista de cargos</h1>
                     <PrimaryButton
                         onClick={() => setShowCreateModal(true)}

@@ -18,7 +18,7 @@ class EmbalagemPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Embalagem $embalagem): bool
+    public function view(User $user): bool
     {
         return $user->isAdmin() || $user->isCaixa();
     }
@@ -34,7 +34,7 @@ class EmbalagemPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Embalagem $embalagem): bool
+    public function update(User $user): bool
     {
         return $user->isAdmin();
     }
@@ -42,7 +42,7 @@ class EmbalagemPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Embalagem $embalagem): bool
+    public function delete(User $user): bool
     {
        return $user->isAdmin();
     }
