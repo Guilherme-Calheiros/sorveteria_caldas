@@ -5,7 +5,7 @@ import { LuClock, LuMessageSquare, LuUser } from "react-icons/lu";
 export default function CardPedido({pedido}) {
     
     return(
-        <div key={pedido.id} className="rounded-xl bg-white overflow-hidden col-span-1 flex flex-col border">
+        <div key={pedido.id} className="rounded-xl bg-white col-span-1 border-t-4 border-secondary shadow-sm transition-all flex flex-col gap-3r">
             <div className="p-4">
                 <h3 className="font-bold text-lg">
                     {pedido.cliente_nome ? `Pedido de ${pedido.cliente_nome}` : `Pedido #${pedido.id}`}
@@ -21,10 +21,10 @@ export default function CardPedido({pedido}) {
                     </p>
                 </div>
             </div>
-            <div className="p-4">
+            <div className="p-4 flex flex-col gap-2">
                 {pedido.itens_pedido.map((item, index) => (
-                        <div key={item.id} className={`flex items-start gap-2 p-2 ${index < pedido.itens_pedido.length - 1 ? 'border-b border-muted' : ''}`}>
-                            <div className="bg-primary text-primary-foreground text-xs font-bold rounded-full h-6 w-6 flex items-center justify-center flex-shrink-0">
+                        <div key={item.id} className={'flex items-start gap-2 p-4 bg-gray-50 border-l-4 border-primary rounded-lg'}>
+                            <div className="bg-primary text-primary-foreground text-xs font-bold rounded-md h-6 w-6 flex items-center justify-center flex-shrink-0">
                                 {item.quantidade}x
                             </div>                            
                             <div className="flex-1 min-w-0">
@@ -52,9 +52,9 @@ export default function CardPedido({pedido}) {
                         </div>
                     ))}
             </div>
-            <div className="p-4 mt-auto flex flex-col gap-2">
+            <div className="p-4 mt-auto flex flex-col gap-4">
                 {pedido.observacao && (
-                    <div className="border border-secondary-dark bg-secondary-light/30 p-4 rounded">
+                    <div className="border border-secondary-dark p-4 rounded">
                         <h4 className="font-bold text-foreground flex items-center gap-1">
                             <LuMessageSquare/>
                             Observação do pedido
