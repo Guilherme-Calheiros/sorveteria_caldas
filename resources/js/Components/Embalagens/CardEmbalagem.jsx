@@ -6,7 +6,7 @@ import { formataMoeda } from "@/Utils/moeda";
 export default function CardEmbalagem({embalagem, onEditar, onExcluir}) {
 
     return(
-        <div key={embalagem.id} className="rounded-xl bg-white col-span-1 border-t-4 border-primary p-4 shadow-sm transition-all hover:scale-105 flex flex-col gap-3">
+        <div key={embalagem.id} className="rounded-xl bg-white col-span-1 border-t-4 border-secondary p-4 shadow-sm transition-all hover:scale-105 flex flex-col gap-3">
             <div className="flex items-center justify-between">
                 <h2 className="text-lg font-bold">
                     {embalagem.name}
