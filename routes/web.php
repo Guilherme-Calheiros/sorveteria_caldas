@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\CargoController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmbalagemController;
 use App\Http\Controllers\FuncionarioController;
 use App\Http\Controllers\PedidoController;
@@ -10,17 +11,13 @@ use App\Http\Controllers\SaborController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', [LandingController::class, 'index']);
-
-Route::get('/login', function () {
+Route::get('/', function () {
     return Inertia::render('Auth/Login');
 });
 
 Route::middleware('auth')->group(function () {
 
-    Route::get('/admin', function () {
-        return Inertia::render('Dashboard');
-    })->middleware('permissao.acesso:administrador')->name('admin.dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('permissao.acesso:administrador')->name('dashboard');
 
     Route::resource('pedidos', PedidoController::class);
 

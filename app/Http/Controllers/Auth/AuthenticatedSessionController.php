@@ -33,7 +33,7 @@ class AuthenticatedSessionController extends Controller
         $user = Auth::user();
 
         if ($user->perfil === User::PERFIL_ADMIN) {
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('dashboard');
         }
 
         return redirect()->route('pedidos.index');

@@ -20,7 +20,7 @@ class ItemPedido extends Model
     }
 
     public function sabores(){
-        return $this->belongsToMany(Sabor::class, 'itens_pedido_sabor', 'item_pedido_id', 'sabor_id');
+        return $this->belongsToMany(Sabor::class, 'itens_pedido_sabor', 'item_pedido_id', 'sabor_id')->withTimestamps();
     }
 
     public function pedido(){

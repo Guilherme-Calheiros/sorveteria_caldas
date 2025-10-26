@@ -23,9 +23,9 @@ class PedidoController extends Controller
         $embalagens = Embalagem::orderBy('name')->get(['id', 'name', 'valor_base', 'maximo_sabores', 'preco_sabor_extra']);
         $funcionarios = Funcionario::orderBy('name')->get(['id', 'name']);
 
-        $pedidos = Pedido::with(['itensPedido.sabores', 'itensPedido.embalagem', 'funcionario', 'user'])
-            ->latest()
-            ->paginate(12);
+            $pedidos = Pedido::with(['itensPedido.sabores', 'itensPedido.embalagem', 'funcionario', 'user'])
+                ->latest()
+                ->paginate(12);
 
         return Inertia::render('Pedidos/Index', [
             'pedidos' => $pedidos,

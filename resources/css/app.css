@@ -15,8 +15,8 @@
     --popover-foreground: 0 0% 3.9%; /* #0a0a0a */
 
     --primary: 346, 99%, 72%;          /* #FE7292 */
-    --primary-dark: 346, 94%, 63%;     /* #F94670 */
-    --primary-light: 346, 97%, 88%;    /* #FEC2D0 */
+    --primary-dark: 347, 75%, 64%;     /* #E85F7C */
+    --primary-light: 346, 100%, 82%;    /* #FFA3B8 */
     --primary-foreground: 0 0% 100%; /* #ffffff */
 
     --secondary: 172 61% 56%;        /* #4fcfc0 */
@@ -37,11 +37,11 @@
     --input: 0 0% 90%;               /* #e5e5e5 */
     --ring: 346 97% 79%;             /* #fe96af */
 
-    --chart-1: 24 92% 47%;           /* #ea580c */
-    --chart-2: 174 70% 35%;          /* #199a8e */
-    --chart-3: 210 26% 31%;          /* #3b4f63 */
-    --chart-4: 45 97% 59%;           /* #fbbf24 */
-    --chart-5: 30 96% 61%;           /* #fb923c */
+    --chart-1: 346, 100%, 82%;       /* #FFA3B8 */
+    --chart-2: 346, 99%, 72%;        /* #FE7292 */
+    --chart-3: 347, 75%, 64%;        /* #E85F7C */
+    --chart-4: 36, 100%, 65%;        /* #FFB84D */
+    --chart-5: 20, 100%, 71%;        /* #FF9B6A */
 
     --radius: 0.5rem;
   }
@@ -50,6 +50,28 @@
 .obrigatorio::after{
   content: ' *';
   color: #ef4444;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+.scrollbar-hidden {
+  -ms-overflow-style: none;  /* IE e Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px; /* fininha */
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: rgba(100,100,100,0.5);
+  border-radius: 10px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.05);
 }
 
 @layer base {
