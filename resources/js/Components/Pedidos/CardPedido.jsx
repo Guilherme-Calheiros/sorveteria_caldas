@@ -5,9 +5,9 @@ import { LuClock, LuMessageSquare, LuUser } from "react-icons/lu";
 export default function CardPedido({pedido}) {
     
     return(
-        <div key={pedido.id} className="rounded-xl bg-white col-span-1 border-t-4 border-secondary shadow-sm transition-all flex flex-col gap-3r">
+        <div key={pedido.id} className="rounded-xl bg-white col-span-1 shadow-sm border hover:shadow-lg transition-all flex flex-col gap-3r">
             <div className="p-4">
-                <h3 className="font-bold text-lg">
+                <h3 className="font-semibold text-gray-800 text-lg">
                     {pedido.cliente_nome ? `Pedido de ${pedido.cliente_nome}` : `Pedido #${pedido.id}`}
                 </h3>
                 <div className="flex flex-wrap items-center justify-between">
@@ -23,7 +23,7 @@ export default function CardPedido({pedido}) {
             </div>
             <div className="p-4 flex flex-col gap-2">
                 {pedido.itens_pedido.map((item, index) => (
-                        <div key={item.id} className={'flex items-start gap-2 p-4 bg-gray-50 border-l-4 border-primary rounded-lg'}>
+                        <div key={item.id} className={'flex items-start gap-2 p-4 bg-gray-50 border shadow-sm rounded-lg'}>
                             <div className="bg-primary text-primary-foreground text-xs font-bold rounded-md h-6 w-6 flex items-center justify-center flex-shrink-0">
                                 {item.quantidade}x
                             </div>                            

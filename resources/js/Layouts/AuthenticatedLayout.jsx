@@ -31,7 +31,7 @@ export default function AuthenticatedLayout({ children }) {
                                 <LuReceiptText className="w-5 h-5" /> Pedidos
                             </NavLink>
                         ) : (
-                            <>
+                            <div className='flex flex-col gap-2'>
                                 <NavLink href={route('dashboard')} active={route().current('dashboard')}>
                                     <LuHouse className='w-5 h-5' /> Dashboard
                                 </NavLink>
@@ -50,7 +50,7 @@ export default function AuthenticatedLayout({ children }) {
                                 <NavLink href={route('cargos.index')} active={route().current('cargos.index')}>
                                     <LuBriefcaseBusiness className='w-5 h-5' /> Cargos
                                 </NavLink>
-                            </>
+                            </div>
                         )}
                     </div>
 
@@ -73,7 +73,7 @@ export default function AuthenticatedLayout({ children }) {
                                 <LuReceiptText className="w-5 h-5" /> Pedidos
                             </NavLink>
                         ) : (
-                            <>
+                            <div className='flex flex-col w-full'>
                                 <NavLink href={route('dashboard')} active={route().current('dashboard')}>
                                     <LuHouse className='w-5 h-5' /> Dashboard
                                 </NavLink>
@@ -92,16 +92,16 @@ export default function AuthenticatedLayout({ children }) {
                                 <NavLink href={route('cargos.index')} active={route().current('cargos.index')}>
                                     <LuBriefcaseBusiness className='w-5 h-5' /> Cargos
                                 </NavLink>
-                            </>
+                            </div>
                         )}
 
-                        <Button variant="ghost" className="mt-2" onClick={handleLogout}>
+                        <Button variant="ghost" className="mt-2 w-full" onClick={handleLogout}>
                             <LuLogOut className='w-5 h-5' /> Sair
                         </Button>
                     </div>
                 )}
 
-                <main className="flex-1 p-6 bg-[#f9f9f4] sm:ml-52 mt-12 sm:mt-0 transition-all">
+                <main className="flex-1 p-6 sm:ml-52 mt-12 sm:mt-0 transition-all">
                     {children}
                 </main>
             </div>

@@ -55,6 +55,7 @@ export default function Dashboard({ultimosPedidos, pedidosNoPeriodo, totalVendas
         >
             <Head title="Dashboard" />
 
+            <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
             <div className='flex items-center gap-2 bg-white p-4 rounded-lg shadow mb-6'>
                 <div className='flex items-center gap-2'>
                     <LuCalendar className='h-5 w-5'/>
@@ -74,42 +75,9 @@ export default function Dashboard({ultimosPedidos, pedidosNoPeriodo, totalVendas
             </div>
             <div className="grid grid-cols-12 gap-4">
                 <div className='col-span-12 lg:col-span-3'>
-                    <div className='bg-white shadow-lg sm:rounded-xl p-6 border-l-4 border-primary-dark hover:shadow-xl transition-shadow duration-300 h-full'>
-                        <div className='flex flex-col justify-center h-full'>
-                            <div className="flex items-start justify-between">
-                                <p className='text-sm font-medium'>Total de Pedidos</p>
-                                <LuReceiptText className='w-8 h-8 text-primary-dark' />
-                            </div>
-                            <p className='text-4xl font-bold text-gray-900'>{totalPedidos}</p>
-                        </div>
-                    </div>
-                </div>
-                <div className='col-span-12 lg:col-span-3'>
-                    <div className='bg-white shadow-lg sm:rounded-xl p-6 border-l-4 border-primary-dark hover:shadow-xl transition-shadow duration-300 h-full'>
-                        <div className='flex flex-col justify-center h-full'>
-                            <div className="flex items-start justify-between">
-                                <p className='text-sm font-medium'>Valor Total de Vendas</p>
-                                <LuWallet className='w-8 h-8 text-primary-dark' />
-                            </div>
-                            <p className='text-4xl font-bold text-gray-900'>{formataMoeda(totalVendas)}</p>
-                        </div>
-                    </div>
-                </div>
-                <div className='col-span-12 lg:col-span-3'>
-                    <div className='bg-white shadow-lg sm:rounded-xl p-6 border-l-4 border-primary-dark hover:shadow-xl transition-shadow duration-300 h-full'>
-                        <div className='flex flex-col justify-center h-full'>
-                            <div className="flex items-start justify-between">
-                                <p className='text-sm font-medium'>Ticket Médio</p>
-                                <LuPercent className='w-8 h-8 text-primary-dark' />
-                            </div>
-                            <p className='text-4xl font-bold text-gray-900'>{formataMoeda(ticketMedio)}</p>
-                        </div>
-                    </div>
-                </div>
-                <div className='col-span-12 lg:col-span-3'>
-                    <div className='bg-white shadow-lg sm:rounded-xl p-4 hover:shadow-xl transition-shadow duration-300'>
+                    <div className='bg-secondary text-white shadow-lg sm:rounded-xl p-4 hover:shadow-xl transition-shadow duration-300'>
                         <p className='text-sm font-medium mb-4'>Estatísticas Gerais</p>
-                        <div className='space-y-1'>
+                        <div className='space-y-2'>
                             <div className='flex items-center justify-between'>
                                 <div className='flex items-center gap-2'>
                                     <LuUsers className='w-4 h-4' />
@@ -134,12 +102,45 @@ export default function Dashboard({ultimosPedidos, pedidosNoPeriodo, totalVendas
                         </div>
                     </div>
                 </div>
+                <div className='col-span-12 lg:col-span-3'>
+                    <div className='bg-white shadow-lg sm:rounded-xl p-4 hover:shadow-xl transition-shadow duration-300 h-full'>
+                        <div>
+                            <div className="flex items-start justify-between mb-4">
+                                <p className='text-sm text-gray-800 font-medium'>Total de Pedidos</p>
+                                <LuReceiptText className='w-12 h-12 text-primary-dark p-1 bg-primary-light/30 rounded-lg' />
+                            </div>
+                            <p className='text-4xl text-gray-900'>{totalPedidos}</p>
+                        </div>
+                    </div>
+                </div>
+                <div className='col-span-12 lg:col-span-3'>
+                    <div className='bg-white shadow-lg sm:rounded-xl p-4 hover:shadow-xl transition-shadow duration-300 h-full'>
+                        <div>
+                            <div className="flex items-start justify-between mb-4">
+                                <p className='text-sm text-gray-800 font-medium'>Valor Total de Vendas</p>
+                                <LuWallet className='w-12 h-12 text-primary-dark p-1 bg-primary-light/30 rounded-lg' />
+                            </div>
+                            <p className='text-4xl text-gray-900'>{formataMoeda(totalVendas)}</p>
+                        </div>
+                    </div>
+                </div>
+                <div className='col-span-12 lg:col-span-3'>
+                    <div className='bg-white shadow-lg sm:rounded-xl p-4 hover:shadow-xl transition-shadow duration-300 h-full'>
+                        <div>
+                            <div className="flex items-start justify-between mb-4">
+                                <p className='text-sm text-gray-800 font-medium'>Ticket Médio</p>
+                                <LuPercent className='w-12 h-12 text-primary-dark p-1 bg-primary-light/30 rounded-lg' />
+                            </div>
+                            <p className='text-4xl text-gray-900'>{formataMoeda(ticketMedio)}</p>
+                        </div>
+                    </div>
+                </div>
                 <div className='col-span-12 lg:col-span-6'>
                     <div className='flex flex-col bg-white shadow-sm sm:rounded-lg p-4 gap-4 h-96'>
                         <div className='font-bold flex items-center justify-between text-lg'>
                             <p>Pedidos {periodosLabels[periodo] || ''}</p>
                             <select
-                                className="border rounded py-1"
+                                className="border border-primary-dark rounded py-1"
                                 value={dataKey}
                                 onChange={e => setDataKey(e.target.value)}
                                 >
@@ -206,14 +207,14 @@ export default function Dashboard({ultimosPedidos, pedidosNoPeriodo, totalVendas
                                             />
                                         }
                                     />
-                                    <Bar dataKey={dataKey} fill="hsl(var(--primary))" radius={4} />
+                                    <Bar dataKey={dataKey} fill="hsl(var(--primary-dark))" radius={4} />
                                 </BarChart>
                             </ChartContainer>
                         </ResponsiveContainer>
                     </div>
                 </div>
                 <div className='col-span-12 lg:col-span-3'>
-                    <div className='flex flex-col overflow-hidden bg-white shadow-sm sm:rounded-lg p-8 h-96'>
+                    <div className='flex flex-col overflow-hidden bg-white shadow-sm sm:rounded-lg p-4 h-96'>
                         <div className='font-bold text-lg'>
                             Top Sabores
                         </div>

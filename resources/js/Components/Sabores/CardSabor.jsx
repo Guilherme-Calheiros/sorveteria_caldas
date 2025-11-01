@@ -5,7 +5,7 @@ import { LuPencil, LuTrash } from "react-icons/lu";
 export default function CardSabor({sabor, onToggleEstado, onEditar, onExcluir}) {
 
     return(
-        <div key={sabor.id} className="rounded-xl bg-white col-span-1 border-t-4 p-4 shadow-sm transition-all hover:scale-105" style={{ borderTop: `6px solid ${sabor.color}` }}>
+        <div key={sabor.id} className="rounded-xl bg-white col-span-1 border-l-4 p-4 shadow-sm border hover:shadow-xl transition-all duration-300" style={{ borderLeft: `6px solid ${sabor.color}` }}>
             <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-1">
                     <h2 className="text-lg font-bold">
@@ -14,7 +14,7 @@ export default function CardSabor({sabor, onToggleEstado, onEditar, onExcluir}) 
                     <div
                         className={`px-2 py-1 rounded-md text-sm
                             ${sabor.disponivel 
-                            ? "bg-green-100 text-green-700" 
+                            ? "bg-secondary-light text-secondary-dark" 
                             : "bg-red-100 text-red-700"}`}
                         >
                         {sabor.disponivel ? "Disponível" : "Indisponível"}

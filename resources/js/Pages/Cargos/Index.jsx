@@ -57,7 +57,7 @@ export default function Index({ cargos }){
                         </PrimaryButton>
                     </div>
                 </div>
-                <div className="rounded-lg overflow-hidden">
+                <div className="rounded-lg shadow-sm overflow-hidden">
                     <table className="table-auto w-full">
                         <thead>
                             <tr className="bg-primary text-white">

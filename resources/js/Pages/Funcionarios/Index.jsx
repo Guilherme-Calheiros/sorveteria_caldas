@@ -69,7 +69,7 @@ export default function Index({ funcionarios, cargos }) {
                         </PrimaryButton>
                     </div>
                 </div>
-                <div className='rounded-lg overflow-hidden'>
+                <div className='rounded-lg overflow-hidden shadow-sm'>
                     <table className="table-auto w-full">
                         <thead>
                             <tr className="bg-primary text-white">

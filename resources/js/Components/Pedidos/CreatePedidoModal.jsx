@@ -131,7 +131,7 @@ export default function CreatePedidoModal({ show, onClose, sabores, embalagens, 
     return(
         <Modal show={show} onClose={onClose} disableOutsideClick={true}>
             <div className="p-6 max-h-[80vh] overflow-y-auto">
-                <div className="p-2 flex justify-between items-center">
+                <div className="flex justify-between items-center mb-4">
                     <h1 className="text-xl font-bold">Criar Pedido</h1>
                     <Button
                         onClick={handleCancel}
@@ -141,8 +141,8 @@ export default function CreatePedidoModal({ show, onClose, sabores, embalagens, 
                     </Button>
                 </div>
                 <form onSubmit={handleSubmit}>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <h2 className="text-lg font-bold col-span-full">Dados do Pedido</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-6">
+                        <h2 className="text-lg font-semibold text-gray-800 col-span-full">Dados do Pedido</h2>
                         <div className="col-span-1">
                             <InputLabel value="Funcionário" htmlFor="funcionario" className="obrigatorio"/>
                             <Select
@@ -185,10 +185,9 @@ export default function CreatePedidoModal({ show, onClose, sabores, embalagens, 
                             {errors.observacao && <p className="text-red-500 text-sm">{errors.observacao}</p>}
                         </div>
                     </div>
-                    <div className="grid grid-cols-1 gap-4 mb-4">
-                        <h2 className="text-lg font-bold">Itens do Pedido</h2>
-                        <div className="p-2 rounded bg-neutral-50 border col-span-full">
-                            <h3 className="text-secondary-foreground">Adicionar Item</h3>
+                    <div className="grid grid-cols-1 gap-2 mb-6">
+                        <h2 className="text-lg text-gray-800 font-semibold">Itens do Pedido</h2>
+                        <div className="p-2 rounded bg-gray-50 border col-span-full">
                             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
                                 <div className="md:col-span-3">
                                     <InputLabel value="Embalagem" htmlFor="embalagem"/>
@@ -200,7 +199,7 @@ export default function CreatePedidoModal({ show, onClose, sabores, embalagens, 
                                             setSelectedEmbalagem(embalagem);
                                         }}
                                     >
-                                        <SelectTrigger className="w-full">
+                                        <SelectTrigger className="w-full bg-white">
                                             <SelectValue placeholder="Selecione a Embalagem" />
                                         </SelectTrigger>
                                         <SelectContent>
@@ -216,6 +215,7 @@ export default function CreatePedidoModal({ show, onClose, sabores, embalagens, 
                                     <InputLabel value="Quantidade" htmlFor="quantidade"/>
                                     <Input
                                         id="quantidade"
+                                        className="bg-white"
                                         type="number"
                                         min={1}
                                         max={10}
@@ -232,10 +232,10 @@ export default function CreatePedidoModal({ show, onClose, sabores, embalagens, 
                                             Escolha até <strong>{selectedEmbalagem.maximo_sabores}</strong> {selectedEmbalagem.maximo_sabores === 1 ? 'sabor' : 'sabores'} sem custo adicional.
                                         </p>
                                         {showSaborExtra && (
-                                            <div className="bg-secondary-light rounded border border-secondary p-2">
-                                                <h3 className="text-foreground font-bold">Confirmar sabor extra</h3>
-                                                <p className="text-sm">Deseja adicionar o sabor <strong>{selectedSabor.name}</strong>?</p>
-                                                <p className="text-sm">Cada sabor extra tem acréscimo de <strong>{formataMoeda(selectedEmbalagem.preco_sabor_extra)}</strong></p>
+                                            <div className="bg-white rounded border border-secondary p-2">
+                                                <h3 className="text-foreground font-semibold text-gray-800 mb-1">Confirmar sabor extra</h3>
+                                                <p className="text-sm text-gray-700">Deseja adicionar o sabor <strong>{selectedSabor.name}</strong>?</p>
+                                                <p className="text-sm text-gray-700">Cada sabor extra tem acréscimo de <strong>{formataMoeda(selectedEmbalagem.preco_sabor_extra)}</strong></p>
                                                 <ModalButtons
                                                     onCancelar={handleCancelSaborExtra}
                                                     onConfirmar={handleAddSaborExtra}
@@ -258,7 +258,7 @@ export default function CreatePedidoModal({ show, onClose, sabores, embalagens, 
                                                 setSelectedSabor(sabor);
                                             }}
                                         >
-                                            <SelectTrigger className="w-full">
+                                            <SelectTrigger className="w-full bg-white">
                                                 <SelectValue placeholder="Selecione um sabor" />
                                             </SelectTrigger>
                                             <SelectContent>

@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
+use function Psy\debug;
+
 class DashboardController extends Controller
 {
     public function index(Request $request){
@@ -116,11 +118,33 @@ class DashboardController extends Controller
 
     private function gerarIntervalosComTotais($pedidosAgrupados, $inicio, $fim, $periodo)
     {
-        $intervalos = match ($periodo) {
-            'hoje' => collect(range(0, $inicio->diffInHours($fim)))->map(fn($h) => $inicio->copy()->addHours($h)->format('H:00')),
-            'semana', 'mes' => collect(range(0, $inicio->diffInDays($fim)))->map(fn($d) => $inicio->copy()->addDays($d)->format('Y-m-d')),
-            'ano' => collect(range(0, $inicio->diffInMonths($fim)))->map(fn($m) => $inicio->copy()->addMonths($m)->format('Y-m')),
+        if ($fim->lt($inicio)) {
+            [$inicio, $fim] = [$fim, $inicio];
+        }
+
+        $diferenca = match ($periodo) {
+            'hoje' => intval(max(0, $inicio->diffInHours($fim))),
+            'semana', 'mes' => intval(max(0, $inicio->diffInDays($fim))),
+            'ano' => intval(max(0, $inicio->diffInMonths($fim))),
+            default => 0,
         };
+
+        if ($diferenca === 0) {
+            $intervalos = collect([$inicio->format(match ($periodo) {
+                'hoje' => 'H:00',
+                'semana', 'mes' => 'Y-m-d',
+                'ano' => 'Y-m',
+            })]);
+        } else {
+            $intervalos = match ($periodo) {
+                'hoje' => collect(range(0, $diferenca))
+                    ->map(fn($h) => $inicio->copy()->addHours($h)->format('H:00')),
+                'semana', 'mes' => collect(range(0, $diferenca))
+                    ->map(fn($d) => $inicio->copy()->addDays($d)->format('Y-m-d')),
+                'ano' => collect(range(0, $diferenca))
+                    ->map(fn($m) => $inicio->copy()->addMonths($m)->format('Y-m')),
+            };
+        }
 
         return $intervalos->map(fn($p) => [
             'periodo' => $p,
